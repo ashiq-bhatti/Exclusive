@@ -1,25 +1,53 @@
-import React ,{ useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import MobBaskit from "../images/RandomImages/MobBaskit.png";
 import { FcGoogle } from "react-icons/fc";
-
-
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
 function RegisterPage() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    const { name, email, password } = formData;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/register",
+        { name, email, password }
+      );
+
+      if (response.data.success) {
+        toast.success("User registration successful");
+        navigate("/login");
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("User already exists");
+        } else if (error.response.status === 500) {
+          toast.error("Server error");
+        } else {
+          toast.error("Unexpected error occurred");
+        }
+      } else {
+        toast.error("Network error or server not reachable");
+      }
+    }
   };
+
   return (
     <>
       <div className="outer mt-16 mb-24">
@@ -62,14 +90,14 @@ function RegisterPage() {
                   onChange={handleChange}
                   value={formData.password}
                   className="w-full my-2  border-gray-500  border-0  border-b-2"
-                />{" "}
+                />
                 <br />
                 <button
                   type="submit"
                   className="bg-customRed text-center text-white w-full rounded-md py-3 my-5"
                 >
                   Create Accoutnt
-                </button>{" "}
+                </button>
                 <br />
                 <button
                   type="button "

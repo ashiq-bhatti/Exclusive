@@ -1,6 +1,7 @@
 const UserModel = require("../Models/user.js");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 const Register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -12,15 +13,16 @@ const Register = async (req, res) => {
         .json({ success: false, message: "User already exists" });
     }
     const hashPassword = await bcryptjs.hash(password, 10);
-    const newUser = new UserModel({ name, email, password: hashPassword });
+
+    const newUser = new UserModel({ name, email, password:hashPassword });
 
     await newUser.save();
 
     res.status(200).json({
       success: true,
-      message: "User created successfully",
+      message: "User created successfully", 
       user: newUser,
-    });
+    }); 
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Server internal error" });

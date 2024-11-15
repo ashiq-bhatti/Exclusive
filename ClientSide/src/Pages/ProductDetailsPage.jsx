@@ -11,12 +11,14 @@ import { Link } from "react-router-dom";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineKeyboardReturn } from "react-icons/md";
 import ProductCard from "../Components/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 const initialState = 0;
 const reducer = (state, action) => {
   switch (true) {
     case action.type == "increment":
-      return state + 1;
+      // return state + 1;
+      return state < 15 ? state + 1 : state;
 
     case action.type == "decrement":
       return state > 0 ? state - 1 : state;
@@ -26,6 +28,7 @@ const reducer = (state, action) => {
   }
 };
 function ProductDetailsPage() {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
@@ -130,6 +133,7 @@ function ProductDetailsPage() {
                   </button>
                 </div>
                 <button
+                  onClick={() => navigate("/cart-page")}
                   type="button"
                   className="bg-customRed text-white py-1 px-12 rounded"
                 >

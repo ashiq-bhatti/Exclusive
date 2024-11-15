@@ -3,3 +3,19 @@
 @tailwind utilities;
 
 @import 'flowbite';
+
+/* .slick-arrow:before{
+    color: gray;
+    font-size: 50px;
+}
+.slick-prev{
+    top:-60px;
+    left: 970px;
+}
+.slick-next{
+    top:-60px;
+    right: -38px;
+} */
+.slick-slide > div{
+    margin: 0px 16px;
+}

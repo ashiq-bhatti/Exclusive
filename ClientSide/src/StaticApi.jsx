@@ -1,0 +1,68 @@
+import keybord from '../src/images/FlashSale/keybord.png';
+
+import game from '../src/images/FlashSale/game.png'
+export const FlashSale = [
+  {
+    id: 1,
+    discount: "-40%",
+    imgsrc: game,
+    description: "HAVIT HV-G92 Gamepad",
+    discountPrice: "$120",
+    orgPrice: "$120",
+    rating: "(88)",
+  },
+  {
+    id: 2,
+    discount: "-40%",
+    imgsrc: game,
+    description: "HAVIT HV-G92 Gamepad",
+    discountPrice: "$120",
+    orgPrice: "$120",
+    rating: "(88)",
+  },
+  {
+    id: 3,
+    discount: "-40%",
+    imgsrc: game,
+    description: "HAVIT HV-G92 Gamepad",
+    discountPrice: "$120",
+    orgPrice: "$120",
+    rating: "(88)",
+  },
+  {
+    id: 4,
+    discount: "-35%",
+    imgsrc: game,
+    description: "AK-900 Wired Keyboard",
+    discountPrice: "$960",
+    orgPrice: "$1160",
+    rating: "(85)",
+  },
+  {
+    id: 5,
+    discount: "-30%",
+    imgsrc: game,
+    description: "IPS LCD Gaming Monitor",
+    discountPrice: "$370",
+    orgPrice: "$400",
+    rating: "(99)",
+  },
+  {
+    id: 6,
+    discount: "-35%",
+    imgsrc: keybord,
+    description: "AK-900 Wired Keyboard",
+    discountPrice: "$960",
+    orgPrice: "$1160",
+    rating: "(85)",
+  },
+  {
+    id: 7,
+    discount: "-30%",
+    imgsrc: game,
+    description: "IPS LCD Gaming Monitor",
+    discountPrice: "$370",
+    orgPrice: "$400",
+    rating: "(99)",
+  },
+];

@@ -1,6 +1,7 @@
 import React, { Link } from "react";
-
+import { useNavigate } from "react-router-dom";
 function Page404() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flashSales-section-outer flex justify-center mt-20">
@@ -16,11 +17,9 @@ function Page404() {
             Your visited page not found. You may go home page.
           </h2>
           <div className="flex justify-center mb-24">
-          {/* <Link to='/'> */}
-          <button className=" mt-[40px] text-white  bg-customRed py-3 px-10  rounded-sm ">
+          <button onClick={()=>navigate('/')} className=" mt-[40px] text-white  bg-customRed py-3 px-10  rounded-sm ">
             Back to home page
           </button>
-          {/* </Link> */}
           </div>
         </div>
       </div>

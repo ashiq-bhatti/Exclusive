@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { PiHeartThin } from "react-icons/pi";
 import { IoCartOutline } from "react-icons/io5";
 
 function NavBar() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="outerNav h-20 w-full border-b border-gray-300">
@@ -48,7 +49,7 @@ function NavBar() {
             </div>
             <div>
               {" "}
-              <IoCartOutline className="text-3xl cursor-pointer" />
+              <IoCartOutline onClick={()=>navigate('/account-page')} className="text-3xl cursor-pointer" />
             </div>
           </div>
         </div>

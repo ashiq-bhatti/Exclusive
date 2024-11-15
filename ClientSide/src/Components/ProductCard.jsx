@@ -8,9 +8,12 @@ import { FaStarHalfAlt } from "react-icons/fa";
 import game from "../images/sliderImages/game.png";
 import { Link } from "react-router-dom";
 
+
 function ProductCard(props) {
+
   return (
     <>
+  
       <div className="w-64 card border-1 ">
         <div className="h-56 relative bg-gray-100 flex    rounded-md p-1">
           <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center ">

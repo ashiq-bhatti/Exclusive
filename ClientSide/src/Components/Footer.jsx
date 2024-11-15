@@ -59,7 +59,7 @@ function Footer() {
                 <Link to="#">Chart</Link>
               </li>
               <li className="py-2">
-                <Link to="#">Wishlist</Link>
+                <Link to="/wishlist">Wishlist</Link>
               </li>
               <li className="py-2">
                 <Link to="#">Shop</Link>
@@ -80,6 +80,9 @@ function Footer() {
               </li>
               <li className="py-2">
                 <Link to="/contact">Contact</Link>
+              </li>
+              <li className="py-2">
+                <Link to="/product-add">Add Product</Link>
               </li>
             </ul>
           </div>

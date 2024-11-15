@@ -1,6 +1,7 @@
 import React ,{useState}from "react";
 import { SlCallEnd } from "react-icons/sl";
 import { MdOutlineMail } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function ContactPage() {
     const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const {name,value}= e.target;
       <div className="flashSales-section-outer flex justify-center mb-24">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 my-14">
-            <h1 className="text-gray-500">Home /</h1>
+            <h1 className="text-gray-500"><Link to='/'>Home /</Link> </h1>
             <span>Contact</span>
           </div>
 

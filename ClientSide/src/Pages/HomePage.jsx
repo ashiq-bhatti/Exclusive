@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useRef, useState, useEffect } from "react";
 import { RiArrowDropRightLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import SliderCarousel from "../Components/SliderCarousel";
@@ -14,15 +13,66 @@ import { FaArrowUp } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
 import { PiHeadphones } from "react-icons/pi";
 import { CiDiscount1 } from "react-icons/ci";
+import playStation from "../images/RandomImages/playStation.png";
+import woman from "../images/RandomImages/woman.png";
+import speackers from "../images/RandomImages/speackers.png";
+import perfume from "../images/RandomImages/perfume.png";
+
+import { FlashSale } from "../StaticApi";
+
+import { GrView } from "react-icons/gr";
+import { PiHeartThin } from "react-icons/pi";
+import { FaStar } from "react-icons/fa";
+import { FaStarHalfAlt } from "react-icons/fa";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import axios from "axios";
 
 function HomePage() {
+  const [flashSaleApi, setFlashSaleApi] = useState(FlashSale);
+  const [products, setProducts] = useState("");
+
+  const scrollRef = useRef(null);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+  };
+
+  useEffect(() => {
+    const FetchProducts = async () => {
+      try {
+        const request = await axios.get(
+          "http://localhost:4000/api/admin/fetch-product"
+        );
+        const response = request.data;
+        setProducts(response.product);
+        if (response.status === 200) {
+          console.log("product: " + response);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    FetchProducts();
+  }, []);
+
   return (
     <>
-      
-
       {/* sidebar and slider section */}
 
-      <div className="menuSlider-section-outer flex">
+      <div ref={scrollRef} className="menuSlider-section-outer flex">
         <div className="menuSlider-section-inner w-[84%] m-auto  flex">
           <div className="menue  border-r text-lg pr-6 ">
             <ul className="mt-10">
@@ -88,7 +138,7 @@ function HomePage() {
                 <CountDownTimer duration={2 * 24 * 60 * 60 * 1000} />
               </div>
             </div>
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <div className="bg-gray-100 h-11 w-11  rounded-full flex items-center justify-center">
                 {" "}
                 <FaArrowLeft className="" />
@@ -97,59 +147,68 @@ function HomePage() {
                 {" "}
                 <FaArrowRight />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
 
       {/* cards */}
-      <div className="flex gap-8 mt-4 ml-24">
-        <ProductCard
-          discount="-40%"
-          imgsrc="./src/images/FlashSale/game.png"
-          description="HAVIT HV-G92 Gamepad"
-          discountPrice="$120"
-          orgPrice="$120"
-          rating="(88)"
-        />
-        <ProductCard
-          discount="-40%"
-          imgsrc="./src/images/FlashSale/game.png"
-          description="HAVIT HV-G92 Gamepad"
-          discountPrice="$120"
-          orgPrice="$120"
-          rating="(88)"
-        />
-        <ProductCard
-          discount="-40%"
-          imgsrc="./src/images/FlashSale/game.png"
-          description="HAVIT HV-G92 Gamepad"
-          discountPrice="$120"
-          orgPrice="$120"
-          rating="(88)"
-        />
-        <ProductCard
-          discount="-35%"
-          imgsrc="./src/images/FlashSale/keybord.png"
-          description="AK-900 Wired Keyboard"
-          discountPrice="$960"
-          orgPrice="$1160"
-          rating="(85)"
-        />
-        <ProductCard
-          discount="-30%"
-          description="IPS LCD Gaming Monitor"
-          discountPrice="$370"
-          orgPrice="$400"
-          rating="(99)"
-        />
+
+      <div className="w-3/4 m-auto ">
+        <Slider {...settings} className="">
+          {flashSaleApi.map((card, index) => (
+            <div key={card.id} className="w-64 card border-1 ">
+              <div className="h-56 relative bg-gray-100 flex gap-3   rounded-md p-1">
+                <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center ">
+                  {card.discount}
+                </span>
+                <img src={card.imgsrc} alt="" className=" h-36 w-36 m-auto" />
+                <div className="absolute flex flex-col gap-2 top-3 right-3">
+                  <button className="bg-white h-8 w-8  rounded-full flex items-center justify-center">
+                    {" "}
+                    <PiHeartThin className="" />
+                  </button>
+                  <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                    {" "}
+                    <Link to="/product-detail-page">
+                      <GrView />
+                    </Link>
+                  </button>
+                  {/* <button className="w-full  bottom-0 left-0  bg-black text-white text-center">
+                   Add To Cart
+                          </button> */}
+                </div>
+              </div>
+
+              <div className="space-y-2 font-semibold">
+                <h2 className="mt-3">{card.description}</h2>
+                <div className="flex gap-3 font-semibold">
+                  <span className="text-customRed">{card.discountPrice}</span>
+                  <span className="text-gray-400 line-through">
+                    {card.orgPrice}
+                  </span>
+                </div>
+                <div className="ratingStar flex gap-4">
+                  <div className="flex items-center text-customeYellow">
+                    <FaStar />
+                    <FaStar />
+                    <FaStar />
+                    <FaStar />
+                    <FaStarHalfAlt />
+                  </div>
+                  <h1 className="text-gray-400">{card.rating}</h1>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
+
       <ViewAllProductsButton className="mt-7" />
 
       {/* Today,Flash sales section  end */}
 
       {/* Divider Line */}
-      <div className="border-t-2 bg-gray-200 my-10  w-[84%] m-auto"></div>
 
       {/* Brows By Catagery */}
       <div className="flashSales-section-outer flex justify-center mt-20">
@@ -177,9 +236,7 @@ function HomePage() {
           </div>
 
           {/* catagery icons */}
-          <div>
             <IconsByCatagaries />
-          </div>
         </div>
       </div>
 
@@ -280,6 +337,7 @@ function HomePage() {
       </div>
 
       {/* Our Products */}
+
       <div className="flashSales-section-outer flex justify-center mt-20">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex gap-3 items-center">
@@ -334,27 +392,143 @@ function HomePage() {
         </div>
       </div>
 
+      {/* api data from backend */}
+      {/* <div className="w-[84%] m-auto">
+        <div className="w-3/2  flex gap-8">
+          {products.length > 0 ? (
+            products
+              .map((product) => (
+                <div key={product.id} className="w-64 card border-1  space-x-3">
+                  <div className="h-60 relative bg-gray-100 flex rounded-md p-1">
+                    <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
+                      -{product.off_percent}
+                    </span>
+                    <img
+                      src={product.image}
+                      alt=""
+                      className="h-36 w-36 m-auto"
+                    />
+                    <div className="absolute flex flex-col gap-2 top-3 right-3">
+                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                        <PiHeartThin />
+                      </button>
+                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                        <Link to="/product-detail-page">
+                          <GrView />
+                        </Link>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 font-semibold">
+                    <h1>{product.title}</h1>
+                    <div className="flex gap-3 font-semibold">
+                      <span className="text-customRed">${product.price}</span>
+                      <span className="text-gray-400 line-through">
+                        ${product.discount_price}
+                      </span>
+                    </div>
+                    <div className="ratingStar flex gap-4">
+                      <div className="flex items-center text-customeYellow">
+                        <FaStar />
+                        <FaStar />
+                        <FaStar />
+                        <FaStar />
+                        <FaStarHalfAlt />
+                      </div>
+                      <h1 className="text-gray-400">{`(${product.rating}) `}</h1>
+                    </div>
+                  </div>
+                </div>
+              ))
+              .slice(1, 5)
+          ) : (
+            <p className="text-lg font-semibold text-center my-7">
+              No products available
+            </p>
+          )}
+        </div>
+      </div> */}
+
       <ViewAllProductsButton />
 
       {/* Featured New Arrivel */}
-      <div className="flashSales-section-outer flex justify-center mt-20">
-        <div className="flashSales-section-inner w-[84%] m-auto ">
-          <div className="flex gap-3 items-center">
-            <div className="h-9 w-5 rounded-sm bg-customRed"></div>
-            <h1 className="text-customRed  font-semibold">Featured </h1>
+      <div className="flashSales-section-inner w-[84%] m-auto ">
+        <div className="flex gap-3 items-center">
+          <div className="h-9 w-5 rounded-sm bg-customRed"></div>
+          <h1 className="text-customRed  font-semibold">Featured </h1>
+        </div>
+        <div className="flex justify-between my-7">
+          <div className="flex items-center gap-20">
+            <h1 className="text-4xl font-semibold tracking-wider">
+              New Arrivel
+            </h1>
           </div>
-          <div className="flex justify-between my-7">
-            <div className="flex items-center gap-20">
-              <h1 className="text-4xl font-semibold tracking-wider">
-                New Arrivel
-              </h1>
+        </div>
+      </div>
+
+      {/* Cards */}
+      <div className="flashSales-section-inner w-[84%] m-auto flex flex-col lg:flex-row justify-between gap-8  ">
+        <div className="left w-[90%] bg-black rounded-md relative ">
+          <img
+            src={playStation}
+            alt="PlayStation 5"
+            className="w-full absolute bottom-0 "
+          />
+
+          <div className="absolute bottom-6 left-6 text-white pr-20">
+            <h1 className="text-xl font-bold">PlayStation 5</h1>
+            <p className="my-4">
+              Black and White version of the PS5 coming out on sale.
+            </p>
+            <button className="border-b-2 text-lg font-semibold border-gray-600 pb-1 hover:border-white transition duration-200">
+              Shop Now
+            </button>
+          </div>
+        </div>
+
+        <div className="right  w-[90%] ">
+          <div className="left bg-black px-8  rounded-md flex flex-row">
+            <div className="  text-white">
+              <h1 className="text-xl text-white">Women’s Collections</h1>
+              <p className="text-white  my-4">
+                Featured woman collections that give you another vibe.{" "}
+              </p>
+              <h2 className="text-white">
+                <Link className="border-b-2 text-lg font-semibold border-gray-600 pb-1">
+                  Shop Now
+                </Link>
+              </h2>
             </div>
+
+            <img src={woman} alt="" className="w-[80%]" />
           </div>
 
-          {/* Cards */}
-          <div>
-            <div className="left"></div>
-            <div className="right"></div>
+          <div className="mt-8 gap-8 flex">
+            <div className="left p-10  bg-black relative rounded-md">
+              <img src={speackers} alt="" className="reletive" />
+              <div className="absolute  bottom-6 left-6 text-white">
+                <h1 className="text-xl text-white">Speakers</h1>
+                <p className="text-white ">Amazon wireless speakers</p>
+                <h2 className="text-white">
+                  <Link className="border-b-2 text-lg font-semibold border-gray-600 pb-1">
+                    Shop Now
+                  </Link>
+                </h2>
+              </div>
+            </div>
+            <div className="left p-10 bg-black relative rounded-md">
+              <img src={perfume} alt="" className="reletive" />
+              <div className="absolute  bottom-6 left-6 text-white">
+                <h1 className="text-xl text-white">Perfume</h1>
+                <p className="text-white font-xs">GUCCI INTENSE OUD EDP</p>
+                <h2 className="text-white">
+                  <Link className="border-b-2 text-lg font-semibold border-gray-600 pb-1">
+                    Shop Now
+                  </Link>
+                </h2>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -388,12 +562,13 @@ function HomePage() {
       </div>
 
       <div className=" w-[90%] m-auto mb-10 flex justify-end">
-        <div className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center">
+        <div
+          onClick={handleScroll}
+          className=" cursor-pointer bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center"
+        >
           <FaArrowUp className="h-10" />
         </div>
       </div>
-
-     
     </>
   );
 }

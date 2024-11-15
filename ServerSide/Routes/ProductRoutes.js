@@ -1,8 +1,11 @@
 const express = require("express");
-const { ListProduct } = require("../Controllers/ProductCtrl.js");
+const { AddProduct ,FetchProduct, uploadmidleware } = require("../Controllers/ProductCtrl.js");
 
 const ProductRoute = express.Router();
 
-ProductRoute.post("/list-product", ListProduct);
+ProductRoute.post("/add-product",uploadmidleware , AddProduct);
+ProductRoute.get("/fetch-product", FetchProduct);
+
 
 module.exports = ProductRoute;
+ 

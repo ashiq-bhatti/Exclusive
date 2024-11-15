@@ -7,13 +7,14 @@ const AuthRoutes = require("./Routes/AuthRoutes.js");
 const AdminRoute = require("./Routes/AdminRoutes.js");
 const ProductRoute = require("./Routes/ProductRoutes.js");
 
+
 const PORT = process.env.PORT || 4000;
 
 dotenv.config();
 app.use(cors());
 app.use(express.json());
 DbConnection();
-
+ 
 
 app.use('/api/auth',AuthRoutes);
 app.use('/api/admin',AdminRoute);

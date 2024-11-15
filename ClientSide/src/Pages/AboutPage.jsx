@@ -8,6 +8,7 @@ import { TbBrandGoogleHome } from "react-icons/tb";
 import { CiDollar } from "react-icons/ci";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { FaSackDollar } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 function AboutPage() {
   return (
@@ -15,7 +16,7 @@ function AboutPage() {
       <div className="flashSales-section-outer flex justify-center mb-24">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 my-14">
-            <h1 className="text-gray-500">Home /</h1>
+            <h1 className="text-gray-500"> <Link to='/'>Home /</Link></h1>
             <span>About</span>
           </div>
         </div>

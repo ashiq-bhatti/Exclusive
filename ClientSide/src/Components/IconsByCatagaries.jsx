@@ -7,6 +7,7 @@ import { LuHeadphones } from "react-icons/lu";
 import { TbDeviceGamepad } from "react-icons/tb";
 
 function IconsByCatagaries() {
+
   return (
     <div>
       <div className="flex gap-[4%]">

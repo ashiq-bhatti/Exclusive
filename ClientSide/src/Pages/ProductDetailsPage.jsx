@@ -41,10 +41,11 @@ function ProductDetailsPage() {
           </div>
         </div>
       </div>
+
       <div className="section-outer mb-20">
-        <div className="section-inner flex w-[84%] m-auto gap-12">
-          <div className="left-imges-section flex gap-7 ">
-            <div className="flex flex-col space-y-5">
+        <div className="section-inner flex flex-col md:flex md:flex-row w-[84%] m-auto gap-12">
+          <div className="left-imges-section flex flex-col-reverse md:flex md:flex-row  gap-7 ">
+            <div className="flex md:flex md:flex-col  gap-5">
               <div className="bg-customGray p-3 rounded-md">
                 <img src={game2} alt="Product" />
               </div>
@@ -60,12 +61,12 @@ function ProductDetailsPage() {
             </div>
 
             <div>
-              <div className="bg-customGray p-8 py-32 rounded-md">
+              <div className="bg-customGray p-7 md:p-8 md:py-32 rounded-md">
                 <img src={game1} alt="Product" />
               </div>
             </div>
           </div>
-          <div className="right-details-section  w-[35%]">
+          <div className="right-details-section w-full md:w-[60%] lg:w-[35%]">
             <h1 className="text-2xl font-semibold">Havic HV G-92 Gamepad</h1>
             <div>
               <div className="ratingStar flex gap-3 my-3">
@@ -114,8 +115,8 @@ function ProductDetailsPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div className="countBtn flex items-center rounded border border-1">
+              <div className="flex justify-between md:flex-wrap">
+                <div className="countBtn flex items-center rounded border border-1 md:mb-3">
                   <button
                     type="button"
                     onClick={() => dispatch({ type: "decrement" })}
@@ -131,7 +132,7 @@ function ProductDetailsPage() {
                   >
                     +
                   </button>
-                </div>
+                </div>               
                 <button
                   onClick={() => navigate("/cart-page")}
                   type="button"
@@ -172,14 +173,14 @@ function ProductDetailsPage() {
         </div>
       </div>
       {/* Related Products */}
-      <div className="flashSales-section-outer flex justify-center my-20">
+      {/* <div className="flashSales-section-outer flex justify-center my-20">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex items-center gap-3 mb-10">
             <div className="h-9 w-5 rounded-sm bg-customRed"></div>
             <h1 className="text-customRed  font-semibold">Related Item </h1>
           </div>
 
-          {/* Cards */}
+         
           <div>
             <div className="flex gap-8 mt-4">
               <ProductCard
@@ -211,7 +212,7 @@ function ProductDetailsPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

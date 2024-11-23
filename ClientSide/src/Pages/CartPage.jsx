@@ -118,10 +118,10 @@ e.preventDefault();
       <div className="flashSales-section-outer flex justify-center ">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex justify-between items-center ">
-            <button className="py-3 px-10 border  border-black border-opacity-55 font-semibold rounded-md">
+            <button className="py-2 px-5 md:py-3 md:px-10 border  border-black border-opacity-55 font-semibold rounded-md">
               Return To Shop
             </button>
-            <button className="py-3 px-10 border  border-black border-opacity-55 font-semibold rounded-md">
+            <button className="py-2 px-5 md:py-3 md:px-10 border  border-black border-opacity-55 font-semibold rounded-md">
               Update Cart
             </button>
           </div>
@@ -129,40 +129,43 @@ e.preventDefault();
       </div>
 
       {/* coupon section */}
+      
       <div className="flashSales-section-outer flex justify-center mt-14 mb-32 ">
-        <div className="flashSales-section-inner flex  justify-between w-[84%] m-auto ">
-            <div className="left">
-              <form onClick={handleSubmit} className="flex justify-between items-center gap-6">
+        <div className="flashSales-section-inner  justify-between flex flex-col  md:flex-row  w-[84%] m-auto ">
+            <div className="left w-full md:w-[40%]">
+              <form onClick={handleSubmit} className="flex md:flex-col md:items-start lg:flex-row items-center gap-6">
                 <input
                   type="text"
                   name="couponNum"
                   onChange={handleChange}
                   value={formData.coupon}
-                  className=" border border-black border-opacity-80 px-9 py-[10px] rounded-md"
+                  className=" border border-black border-opacity-80   rounded-md"
                   placeholder="Coupon Code"
                 />
-                <button type="submit" className="py-3 px-12 border  bg-customRed text-white  rounded-md">
+                <button type="submit" className=" p-2   lg:py-3 lg:px-10 border  bg-customRed text-white  rounded-md">
                   Apply Coupon
                 </button>
               </form>
             </div>
-            <div className=" right-cart-totel border-2  border-black border-opacity-55 rounded-md p-5 py-6">
+            <div className=" right-cart-totel w-full md:w-[47%] border-2  border-black border-opacity-55 rounded-md mt-6 p-5 py-6">
               <h1 className="text-lg font-semibold mb-2">Cart Total </h1>
               <div className="flex justify-between items-center border-b my-3 border-gray-400 pb-2 w-full">
-                <p className="mr-72 ">Subtotal:</p>
+                <p className=" ">Subtotal:</p>
                 <p>$550</p>
               </div>
               <div className="flex justify-between items-center border-b my-3 border-gray-400 pb-2 w-full">
-                <p className="mr-72 ">Sipping:</p>
+                <p className=" ">Sipping:</p>
                 <p>Free</p>
               </div>
               <div className="flex justify-between items-center  pb-2 w-full">
-                <p className="mr-64 ">Total:</p>
+                <p className="">Total:</p>
                 <p className="">$550</p>
               </div>
-              <button onClick={()=>nevigate('/check-out-page')} type="submit" className="w-[66%] flex m-auto mt-3 py-3 px-10 border  bg-customRed text-white font-semibold rounded-md">
-                Proceed to chekout
+              <div className="w-[66%] flex m-auto">
+              <button onClick={()=>nevigate('/check-out-page')} type="submit" className=" mt-3 py-3 px-7 text-center border  bg-customRed text-white font-semibold rounded-md">
+                 Proceed to chekout
               </button>
+              </div>
             </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const uploadmidleware = upload.single('image');
+// const uploadmidleware = upload.single('image');
 
 
 const AddProduct = async (req, res) => {
@@ -91,4 +91,4 @@ const FetchProduct = async (req, res) => {
   }
 };
 
-module.exports = { AddProduct, upload,uploadmidleware, FetchProduct };
+module.exports = { AddProduct, upload, FetchProduct };

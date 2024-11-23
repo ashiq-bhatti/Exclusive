@@ -127,11 +127,11 @@ function HomePage() {
           </div>
           <div className="flex justify-between my-7">
             <div className="flex items-center gap-20">
-              <h1 className="text-4xl font-semibold tracking-wider">
+              <h1 className=" text-lg md:text-2xl lg:text-4xl font-semibold tracking-wider">
                 Flash Sales
               </h1>
               <div className="-mt-6">
-                <span className="font-medium flex gap-3">
+                <span className=" font-medium flex gap-3">
                   {" "}
                   <p>Days</p> <p>Hours </p> Minutes <p>Seconds</p>{" "}
                 </span>
@@ -236,7 +236,7 @@ function HomePage() {
           </div>
 
           {/* catagery icons */}
-            <IconsByCatagaries />
+            {/* <IconsByCatagaries /> */}
         </div>
       </div>
 
@@ -534,7 +534,8 @@ function HomePage() {
       </div>
 
       {/* Free And Fast Delivery section */}
-      <div className="w-[70%] m-auto flex space-x-40 my-28">
+      <div className="w-[70%] m-auto  space-x-40 my-28">
+        <div className="w-full md:flex  items-center justify-between">
         <div className=" flex flex-col items-center justify-center ">
           <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
             {" "}
@@ -543,7 +544,7 @@ function HomePage() {
           <h1 className="font-semibold mb-1">FREE AND FAST DELIVERY</h1>
           <p className="text-xs">Free delivery for all orders over $140</p>
         </div>
-        <div className=" flex flex-col items-center justify-center ">
+        <div className=" flex flex-col items-center  my-10 ">
           <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
             {" "}
             <PiHeadphones className="text-white text-3xl" />
@@ -558,6 +559,7 @@ function HomePage() {
           </div>
           <h1 className="font-semibold mb-1">MONEY BACK GUARANTEE</h1>
           <p className="text-xs">We reurn money within 30 days</p>
+        </div>
         </div>
       </div>
 

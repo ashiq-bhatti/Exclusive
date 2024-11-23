@@ -3,21 +3,24 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { PiHeartThin } from "react-icons/pi";
 import { IoCartOutline } from "react-icons/io5";
+import { FiAlignJustify } from "react-icons/fi";
 
 function NavBar() {
   const navigate = useNavigate();
   return (
     <>
       <div className="outerNav h-20 w-full border-b border-gray-300">
-        <div className="innerNav w-[84%]  h-full m-auto flex justify-between items-center">
-          <div className="logo ">
+        <div className="innerNav w-[90%] max-w-7xl h-full m-auto flex justify-between items-center">
+          {/* Logo */}
+          <div className="logo">
             <Link to="/" className="font-bold text-2xl">
               Exclusive
             </Link>
           </div>
 
-          <div className="navLinks">
-            <ul className="flex justify-between text-lg items-center space-x-10">
+          {/* Nav Links */}
+          <div className="navLinks hidden md:flex">
+            <ul className="flex text-lg items-center space-x-10">
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
@@ -33,25 +36,35 @@ function NavBar() {
             </ul>
           </div>
 
-          <div className="searchCart flex justify-around items-center space-x-5">
-            <div className="searchBox  bg-gray-100 flex px-2 rounded-md items-center space-x-6  ">
-                <form className="flex items-center ">
-                  <input className="bg-gray-100 border-0" type="text" placeholder="What are you looking for? " />
-                  <button type="submit">
-                    {" "}
-                    <CiSearch className="text-2xl ml-4 " />
-                  </button>
-                </form>
+          {/* Search, Wishlist, and Cart */}
+          <div className="searchCart flex items-center space-x-5">
+            {/* Search Box */}
+            <div className="searchBox hidden lg:flex bg-gray-100 px-2 rounded-md items-center space-x-3">
+              <form className="flex items-center">
+                <input
+                  className="bg-gray-100 border-0 outline-none"
+                  type="text"
+                  placeholder="Search..."
+                />
+                <button type="submit">
+                  <CiSearch className="text-2xl ml-2" />
+                </button>
+              </form>
             </div>
-            <div>
-              {" "}
-            <Link to='/wishlist'><PiHeartThin className="text-3xl cursor-pointer" /></Link>  
-            </div>
-            <div>
-              {" "}
-              <IoCartOutline onClick={()=>navigate('/account-page')} className="text-3xl cursor-pointer" />
-            </div>
+
+            {/* Icons */}
+            <CiSearch className="text-2xl lg:hidden" />
+            <Link to="/wishlist">
+              <PiHeartThin className="text-3xl cursor-pointer" />
+            </Link>
+            <IoCartOutline
+              onClick={() => navigate("/account-page")}
+              className="text-3xl cursor-pointer"
+            />
           </div>
+
+          {/* Hamburger Menu */}
+          <FiAlignJustify className="text-3xl cursor-pointer md:hidden" />
         </div>
       </div>
     </>

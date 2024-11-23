@@ -50,20 +50,29 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="outer mt-16 mb-24">
-        <div className="inner flex gap-28">
-          <div className="left">
-            <img src={MobBaskit} alt="" className="rounded-r-md " />
+      <div className="outer mt-16 mb-24 w-[90%] lg:w-[80%] mx-auto lg:mx-0">
+        <div className="inner flex flex-col lg:flex-row gap-12 lg:gap-36 items-center">
+          {/* Left Section (Image) */}
+          <div className="left w-full lg:w-2/3">
+            <img
+              src={MobBaskit}
+              alt=""
+              className="rounded-r-md w-full "
+            />
           </div>
-          <div className="right">
-            <div className="content mt-24">
+
+          {/* Right Section (Form) */}
+          <div className="right w-full lg:w-1/3">
+            <div className="content mt-6 lg:mt-2 text-center lg:text-left">
               <h1
-                className="text-4xl font-semibold "
+                className="text-3xl lg:text-4xl font-semibold"
                 style={{ wordSpacing: "5px" }}
               >
                 Create an account
               </h1>
-              <p className="font-medium my-6 ">Enter your details below</p>
+              <p className="font-medium my-4 lg:my-6">
+                Enter your details below
+              </p>
               <form action="" onSubmit={handleSubmit}>
                 <input
                   type="text"
@@ -71,46 +80,42 @@ function RegisterPage() {
                   onChange={handleChange}
                   value={formData.name}
                   placeholder="Name"
-                  className="w-full my-2  border-gray-500  border-0  border-b-2"
-                />{" "}
-                <br />
+                  className="w-full my-2 border-gray-500 border-0 border-b-2"
+                />
                 <input
                   type="email"
                   name="email"
                   onChange={handleChange}
                   value={formData.email}
-                  className="w-full my-2  border-gray-500  border-0  border-b-2"
+                  className="w-full my-2 border-gray-500 border-0 border-b-2"
                   placeholder="Email or Phone Number"
                 />
-                <br />
                 <input
                   type="password"
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
                   value={formData.password}
-                  className="w-full my-2  border-gray-500  border-0  border-b-2"
+                  className="w-full my-2 border-gray-500 border-0 border-b-2"
                 />
-                <br />
                 <button
                   type="submit"
                   className="bg-customRed text-center text-white w-full rounded-md py-3 my-5"
                 >
-                  Create Accoutnt
+                  Create Account
                 </button>
-                <br />
                 <button
-                  type="button "
-                  className=" flex gap-4 border border-gray-300 text-center text-md w-full rounded-md py-3 px-9"
+                  type="button"
+                  className="flex gap-4 border border-gray-300 text-center text-md w-full rounded-md py-3 px-6 lg:px-1 items-center justify-center"
                 >
                   <FcGoogle className="text-2xl" />
-                  <p> Sign Up With Google</p>
+                  <p>Sign Up With Google</p>
                 </button>
-                <div className="flex space-x-4 mt-10">
+                <div className="flex justify-center lg:justify-start space-x-2 mt-6">
                   <p>Already have an account?</p>
                   <Link
                     to="/login"
-                    className="font-medium  border-b border-gray-500"
+                    className="font-medium border-b border-gray-500"
                   >
                     Log In
                   </Link>

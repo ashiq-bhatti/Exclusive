@@ -26,7 +26,7 @@ function LoginPage() {
         email,
         password,
       });
-      const response= request.data;
+      const response = request.data;
 
       if (response.data.success) {
         toast.success("Login successful");
@@ -51,39 +51,46 @@ function LoginPage() {
 
   return (
     <>
-      <div className="outer mt-16 mb-24">
-        <div className="inner flex gap-28">
-          <div className="left">
-            <img src={MobBaskit} alt="" className="rounded-r-md " />
+      <div className="outer mt-16 mb-24 w-[90%] lg:w-[80%] mx-auto lg:mx-0">
+        <div className="inner flex flex-col lg:flex-row gap-12 lg:gap-36 items-center">
+          {/* Left Section (Image) */}
+          <div className="left w-full lg:w-1/2">
+            <img
+              src={MobBaskit}
+              alt=""
+              className="rounded-r-md w-full lg:w-auto"
+            />
           </div>
-          <div className="right ">
-            <div className="content mt-44">
+
+          {/* Right Section (Content and Form) */}
+          <div className="right w-full lg:w-1/2">
+            <div className="content  mt-6 lg:mt-2 text-center lg:text-left">
               <h1
-                className="text-4xl font-semibold "
+                className="text-3xl lg:text-4xl font-semibold"
                 style={{ wordSpacing: "5px" }}
               >
                 Log in to Exclusive
               </h1>
-              <p className="font-medium my-6 ">Enter your details below</p>
+              <p className="font-medium my-4 lg:my-6">
+                Enter your details below
+              </p>
               <form onSubmit={handleSubmit}>
                 <input
                   type="email"
                   name="email"
                   onChange={handleChange}
                   value={formData.email}
-                  className="w-full my-2  border-gray-500  border-0  border-b-2"
+                  className="w-full my-2 border-gray-500 border-0 border-b-2"
                   placeholder="Email or Phone Number"
                 />
-                <br />
                 <input
                   type="password"
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
                   value={formData.password}
-                  className="w-full my-2  border-gray-500  border-0  border-b-2"
+                  className="w-full my-2 border-gray-500 border-0 border-b-2"
                 />
-                <br />
                 <button
                   type="submit"
                   className="bg-customRed text-center text-white w-full rounded-md py-3 my-5"

@@ -27,9 +27,9 @@ function CheckoutPage() {
   };
   return (
     <>
-      <div className="section-outer flex  ">
+      <div className="section-outer   ">
         <div className="section-inner w-[84%] m-auto ">
-          <div className="flex items-center space-x-2 my-14">
+          <div className="flex flex-wrap items-center space-x-2 my-14">
             <h1 className="text-gray-500">Account / </h1>
             <h1 className="text-gray-500">My Account / </h1>
             <h1 className="text-gray-500">Product / </h1>
@@ -43,11 +43,11 @@ function CheckoutPage() {
 
       <div className="section-outer flex justify-center ">
         <div className="section-inner w-[84%] m-auto mb-28">
-          <h1 className="text-black text-3xl mb-9 font-semibold">
+          <h1 className="text-black text-lg md:text-3xl mb-9 font-semibold">
             Billing Detail{" "}
           </h1>
-          <div className="flex  justify-between">
-            <div className="formData-box w-[40%]">
+          <div className="flex flex-col md:flex-row  justify-between">
+            <div className="formData-box w-full md:w-[40%]">
               <form action="">
                 <div className="flex flex-col mb-6 ">
                   <label htmlFor="name" className="text-gray-400 mb-2">
@@ -150,8 +150,8 @@ function CheckoutPage() {
                 </div>
               </form>
             </div>
-            <div className="billDetal-box  w-[47%]">
-              <div className="w-[70%]">
+            <div className="billDetal-box  w-full md:w-[47%]">
+              <div className="w-full md:w-[80%]">
                 <div className="flex justify-between items-cente  my-7  ">
                   <div className="flex items-center gap-5">
                     <img src={game} alt="Loading.." className="h-14 w-14" />
@@ -212,12 +212,12 @@ function CheckoutPage() {
                     name="couponNum"
                     onChange={handleChange}
                     value={formData.coupon}
-                    className=" border border-black border-opacity-80 px-9 py-[10px] rounded-md"
+                    className=" border border-black border-opacity-80 md:px-9 md:py-[10px] rounded-md"
                     placeholder="Coupon Code"
                   />
                   <button
                     type="submit"
-                    className="py-3 px-10 border  bg-customRed text-white  rounded-md"
+                    className="px-2 py-2   md:py-3 md:px-10 border  bg-customRed text-white  rounded-md"
                   >
                     Apply Coupon
                   </button>

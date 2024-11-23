@@ -14,7 +14,7 @@ function Footer() {
   return (
     <>
       <div className="footerOuter bg-black">
-        <div className="footerInner w-[84%] m-auto flex justify-between py-12 pr-16">
+        <div className="footerInner w-[84%] m-auto  md:flex flex-wrap justify-between py-12 pr-16">
           <div className="exclusive text-white ">
             <Link to="/" className="font-semibold text-2xl  ">
               Exclusive

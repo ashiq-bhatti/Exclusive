@@ -23,7 +23,7 @@ function CountDownTimer({ duration }) {
   };
   return (
     <>
-      <div className="text-4xl font-bold ">{formatTimer(time)}</div>
+      <div className="text-lg md:text-2xl lg:text-4xl font-bold ">{formatTimer(time)}</div>
     </>
   );
 }

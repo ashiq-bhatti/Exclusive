@@ -10,7 +10,7 @@ function Page404() {
             <h1 className="text-gray-500">Home /</h1>
             <span>404 Error</span>
           </div>
-          <h1 className="text-center text-7xl font-bold mt-16">
+          <h1 className="text-center text-2xl md:text-4xl lg:text-5xl xl:text-7xl font-bold mt-16">
             404 Not Found
           </h1>
           <h2 className="text-center text-md  mt-7 mb-2 ">

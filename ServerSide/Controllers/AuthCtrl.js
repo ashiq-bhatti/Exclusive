@@ -14,15 +14,15 @@ const Register = async (req, res) => {
     }
     const hashPassword = await bcryptjs.hash(password, 10);
 
-    const newUser = new UserModel({ name, email, password:hashPassword });
+    const newUser = new UserModel({ name, email, password: hashPassword });
 
     await newUser.save();
 
     res.status(200).json({
       success: true,
-      message: "User created successfully", 
+      message: "User created successfully",
       user: newUser,
-    }); 
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Server internal error" });
@@ -52,7 +52,7 @@ const Login = async (req, res) => {
     }
 
     const token = jwt.sign({ userId: userExist._id }, process.env.JWT_SECRET);
-
+    console.log(token);
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
@@ -62,9 +62,8 @@ const Login = async (req, res) => {
       success: true,
       message: "Logged in successfully",
       user: userExist,
+      token,
     });
-   
-
   } catch (error) {
     console.log("Error during login:", error);
     res.status(500).json({ success: false, message: "Server internal error" });
@@ -75,10 +74,10 @@ const Logout = (req, res) => {
   try {
     res.clearCookie("token");
     res.status(200).json({ success: true, message: "Logged out successfully" });
-
   } catch (error) {
     console.log("Error during logout:", error);
     res.status(500).json({ success: false, message: "Server internal error" });
   }
 };
+
 module.exports = { Register, Login, Logout };

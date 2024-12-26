@@ -2,22 +2,50 @@ import React, { useState } from "react";
 import { SlCallEnd } from "react-icons/sl";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    number: "",
+    phone: "",
     message: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    const { name, email, phone, message } = formData;
+
+    try {
+      const request = await axios.post("http://localhost:8000/api/contact/contact-message", {
+        name,
+        email,
+        phone,
+        message,
+      });
+      const response = request.data;
+
+      if (response.success) {
+        toast.success("Your Message sent successfully");
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 500) {
+          toast.error("Server error. Please try again later.");
+        } else {
+          toast.error("Network error or server not reachable.");
+        }
+      } else {
+        toast.error("An unknown error occurred.");
+      }
+      console.error("Error contact....", error);
+    }
   };
+
   return (
     <>
       <div className="flashSales-section-outer flex justify-center mb-24">
@@ -31,57 +59,52 @@ function ContactPage() {
 
           {/* call to us and text boxes */}
           <div className="md:flex md:flex-row-reverse gap-10">
-
-          <div className="rightTextboxes rounded shadow-md p-8">
+            <div className="rightTextboxes rounded shadow-md p-8">
               <div>
                 <form className="" onSubmit={handleSubmit}>
-                <div className="md:flex  gap-3">
-                  <input
-                    type="text"
-                    onChange={handleChange}
-                    value={formData.name}
-                    placeholder="Your Name"
-                    className="rounded border-0 bg-customGray w-full"
-                  />
-                  <input
-                    type="email"
-                    onChange={handleChange}
-                    value={formData.email}
-                    placeholder="Your Email"
-                    name=""
-                    id=""
-                    className="rounded  border-0 bg-customGray w-full my-5 md:my-0"
-                  />
-                  <input
-                    type="number"
-                    onChange={handleChange}
-                    value={formData.number}
-                    placeholder="Your Phone"
-                    name=""
-                    id=""
-                    className="rounded border-0 bg-customGray w-full"
-                  />
+                  <div className="md:flex  gap-3">
+                    <input
+                      type="text"
+                      name="name"
+                      onChange={handleChange}
+                      value={formData.name}
+                      placeholder="Your Name"
+                      className="rounded border-0 bg-customGray w-full"
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      onChange={handleChange}
+                      value={formData.email}
+                      placeholder="Your Email"
+                      className="rounded  border-0 bg-customGray w-full my-5 md:my-0"
+                    />
+                    <input
+                      type="number"
+                      name="phone"
+                      onChange={handleChange}
+                      value={formData.phone}
+                      placeholder="Your Phone"
+                      className="rounded border-0 bg-customGray w-full"
+                    />
                   </div>
                   <textarea
                     onChange={handleChange}
                     value={formData.message}
-                    name=""
-                    id=""
+                    name="message"
                     placeholder="Your Message"
-                  
                     rows={8}
                     className="mt-6 rounded border-0 bg-customGray w-full"
                   ></textarea>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className=" mt-5 text-white  bg-customRed py-2 px-3 md:py-3 md:px-10   rounded-md "
+                    >
+                      Send Message
+                    </button>
+                  </div>
                 </form>
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className=" mt-5 text-white  bg-customRed py-2 px-3 md:py-3 md:px-10   rounded-md "
-                >
-                  Send Message
-                </button>
               </div>
             </div>
 
@@ -113,8 +136,6 @@ function ContactPage() {
               <p className=" mt-2">Emails: customer@exclusive.com</p>
               <p className=" mt-2">Emails: support@exclusive.com</p>
             </div>
-
-           
           </div>
         </div>
       </div>

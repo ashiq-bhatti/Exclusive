@@ -13,6 +13,7 @@ const GetUser = async (req, res) => {
   }
 };
 
+ 
 const DeleteUser = async (req, res) => {
   try {
     const userId = req.params.id;

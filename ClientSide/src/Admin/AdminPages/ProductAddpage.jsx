@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 function ProductAddpage() {
+ const navigate = useNavigate()
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -16,60 +18,60 @@ function ProductAddpage() {
     image: "",
   });
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(formData);
-    const {
-      title,
-      category,
-      subcategory,
-      price,
-      off_percent,
-      discount_price,
-      quantity,
-      rating,
-      reviews,
-      description,
-      image,
-    } = formData;
-
-    try {
-      const request = await axios.post(
-        "http://localhost:4000/api/admin/add-product",
-        {
-          title,
-          category,
-          subcategory,
-          price,
-          off_percent,
-          discount_price,
-          quantity,
-          rating,
-          reviews,
-          description,
-          image,
-        }
-      );
-      const response = request.data;
-      if (response.status === 200) {
-        toast.success("Product added successfully");
-        toast.success(response.message);
-      }
-
-      console.log(response);
-    } catch (error) {
-      toast(error.message);
-      console.log(error.message);
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formDataToSend = new FormData();
+
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/product/add-product",
+        formDataToSend,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Product added successfully");
+        navigate('/admin/all-products')
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("Product already exists");
+        }
+        if (error.response.status === 400) {
+          toast.error("Image is required");
+        } else if (error.response.status === 500) {
+          toast.error("Server error");
+        } else {
+          toast.error("Unexpected error occurred");
+        }
+      } else {
+        toast.error("Network error or server not reachable");
+      }
+    }
+  };
+
   return (
     <>
-      {/* Add product form */}
       <div>
-        <form onSubmit={handleSubmit}  enctype="multipart/form-data">
+        <form
+          onSubmit={handleSubmit}
+          enctype="multipart/form-data"
+        >
           <div className="w-[80%]  m-auto bg-slate-50  p-6 md:space-y-6 ">
             <div className="w-full flex flex-col sm:flex-row md:flex-flex-row space-x-6 space-y-3 justify-center items-center   ">
               <div className="w-full space-y-2">
@@ -234,10 +236,8 @@ function ProductAddpage() {
                 <input
                   type="file"
                   name="image"
-                  value={formData.image}
                   onChange={handleChange}
-                  placeholder=""
-                  className="w-full   bg-slate-800  rounded-md"
+                  className="w-full bg-slate-800 rounded-md"
                 />
               </div>
             </div>
@@ -254,7 +254,6 @@ function ProductAddpage() {
         </form>
       </div>
     </>
-  
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { RiArrowDropRightLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import SliderCarousel from "../Components/SliderCarousel";
@@ -17,8 +17,7 @@ import playStation from "../images/RandomImages/playStation.png";
 import woman from "../images/RandomImages/woman.png";
 import speackers from "../images/RandomImages/speackers.png";
 import perfume from "../images/RandomImages/perfume.png";
-
-import { FlashSale } from "../StaticApi";
+import toast from "react-hot-toast";
 
 import { GrView } from "react-icons/gr";
 import { PiHeartThin } from "react-icons/pi";
@@ -29,11 +28,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import axios from "axios";
+import { StoreContext } from "../Context/StoreContext";
 
-function HomePage() {
-  const [flashSaleApi, setFlashSaleApi] = useState(FlashSale);
-  const [products, setProducts] = useState("");
+function HomePage(_id) {
+  const { cartItems, FlashSale, product_List, addToCart } =
+    useContext(StoreContext);
 
   const scrollRef = useRef(null);
 
@@ -42,6 +41,7 @@ function HomePage() {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -50,26 +50,76 @@ function HomePage() {
     slidesToScroll: 1,
   };
 
-  useEffect(() => {
-    const FetchProducts = async () => {
-      try {
-        const request = await axios.get(
-          "http://localhost:4000/api/admin/fetch-product"
-        );
-        const response = request.data;
-        setProducts(response.product);
-        if (response.status === 200) {
-          console.log("product: " + response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    FetchProducts();
-  }, []);
-
   return (
     <>
+      {/* 1 api data from backend */}
+      <div className="w-[84%] m-auto">
+        <div className="w-3/2 flex gap-8">
+          {product_List ? (
+            product_List
+              .map((product) => (
+                <div key={product._id} className="w-64 card border-1 space-x-3">
+                  <div className="bg-gray-100 rounded-lg overflow-hidden">
+                    <div className="h-56 relative bg-gray-100 flex rounded-md p-1">
+                      <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
+                        -{product.off_percent}
+                      </span>
+                      <img
+                        src={`http://localhost:8000/public/images/${product.image}`}
+                        alt=""
+                        className="h-32 w-32 m-auto"
+                      />
+                      <div className="absolute flex flex-col gap-2 top-3 right-3">
+                        <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                          <PiHeartThin />
+                        </button>
+                        <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                          <Link to="/product-detail-page">
+                            <GrView />
+                          </Link>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="w-full bg-black text-white p-2"                    
+                      onClick={() => {
+                        addToCart(product._id);
+                        toast("Product added to cart");
+                      }}
+                    >
+                      Add To Cart
+                    </button>
+                  </div>
+                  <div className="space-y-2 font-semibold">
+                    <h1>{product.title}</h1>
+                    <div className="flex gap-3 font-semibold">
+                      <span className="text-customRed">${product.price}</span>
+                      <span className="text-gray-400 line-through">
+                        ${product.discount_price}
+                      </span>
+                    </div>
+                    <div className="ratingStar flex gap-4">
+                      <div className="flex items-center text-customeYellow">
+                        <FaStar />
+                        <FaStar />
+                        <FaStar />
+                        <FaStar />
+                        <FaStarHalfAlt />
+                      </div>
+                      <h1 className="text-gray-400">{`(${product.reviews}) `}</h1>
+                    </div>
+                  </div>
+                </div>
+              ))
+              .slice(1, 5)
+          ) : (
+            <p className="text-lg font-semibold text-center my-7">
+              No products available
+            </p>
+          )}
+        </div>
+      </div>
       {/* sidebar and slider section */}
 
       <div ref={scrollRef} className="menuSlider-section-outer flex">
@@ -156,30 +206,36 @@ function HomePage() {
 
       <div className="w-3/4 m-auto ">
         <Slider {...settings} className="">
-          {flashSaleApi.map((card, index) => (
-            <div key={card.id} className="w-64 card border-1 ">
-              <div className="h-56 relative bg-gray-100 flex gap-3   rounded-md p-1">
-                <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center ">
-                  {card.discount}
-                </span>
-                <img src={card.imgsrc} alt="" className=" h-36 w-36 m-auto" />
-                <div className="absolute flex flex-col gap-2 top-3 right-3">
-                  <button className="bg-white h-8 w-8  rounded-full flex items-center justify-center">
-                    {" "}
-                    <PiHeartThin className="" />
-                  </button>
-                  <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
-                    {" "}
-                    <Link to="/product-detail-page">
-                      <GrView />
-                    </Link>
-                  </button>
-                  {/* <button className="w-full  bottom-0 left-0  bg-black text-white text-center">
-                   Add To Cart
-                          </button> */}
+          {FlashSale.map((card, index) => (
+            <div key={card._id} className="w-64 card border-1 ">
+              <div className="bg-gray-100 rounded-lg overflow-hidden">
+                <div className="h-52 relative flex gap-3  p-1">
+                  <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center ">
+                    {card.discount}
+                  </span>
+                  <img src={card.imgsrc} alt="" className=" h-36 w-36 m-auto" />
+                  <div className="absolute flex flex-col gap-2 top-3 right-3">
+                    <button className="bg-white h-8 w-8  rounded-full flex items-center justify-center">
+                      {" "}
+                      <PiHeartThin className="" />
+                    </button>
+                    <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                      {" "}
+                      <Link to="/product-detail-page">
+                        <GrView />
+                      </Link>
+                    </button>
+                  </div>
                 </div>
+                {cartItems[_id]}
+                <button
+                  // onClick={() => dispatch(addToCart(card))}
+                  onClick={() => addToCart(card.id)}
+                  className="w-full  p-2  bg-black text-white text-center"
+                >
+                  Add To Cart
+                </button>
               </div>
-
               <div className="space-y-2 font-semibold">
                 <h2 className="mt-3">{card.description}</h2>
                 <div className="flex gap-3 font-semibold">
@@ -236,7 +292,7 @@ function HomePage() {
           </div>
 
           {/* catagery icons */}
-            {/* <IconsByCatagaries /> */}
+          {/* <IconsByCatagaries /> */}
         </div>
       </div>
 
@@ -363,7 +419,7 @@ function HomePage() {
           </div>
 
           {/* Cards */}
-          <div>
+          {/* <div>
             <div className="flex gap-8 mt-4">
               <ProductCard
                 imgsrc="./src/images/FlashSale/game.png"
@@ -388,38 +444,51 @@ function HomePage() {
                 rating="(99)"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      {/* api data from backend */}
-      {/* <div className="w-[84%] m-auto">
-        <div className="w-3/2  flex gap-8">
-          {products.length > 0 ? (
-            products
+      {/* 2 api data from backend */}
+      <div className="w-[84%] m-auto">
+        <div className="w-3/2 flex gap-8">
+          {product_List ? (
+            product_List
               .map((product) => (
-                <div key={product.id} className="w-64 card border-1  space-x-3">
-                  <div className="h-60 relative bg-gray-100 flex rounded-md p-1">
-                    <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
-                      -{product.off_percent}
-                    </span>
-                    <img
-                      src={product.image}
-                      alt=""
-                      className="h-36 w-36 m-auto"
-                    />
-                    <div className="absolute flex flex-col gap-2 top-3 right-3">
-                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
-                        <PiHeartThin />
-                      </button>
-                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
-                        <Link to="/product-detail-page">
-                          <GrView />
-                        </Link>
-                      </button>
+                <div key={product._id} className="w-64 card border-1 space-x-3">
+                  <div className="bg-gray-100 rounded-lg overflow-hidden">
+                    <div className="h-56 relative bg-gray-100 flex rounded-md p-1">
+                      <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
+                        -{product.off_percent}
+                      </span>
+                      <img
+                        src={`http://localhost:8000/public/images/${product.image}`}
+                        alt=""
+                        className="h-32 w-32 m-auto"
+                      />
+                      <div className="absolute flex flex-col gap-2 top-3 right-3">
+                        <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                          <PiHeartThin />
+                        </button>
+                        <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
+                          <Link to="/product-detail-page">
+                            <GrView />
+                          </Link>
+                        </button>
+                      </div>
                     </div>
+                    {cartItems[_id]}
+                    <button
+                      type="button"
+                      className="w-full bg-black text-white p-2"
+                      // onClick={() => {
+                      //   // dispatch(addToCart(product));
+                      //   toast("Product added to cart");
+                      // }}
+                      onClick={() => addToCart(product._id)}
+                    >
+                      Add To Cart
+                    </button>
                   </div>
-
                   <div className="space-y-2 font-semibold">
                     <h1>{product.title}</h1>
                     <div className="flex gap-3 font-semibold">
@@ -436,7 +505,7 @@ function HomePage() {
                         <FaStar />
                         <FaStarHalfAlt />
                       </div>
-                      <h1 className="text-gray-400">{`(${product.rating}) `}</h1>
+                      <h1 className="text-gray-400">{`(${product.reviews}) `}</h1>
                     </div>
                   </div>
                 </div>
@@ -448,7 +517,7 @@ function HomePage() {
             </p>
           )}
         </div>
-      </div> */}
+      </div>
 
       <ViewAllProductsButton />
 
@@ -536,30 +605,30 @@ function HomePage() {
       {/* Free And Fast Delivery section */}
       <div className="w-[70%] m-auto  space-x-40 my-28">
         <div className="w-full md:flex  items-center justify-between">
-        <div className=" flex flex-col items-center justify-center ">
-          <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
-            {" "}
-            <TbTruckDelivery className="text-white text-3xl" />
+          <div className=" flex flex-col items-center justify-center ">
+            <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
+              {" "}
+              <TbTruckDelivery className="text-white text-3xl" />
+            </div>
+            <h1 className="font-semibold mb-1">FREE AND FAST DELIVERY</h1>
+            <p className="text-xs">Free delivery for all orders over $140</p>
           </div>
-          <h1 className="font-semibold mb-1">FREE AND FAST DELIVERY</h1>
-          <p className="text-xs">Free delivery for all orders over $140</p>
-        </div>
-        <div className=" flex flex-col items-center  my-10 ">
-          <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
-            {" "}
-            <PiHeadphones className="text-white text-3xl" />
+          <div className=" flex flex-col items-center  my-10 ">
+            <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
+              {" "}
+              <PiHeadphones className="text-white text-3xl" />
+            </div>
+            <h1 className="font-semibold mb-1">24/7 CUSTOMER SERVICE</h1>
+            <p className="text-xs">Friendly 24/7 customer support</p>
           </div>
-          <h1 className="font-semibold mb-1">24/7 CUSTOMER SERVICE</h1>
-          <p className="text-xs">Friendly 24/7 customer support</p>
-        </div>
-        <div className=" flex flex-col items-center justify-center ">
-          <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
-            {" "}
-            <CiDiscount1 className="text-white text-3xl" />
+          <div className=" flex flex-col items-center justify-center ">
+            <div className="bg-black border-8  border-gray-300 h-14 w-14 mb-4  rounded-full flex  items-center justify-center">
+              {" "}
+              <CiDiscount1 className="text-white text-3xl" />
+            </div>
+            <h1 className="font-semibold mb-1">MONEY BACK GUARANTEE</h1>
+            <p className="text-xs">We reurn money within 30 days</p>
           </div>
-          <h1 className="font-semibold mb-1">MONEY BACK GUARANTEE</h1>
-          <p className="text-xs">We reurn money within 30 days</p>
-        </div>
         </div>
       </div>
 

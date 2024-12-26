@@ -14,10 +14,14 @@ import Footer from "./Components/Footer";
 import ProductDetailsPage from "./Pages/ProductDetailsPage";
 import AboutPage from "./Pages/AboutPage";
 import CartPage from "./Pages/CartPage";
-import CheckoutPage from "./Pages/CheckoutPage";
-import AccountPage from "./Pages/AccountPage";
-import ProductAddpage from "./Admin/AdminPages/ProductAddpage";
+import CheckoutPage from "./Pages/CheckOutPage";
 
+import AccountPage from "./Pages/AccountPage";
+
+import AdminLayout from "./Admin/AdminLaout";
+import ProductAddpage from "./Admin/AdminPages/ProductAddpage";
+import AllProducts from "./Admin/AdminPages/AllProducts";
+import VerifyOrderSpinner from "./Components/VerifyOrderSpinner";
 
 function App() {
   return (
@@ -26,8 +30,7 @@ function App() {
         <SeasionHeader />
         <NavBar />
         <Routes>
-        <Route path="*" element={<Page404 />} />
-
+          <Route path="*" element={<Page404 />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -39,10 +42,17 @@ function App() {
           <Route path="/check-out-page" element={<CheckoutPage />} />
           <Route path="/account-page" element={<AccountPage />} />
           <Route path="/wishlist" element={<WishListPage />} />
-          <Route path="/product-add" element={<ProductAddpage />} />
+          {/* <Route path="/product-add" element={<ProductAddpage />} /> */}
+          <Route path="/verify" element={<VerifyOrderSpinner />} />
+
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index path="/admin/product-add" element={<ProductAddpage />} />
+            <Route path="/admin/all-products" element={<AllProducts />} />
+          </Route>
+
 
         </Routes>
-        <Footer/>
+        <Footer />
         <Toaster />
       </BrowserRouter>
     </>

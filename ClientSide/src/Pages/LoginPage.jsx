@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MobBaskit from "../images/RandomImages/MobBaskit.png";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { StoreContext } from "../Context/StoreContext";
 
 function LoginPage() {
+  const { setToken } = useContext(StoreContext);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -22,17 +25,23 @@ function LoginPage() {
     const { email, password } = formData;
 
     try {
-      const request = await axios.post("http://localhost:4000/api/auth/login", {
-        email,
-        password,
-      });
+      const request = await axios.post(
+        "http://localhost:8000/api/auth/user-login",
+        {
+          email,
+          password,
+        }
+      );
       const response = request.data;
 
-      if (response.data.success) {
+      if (response.success) {
+        setToken(response.token);
+        localStorage.setItem("token", response.token);
         toast.success("Login successful");
-        navigate("/");
+        navigate("/");      
       }
     } catch (error) {
+      console.log(error);
       if (error.response) {
         if (error.response.status === 404) {
           toast.error("User not found");
@@ -58,7 +67,7 @@ function LoginPage() {
             <img
               src={MobBaskit}
               alt=""
-              className="rounded-r-md w-full lg:w-auto"
+              className="rounded-md lg:rounded-none lg:rounded-r-md w-full"
             />
           </div>
 

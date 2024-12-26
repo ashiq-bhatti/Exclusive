@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import game from "../images/sliderImages/game.png";
-import LED from "../images/RandomImages/LED.png";
-
+import React, { useContext, useState } from "react";
 import visaLogo from "../images/RandomImages/visaLogo.png";
 import masterLogo from "../images/RandomImages/masterLogo.png";
 import paypalLogo from "../images/RandomImages/paypalLogo.png";
+import { StoreContext } from "../Context/StoreContext";
+import axios from "axios";
 
 function CheckoutPage() {
+  const { cartItems, product_List,token, backend_url, totelAmoutOfCart } =
+    useContext(StoreContext);
+    const [paymentMethod, setPaymentMethod] = useState("");
   const [formData, setFormData] = useState({
     fname: "",
     companyName: "",
@@ -21,9 +23,41 @@ function CheckoutPage() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(formData);
+    let orderItems = [];
+    product_List.map((item) => {
+      if (cartItems[item._id] > 0) {
+        let productInfo = item;
+        productInfo["quantity"] = cartItems[item._id];
+        orderItems.push(productInfo);
+      }
+    });
+    console.log("oerder list", orderItems);
+    const orderData = {
+      address: formData,
+      items: orderItems,
+      amount: totelAmoutOfCart() + 3,
+    };
+    
+    try {
+      const response = await axios.post(`${backend_url}/api/order/place-order`, orderData, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+    
+      if (response.data.success) {
+        const { session_url } = response.data;
+        window.location.replace(session_url);
+      } else {
+        alert("Order placement failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error in PlaceOrder:", error);
+      alert("An error occurred while placing the order.");
+    }
+    
   };
   return (
     <>
@@ -48,7 +82,7 @@ function CheckoutPage() {
           </h1>
           <div className="flex flex-col md:flex-row  justify-between">
             <div className="formData-box w-full md:w-[40%]">
-              <form action="">
+              <form action="" onSubmit={handleSubmit}>
                 <div className="flex flex-col mb-6 ">
                   <label htmlFor="name" className="text-gray-400 mb-2">
                     First Name <span className="text-red-600">*</span>
@@ -148,39 +182,64 @@ function CheckoutPage() {
                     </label>
                   </div>
                 </div>
+                <button
+                 type="submit"
+                  className="py-3 px-12  border  bg-customRed text-white  rounded-md"
+                >
+                  Place Order
+                </button>
               </form>
             </div>
             <div className="billDetal-box  w-full md:w-[47%]">
               <div className="w-full md:w-[80%]">
-                <div className="flex justify-between items-cente  my-7  ">
-                  <div className="flex items-center gap-5">
-                    <img src={game} alt="Loading.." className="h-14 w-14" />
-                    <h1>LCD Monitor</h1>
-                  </div>
-                  <h1>$750</h1>
-                </div>
-                <div className="flex justify-between items-cente  pb-2 my-4  ">
-                  <div className="flex items-center gap-5">
-                    <img src={LED} alt="Loading.." className="h-12 w-12" />
-                    <h1>LCD Monitor</h1>
-                  </div>
-                  <h1>$750</h1>
-                </div>
+                {product_List && product_List.length > 0 ? (
+                  product_List.map((product) => {
+                    if (cartItems[product._id] > 0) {
+                      return (
+                        <div
+                          key={product._id}
+                          className="flex justify-between items-cente  pb-2 my-4  "
+                        >
+                          <div className="flex items-center gap-5">
+                            <img
+                              src={`http://localhost:8000/public/images/${product.image}`}
+                              alt="Product"
+                              className="h-14 w-14"
+                            />{" "}
+                            <h1>
+                              {`${product.title.slice(0, 10)}${
+                                product.title.length > 10 ? "..." : ""
+                              }`}
+                            </h1>
+                          </div>
+                          <h1>{product.price}</h1>
+                        </div>
+                      );
+                    }
+                  })
+                ) : (
+                  <p className="text-center">Loading Products</p>
+                )}
                 <div className="flex justify-between items-center border-b my-5 border-gray-400 pb-2 w-full">
                   <p className=" text-lg">Subtotal:</p>
-                  <p className="text-lg">$550</p>
+                  <p className="text-lg">${totelAmoutOfCart()}</p>
                 </div>
                 <div className="flex justify-between items-center border-b my-4 border-gray-400 pb-2 w-full">
                   <p className="text-lg  ">Sipping:</p>
-                  <p className="text-lg">Free</p>
+                  <p className="text-lg">${3}</p>
                 </div>
                 <div className="flex justify-between items-center  pb-2 w-full">
                   <p className="text-lg ">Total:</p>
-                  <p className="text-lg">$550</p>
+                  <p className="text-lg">${totelAmoutOfCart() + 3}</p>
                 </div>
                 <div className="flex justify-between items-center mt-4  pb-2 w-full">
                   <div className="flex items-center gap-4">
-                    <input type="radio" />
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Bank"
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
                     <p className="text-lg">Bank</p>
                   </div>
                   <div className="flex items-center gap-1">
@@ -198,15 +257,17 @@ function CheckoutPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <input type="radio" />
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="Cash"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />{" "}
                   <p className="text-lg">Chash on delivery</p>
                 </div>
               </div>
               <div className="left">
-                <form
-                  onClick={handleSubmit}
-                  className="flex items-center gap-6 my-6"
-                >
+                <form className="flex items-center gap-6 my-6">
                   <input
                     type="text"
                     name="couponNum"
@@ -216,14 +277,14 @@ function CheckoutPage() {
                     placeholder="Coupon Code"
                   />
                   <button
-                    type="submit"
+                    // type="submit"
                     className="px-2 py-2   md:py-3 md:px-10 border  bg-customRed text-white  rounded-md"
                   >
                     Apply Coupon
                   </button>
                 </form>
                 <button
-                  type="submit"
+                 type="submit"
                   className="py-3 px-12  border  bg-customRed text-white  rounded-md"
                 >
                   Place Order

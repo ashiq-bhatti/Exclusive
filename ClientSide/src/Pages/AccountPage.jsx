@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 function AccountPage() {
   const [formData, setFormData] = useState({
@@ -14,11 +16,48 @@ function AccountPage() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    
+    const {
+      fname,
+      lname,
+      email,
+      address,
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+    } = formData;
+    try {
+      const request = await axios.post(
+        "http://localhost:8000/api/profile/edit-profile",
+        {
+          fname,
+          lname,
+          email,
+          address,
+          currentPassword,
+          newPassword,
+          confirmNewPassword,
+        }
+      );
+      const response = request.data;
+      if (response.status === 200) {
+        toast.success(response.message);
+      }
+      console.log(formData);
+    } catch (error) {
+      if (error.response) {       
+         if (error.response.status === 500) {
+          toast.error("Server error");
+        } else {
+          toast.error("Unexpected error occurred");
+        }
+      } else {
+        toast.error("Network error or server not reachable");
+      }
+    }
   };
+
   return (
     <>
       <div className="section-outer flex  ">
@@ -65,7 +104,7 @@ function AccountPage() {
                 <input
                   type="text"
                   name="fname"
-                  placeholder="Ashiq"
+                  placeholder="First Name"
                   onChange={handleChange}
                   value={formData.fname}
                   required
@@ -79,7 +118,7 @@ function AccountPage() {
                 <input
                   type="text"
                   name="lname"
-                  placeholder="Hussain"
+                  placeholder="Last Name"
                   onChange={handleChange}
                   value={formData.lname}
                   required
@@ -90,12 +129,12 @@ function AccountPage() {
             <div className="flex justify-between items-center">
               <div className="flex flex-col mb-6 w-[47%] ">
                 <label htmlFor="name" className=" mb-2 ">
-                  First Name
+                  E-mail
                 </label>
                 <input
                   type="email"
                   name="email"
-                  placeholder="Ashiq"
+                  placeholder="ali123@gmail.com"
                   onChange={handleChange}
                   value={formData.email}
                   required

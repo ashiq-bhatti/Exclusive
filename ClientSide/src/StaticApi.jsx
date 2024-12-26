@@ -3,7 +3,16 @@ import keybord from '../src/images/FlashSale/keybord.png';
 import game from '../src/images/FlashSale/game.png'
 export const FlashSale = [
   {
-    id: 1,
+    _id: 1,
+    discount: "-40%",
+    imgsrc: game,
+    description: "Game No 2 Plastict",
+    discountPrice: "$120",
+    orgPrice: "$120",
+    rating: "(88)",
+  },
+  {
+    _id: 2,
     discount: "-40%",
     imgsrc: game,
     description: "HAVIT HV-G92 Gamepad",
@@ -12,25 +21,16 @@ export const FlashSale = [
     rating: "(88)",
   },
   {
-    id: 2,
+    _id: 3,
     discount: "-40%",
     imgsrc: game,
-    description: "HAVIT HV-G92 Gamepad",
+    description: "Game No 3 Almonitor",
     discountPrice: "$120",
     orgPrice: "$120",
     rating: "(88)",
   },
   {
-    id: 3,
-    discount: "-40%",
-    imgsrc: game,
-    description: "HAVIT HV-G92 Gamepad",
-    discountPrice: "$120",
-    orgPrice: "$120",
-    rating: "(88)",
-  },
-  {
-    id: 4,
+    _id: 4,
     discount: "-35%",
     imgsrc: game,
     description: "AK-900 Wired Keyboard",
@@ -39,7 +39,7 @@ export const FlashSale = [
     rating: "(85)",
   },
   {
-    id: 5,
+    _id: 5,
     discount: "-30%",
     imgsrc: game,
     description: "IPS LCD Gaming Monitor",
@@ -48,7 +48,7 @@ export const FlashSale = [
     rating: "(99)",
   },
   {
-    id: 6,
+    _id: 6,
     discount: "-35%",
     imgsrc: keybord,
     description: "AK-900 Wired Keyboard",
@@ -57,7 +57,7 @@ export const FlashSale = [
     rating: "(85)",
   },
   {
-    id: 7,
+    _id: 7,
     discount: "-30%",
     imgsrc: game,
     description: "IPS LCD Gaming Monitor",

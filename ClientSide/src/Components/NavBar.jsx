@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { PiHeartThin } from "react-icons/pi";
 import { IoCartOutline } from "react-icons/io5";
 import { FiAlignJustify } from "react-icons/fi";
+import { VscAccount } from "react-icons/vsc";
+
+import MobileNavLink from "./MobileNavLink";
+// import { useSelector } from "react-redux";
 
 function NavBar() {
+  const [showNavLinks, setShowNavLinks] = useState(false);
+// const {cart} =  useSelector((state)=>state.CartReducer)
   const navigate = useNavigate();
   return (
     <>
@@ -57,16 +63,27 @@ function NavBar() {
             <Link to="/wishlist">
               <PiHeartThin className="text-3xl cursor-pointer" />
             </Link>
-            <IoCartOutline
+            <div onClick={() => navigate("/cart-page")}>
+            <div className="w-4 h-4 cursor-pointer bg-customRed rounded-full text-center absolute ml-4 mb- z-10 text-white">
+                {/* {cart.length} */}
+              </div>
+              <IoCartOutline className="text-3xl cursor-pointer" />
+              
+            </div>
+
+            <VscAccount
               onClick={() => navigate("/account-page")}
               className="text-3xl cursor-pointer"
             />
           </div>
-
           {/* Hamburger Menu */}
-          <FiAlignJustify className="text-3xl cursor-pointer md:hidden" />
+          <FiAlignJustify
+            onClick={() => setShowNavLinks(!showNavLinks)}
+            className="text-3xl cursor-pointer md:hidden"
+          />
         </div>
       </div>
+      {showNavLinks ? <MobileNavLink /> : null}
     </>
   );
 }

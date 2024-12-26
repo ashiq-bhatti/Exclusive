@@ -25,7 +25,7 @@ function RegisterPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/auth/register",
+        "http://localhost:8000/api/auth/user-register",
         { name, email, password }
       );
 
@@ -57,7 +57,7 @@ function RegisterPage() {
             <img
               src={MobBaskit}
               alt=""
-              className="rounded-r-md w-full "
+              className="rounded-md lg:rounded-none lg:rounded-r-md w-full "
             />
           </div>
 

@@ -22,7 +22,7 @@ function SeasionHeader() {
             </p>
           </div>
 
-          <div className=" flex justify-center items-center cursor-pointer">
+          <div className=" hidden lg:block md:flex justify-center items-center cursor-pointer ">
             <p className="text-white ">English</p>
             <RiArrowDropDownLine className="text-white  text-[36px]" />
           </div>

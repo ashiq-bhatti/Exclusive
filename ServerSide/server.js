@@ -34,7 +34,7 @@ app.use("/api/contact", ContactRoutes);
 app.use("api/profile", EdditProfileRoutes);
 app.use("/api/cart", CartRoutes);
 app.use("/api/order", OrderRoutes);
-
+ 
 app.get("/", (req, res) => {
   res.send("Welcome to Server Home Page");
 });

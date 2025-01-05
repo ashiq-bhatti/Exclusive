@@ -19,7 +19,6 @@ const StoreContextProvider = (props) => {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
     if (token) {
-      console.log("Token:", token);
       try {
         await axios.post(
           `${backend_url}/api/cart/add-to-cart`,

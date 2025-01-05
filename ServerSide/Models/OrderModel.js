@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
- 
+
 const OrderSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   items: { type: Array, required: true },
@@ -15,3 +15,4 @@ const OrderSchema = new mongoose.Schema({
 });
 const OrderModel = mongoose.model("Order", OrderSchema);
 module.exports = OrderModel;
+  

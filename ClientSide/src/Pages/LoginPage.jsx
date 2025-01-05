@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MobBaskit from "../images/RandomImages/MobBaskit.png";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
@@ -38,7 +38,7 @@ function LoginPage() {
         setToken(response.token);
         localStorage.setItem("token", response.token);
         toast.success("Login successful");
-        navigate("/");      
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

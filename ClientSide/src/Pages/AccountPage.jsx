@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { toast } from "react-hot-toast";
 
 function AccountPage() {
@@ -46,8 +48,8 @@ function AccountPage() {
       }
       console.log(formData);
     } catch (error) {
-      if (error.response) {       
-         if (error.response.status === 500) {
+      if (error.response) {
+        if (error.response.status === 500) {
           toast.error("Server error");
         } else {
           toast.error("Unexpected error occurred");
@@ -79,14 +81,21 @@ function AccountPage() {
         <div className="left-manage-account md:w-[25%] w-[80%] m-auto mb-6">
           <h1 className="text-lg font-semibold">Manage My Account</h1>
           <div className="flex  flex-col  ml-10 my-3  space-y-2 ">
-            <p className="text-customRed">My Profile</p>
-            <p className="text-gray-500">Adress Book</p>
-            <p className="text-gray-500">My Payment Options</p>
+            <p className="text-gray-500  hover:text-customRed">My Profile</p>
+            <p className="text-gray-500  hover:text-customRed">Adress Book</p>
+            <p className="text-gray-500  hover:text-customRed">
+              My Payment Options
+            </p>
           </div>
           <h1 className="text-lg font-semibold">Manage Order</h1>
           <div className="flex  flex-col  ml-10 my-3  space-y-2 ">
-            <p className="text-gray-500">My Returns</p>
-            <p className="text-gray-500">My Cancellations</p>
+            <Link to={"/my-order-page"}>
+              <p className="text-gray-500  hover:text-customRed">My Orders</p>
+            </Link>
+            <p className="text-gray-500  hover:text-customRed">My Returns</p>
+            <p className="text-gray-500  hover:text-customRed">
+              My Cancellations
+            </p>
           </div>
           <h1 className="text-lg font-semibold">Manage WishList</h1>
           <div className="flex  flex-col  ml-10 my-3  space-y-2 "></div>

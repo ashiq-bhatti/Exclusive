@@ -77,5 +77,58 @@ const verifyOrder = async (req, res) => {
     });
   }
 };
+const fetchSingleUserOrder = async (req, res) => {
+  try {
+    
+    const orders = await OrderModel.find({ userId: req.body.userId });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Order fetch successfully",
+        orders: orders,
+      });
+      console.log("userId:", req.body.userId);
 
-module.exports = { PlaceOrder, verifyOrder };
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Error in fetch order " });
+  }
+};
+const fetchAllOrder = async (req, res) => {
+  try {
+    const order = await OrderModel.find();
+    if (!order) {
+      res.status(404).json({ success: false, message: "No orders found" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "Order Fetch Successfully", order });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: "Error in geting Orders" });
+  }
+};
+const updateOrderStatus = async (req, res) => {
+  try {
+    await OrderModel.findByIdAndUpdate(req.body.orderId, {
+      status: req.body.status,
+    });
+    res
+      .status(200)
+      .json({ success: true, message: "Order status successfully updated" });
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(500)
+      .json({ success: false, message: "Error in updating Order" });
+  }
+};
+
+module.exports = {
+  PlaceOrder,
+  verifyOrder,
+  fetchAllOrder,
+  updateOrderStatus,
+  fetchSingleUserOrder,
+};

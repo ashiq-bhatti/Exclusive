@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import game1 from "../images/RandomImages/game1.png";
 import game2 from "../images/RandomImages/game2.png";
 import game3 from "../images/RandomImages/game3.png";
@@ -7,11 +7,13 @@ import game5 from "../images/RandomImages/game5.png";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { PiHeartThin } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineKeyboardReturn } from "react-icons/md";
 import ProductCard from "../Components/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { backend_url } from "../BackenURL";
+import axios from "axios";
 
 const initialState = 0;
 const reducer = (state, action) => {
@@ -27,9 +29,30 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 function ProductDetailsPage() {
   const navigate = useNavigate();
+  const [productData, setProductData] = useState({});
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { id } = useParams();
+  
+  useEffect(() => {
+    const fetchProductById = async () => {
+      try {
+        const request = await axios.get(
+          `http://localhost:8000/api/product/fetch-product-by-id/${id}`
+        );
+        const response = request.data.product;
+        if (request.status === 200) {
+          setProductData(response);       
+        }
+     
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchProductById();
+  }, []);
 
   return (
     <>
@@ -37,7 +60,7 @@ function ProductDetailsPage() {
         <div className="section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 ">
             <h1 className="text-gray-500">Account / Gameing /</h1>
-            <span>Havic HV G-92 Gamepad</span>
+            <span>{productData.title}</span>
           </div>
         </div>
       </div>
@@ -62,12 +85,16 @@ function ProductDetailsPage() {
 
             <div>
               <div className="bg-customGray p-7 md:p-8 md:py-32 rounded-md">
-                <img src={game1} alt="Product" />
+                <img
+                  src={`http://localhost:8000/public/images/${productData.image}`}
+                  alt="Product"
+                  className=" w-96 h-80"
+                />
               </div>
             </div>
           </div>
           <div className="right-details-section w-full md:w-[60%] lg:w-[35%]">
-            <h1 className="text-2xl font-semibold">Havic HV G-92 Gamepad</h1>
+            <h1 className="text-2xl font-semibold">{productData.title}</h1>
             <div>
               <div className="ratingStar flex gap-3 my-3">
                 <div className="flex items-center text-customeYellow">
@@ -77,15 +104,13 @@ function ProductDetailsPage() {
                   <FaStar />
                   <FaStarHalfAlt />
                 </div>
-                <h1 className="text-gray-400">(150 Reviews)</h1>
+                <h1 className="text-gray-400"> {`(${productData.reviews}) Reviews`}</h1>
                 <div className="h-4 w-[1px] mt-1 bg-black opacity-50"></div>
                 <p className="text-customGreen"> In Stock</p>{" "}
               </div>
-              <h1 className="text-2xl font-semibold">$ 192.00</h1>
+              <h1 className="text-2xl font-semibold"> {`$${productData.price}`}</h1>
               <p className="mt-5">
-                PlayStation 5 Controller Skin High quality vinyl with air
-                channel adhesive for easy bubble free install & mess free
-                removal Pressure sensitive.
+              {`${productData.description}`}
               </p>
               <div className="h-[1px] w-full my-5 bg-black opacity-50"></div>
               <div className="flex items-center gap-4">
@@ -132,7 +157,7 @@ function ProductDetailsPage() {
                   >
                     +
                   </button>
-                </div>               
+                </div>
                 <button
                   onClick={() => navigate("/cart-page")}
                   type="button"
@@ -173,7 +198,7 @@ function ProductDetailsPage() {
         </div>
       </div>
       {/* Related Products */}
-      {/* <div className="flashSales-section-outer flex justify-center my-20">
+      <div className="flashSales-section-outer flex justify-center my-20">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex items-center gap-3 mb-10">
             <div className="h-9 w-5 rounded-sm bg-customRed"></div>
@@ -212,7 +237,7 @@ function ProductDetailsPage() {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

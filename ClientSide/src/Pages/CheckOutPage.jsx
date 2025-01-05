@@ -1,14 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import visaLogo from "../images/RandomImages/visaLogo.png";
 import masterLogo from "../images/RandomImages/masterLogo.png";
 import paypalLogo from "../images/RandomImages/paypalLogo.png";
 import { StoreContext } from "../Context/StoreContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CheckoutPage() {
-  const { cartItems, product_List,token, backend_url, totelAmoutOfCart } =
+  const navigate = useNavigate();
+  const { cartItems, product_List, token, backend_url, totelAmoutOfCart } =
     useContext(StoreContext);
-    const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [formData, setFormData] = useState({
     fname: "",
     companyName: "",
@@ -23,7 +25,7 @@ function CheckoutPage() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     let orderItems = [];
@@ -40,13 +42,17 @@ function CheckoutPage() {
       items: orderItems,
       amount: totelAmoutOfCart() + 3,
     };
-    
+
     try {
-      const response = await axios.post(`${backend_url}/api/order/place-order`, orderData, {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      });
-    
+      const response = await axios.post(
+        `${backend_url}/api/order/place-order`,
+        orderData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
       if (response.data.success) {
         const { session_url } = response.data;
         window.location.replace(session_url);
@@ -57,8 +63,14 @@ function CheckoutPage() {
       console.error("Error in PlaceOrder:", error);
       alert("An error occurred while placing the order.");
     }
-    
   };
+  useEffect(() => {
+    if (!token) {
+      navigate("/cart-page");
+    }else if(totelAmoutOfCart === 0){
+      navigate("/cart-page");
+    }
+  }, [token]);
   return (
     <>
       <div className="section-outer   ">
@@ -183,7 +195,7 @@ function CheckoutPage() {
                   </div>
                 </div>
                 <button
-                 type="submit"
+                  type="submit"
                   className="py-3 px-12  border  bg-customRed text-white  rounded-md"
                 >
                   Place Order
@@ -284,7 +296,7 @@ function CheckoutPage() {
                   </button>
                 </form>
                 <button
-                 type="submit"
+                  type="submit"
                   className="py-3 px-12  border  bg-customRed text-white  rounded-md"
                 >
                   Place Order

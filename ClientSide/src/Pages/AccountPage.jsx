@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { toast } from "react-hot-toast";
+import HOC from "../Components/HOC";
 
 function AccountPage() {
   const [formData, setFormData] = useState({
@@ -219,4 +220,4 @@ function AccountPage() {
   );
 }
 
-export default AccountPage;
+export default HOC(AccountPage);

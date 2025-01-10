@@ -4,6 +4,7 @@ import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import HOC from "../Components/HOC";
 
 function ContactPage() {
   const [formData, setFormData] = useState({
@@ -143,4 +144,4 @@ function ContactPage() {
   );
 }
 
-export default ContactPage;
+export default HOC(ContactPage);

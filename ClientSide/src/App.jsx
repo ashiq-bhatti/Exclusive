@@ -8,9 +8,6 @@ import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import WishListPage from "./Pages/WishListPage";
 import Page404 from "./Pages/Page404";
-import SeasionHeader from "./Components/SeasionHeader";
-import NavBar from "./Components/NavBar";
-import Footer from "./Components/Footer";
 import ProductDetailsPage from "./Pages/ProductDetailsPage";
 import AboutPage from "./Pages/AboutPage";
 import CartPage from "./Pages/CartPage";
@@ -24,13 +21,13 @@ import ProductAddpage from "./Admin/AdminPages/ProductAddpage";
 import AllProducts from "./Admin/AdminPages/AllProducts";
 import OrderPAge from "./Admin/AdminPages/OrderPAge";
 import MyorderPage from "./Pages/MyorderPage";
+import AllListedProducts from "./Components/AllProducts";
 
 function App() {
+
   return (
     <>
       <BrowserRouter>
-        <SeasionHeader />
-        <NavBar />
         <Routes>
           <Route path="*" element={<Page404 />} />
           <Route path="/" element={<HomePage />} />
@@ -39,24 +36,28 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/page404" element={<Page404 />} />
-          <Route path="/product-detail-page/:id" element={<ProductDetailsPage />} />
+          <Route
+            path="/product-detail-page/:id"
+            element={<ProductDetailsPage />}
+          />
           <Route path="/cart-page" element={<CartPage />} />
           <Route path="/check-out-page" element={<CheckoutPage />} />
           <Route path="/account-page" element={<AccountPage />} />
           <Route path="/my-order-page" element={<MyorderPage />} />
           <Route path="/wishlist" element={<WishListPage />} />
           <Route path="/verify" element={<VerifyOrderSpinner />} />
+          <Route path="/allListedProducts" element={<AllListedProducts />} />
 
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index path="/admin/product-add" element={<ProductAddpage />} />
+            <Route
+              index
+              path="/admin/product-add"
+              element={<ProductAddpage />}
+            />
             <Route path="/admin/all-products" element={<AllProducts />} />
             <Route path="/admin/order" element={<OrderPAge />} />
-
           </Route>
-
-
         </Routes>
-        <Footer />
         <Toaster />
       </BrowserRouter>
     </>

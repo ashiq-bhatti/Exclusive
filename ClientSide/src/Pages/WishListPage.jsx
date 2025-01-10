@@ -1,6 +1,7 @@
 import React from "react";
 
 import ProductCard from "../Components/ProductCard";
+import HOC from "../Components/HOC";
 
 function WishListPage() {
   return (
@@ -113,4 +114,4 @@ function WishListPage() {
   );
 }
 
-export default WishListPage;
+export default HOC(WishListPage);

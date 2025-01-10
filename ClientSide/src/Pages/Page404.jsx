@@ -1,5 +1,6 @@
 import React, { Link } from "react";
 import { useNavigate } from "react-router-dom";
+import HOC from "../Components/HOC";
 function Page404() {
   const navigate = useNavigate();
   return (
@@ -27,4 +28,4 @@ function Page404() {
   );
 }
 
-export default Page404;
+export default HOC(Page404);

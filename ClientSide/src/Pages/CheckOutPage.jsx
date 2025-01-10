@@ -5,6 +5,7 @@ import paypalLogo from "../images/RandomImages/paypalLogo.png";
 import { StoreContext } from "../Context/StoreContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HOC from "../Components/HOC";
 
 function CheckoutPage() {
   const navigate = useNavigate();
@@ -310,4 +311,4 @@ function CheckoutPage() {
   );
 }
 
-export default CheckoutPage;
+export default HOC(CheckoutPage);

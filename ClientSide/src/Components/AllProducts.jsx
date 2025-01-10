@@ -1,51 +1,78 @@
-import { StoreContext } from "../Context/StoreContext";
 import React, { useContext, useState } from "react";
+import { StoreContext } from "../Context/StoreContext";
 import { GrView } from "react-icons/gr";
 import { PiHeartThin } from "react-icons/pi";
-import { FaStar } from "react-icons/fa";
-import { FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
-const OurProducts = () => {
+import toast from "react-hot-toast";
+import { CiSearch } from "react-icons/ci";
+import HOC from "./HOC";
+
+const AllListedProducts = () => {
   const { product_List, addToCart } = useContext(StoreContext);
-  const [viewAllProducts, setViewAllProducts] = useState(false);
-  const displayProducts = viewAllProducts
-    ? product_List
-    : product_List.slice(0, 8);
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const selectedCategories = (category) => {
+    if (category === "all") {
+      setSelectedCategory(null);
+    } else {
+      const updatedProducts = product_List.filter(
+        (product) => product.category === category
+      );
+      setSelectedCategory(updatedProducts);
+    }
+  };
+
+  const productsToDisplay = selectedCategory || product_List;
+
+  const [searchProduct, setSearchProduct] = useState("");
+  const handleSearch = (e) => {
+    setSearchProduct(e.target.value);
+  };
+  const searchResults = productsToDisplay.filter(
+    (product) =>
+      product.title.toLowerCase().includes(searchProduct.toLocaleLowerCase()) ||
+      product.category.toLowerCase().includes(searchProduct.toLocaleLowerCase())
+  );
+
   return (
     <>
-      <div className="flashSales-section-outer flex justify-center mt-20">
-        <div className="flashSales-section-inner w-[84%] m-auto ">
-          <div className="flex gap-3 items-center">
-            <div className="h-9 w-5 rounded-sm bg-customRed"></div>
-            <h1 className="text-customRed  font-semibold">Our Products </h1>
-          </div>
-          <div className="flex justify-between my-7">
-            <div className="flex items-center gap-20">
-              <h1 className="text-4xl font-semibold tracking-wider">
-                Explore Our Prducts
-              </h1>
-            </div>
-            <div className="flex gap-2">
-              <div className="bg-gray-100 h-11 w-11  rounded-full flex items-center justify-center">
-                {" "}
-                <FaArrowLeft className="" />
-              </div>
-              <div className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center">
-                {" "}
-                <FaArrowRight />
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="searchBox hidden w-32 lg:flex bg-gray-100 px-2 rounded-md items-center space-x-3">
+        <input
+          className="bg-gray-100 border-0 outline-none"
+          type="text"
+          placeholder="Search..."
+          value={searchProduct}
+          onChange={handleSearch}
+        />
+        <button type="submit">
+          <CiSearch className="text-2xl ml-2" />
+        </button>
       </div>
+      <button type="button" onClick={() => selectedCategories("all")}>
+        All Products
+      </button>
+      <br />
+      <button type="button" onClick={() => selectedCategories("electric")}>
+        Electricity
+      </button>
+      <br />
+      <button type="button" onClick={() => selectedCategories("computer")}>
+        Computer
+      </button>
+      <br />
+      <button type="button" onClick={() => selectedCategories("medicine")}>
+        Medicine
+      </button>
+
+      <h1 className="text-customRed font-semibold">All Products</h1>
 
       <div className="w-[84%] m-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {displayProducts ? (
-            displayProducts.map((product) => (
-              <div key={product._id} className="w-64 card border-1 space-x-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {searchResults.length > 0 ? (
+            searchResults.map((product) => (
+              <div key={product._id} className="card border-1 space-x-3">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
                   <div className="h-56 relative bg-gray-100 flex rounded-md p-1">
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
@@ -106,16 +133,8 @@ const OurProducts = () => {
           )}
         </div>
       </div>
-      <div className="text-center text-white mt-12">
-        <button
-          className=" bg-customRed py-3 px-10  rounded-sm  "
-          onClick={() => setViewAllProducts(!viewAllProducts)}
-        >
-          {viewAllProducts ? "View Less Products" : "View All Products"}
-        </button>
-      </div>
     </>
   );
 };
 
-export default OurProducts;
+export default HOC(AllListedProducts);

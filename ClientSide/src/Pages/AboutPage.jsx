@@ -9,6 +9,7 @@ import { CiDollar } from "react-icons/ci";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { FaSackDollar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import HOC from "../Components/HOC";
 
 function AboutPage() {
   return (
@@ -125,4 +126,4 @@ function AboutPage() {
   );
 }
 
-export default AboutPage;
+export default HOC(AboutPage);

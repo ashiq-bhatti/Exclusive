@@ -5,6 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { StoreContext } from "../Context/StoreContext";
+import HOC from "../Components/HOC";
 
 function CartPage() {
 
@@ -174,4 +175,4 @@ function CartPage() {
   );
 }
 
-export default CartPage;
+export default HOC(CartPage);

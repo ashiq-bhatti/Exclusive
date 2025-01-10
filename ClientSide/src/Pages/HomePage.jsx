@@ -10,6 +10,7 @@ import EnhanseMusic from "../Components/EnhanseMusic";
 import OurProducts from "../Components/OurProducts";
 import NewArrivel from "../Components/NewArrivel";
 import FreeAndFastDelivery from "../Components/FreeAndFastDelivery";
+import HOC from "../Components/HOC";
 
 function HomePage() {
   const scrollRef = useRef(null);
@@ -30,15 +31,14 @@ function HomePage() {
           </div>
         </div>
       </div>
-
       <FlashSales />
-      <ViewAllProductsButton className="mt-7" />
+      <div className="border-t-2 bg-gray-200 my-14  w-[84%] m-auto"></div>
+
       <IconsByCatagaries />
       <div className="border-t-2 bg-gray-200 my-14  w-[84%] m-auto"></div>
       <ThisMonth />
       <EnhanseMusic />
       <OurProducts />
-      <ViewAllProductsButton />
       <NewArrivel />
       <FreeAndFastDelivery />
       <div className=" w-[90%] m-auto mb-10 flex justify-end">
@@ -53,4 +53,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default HOC(HomePage);

@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { StoreContext } from "../Context/StoreContext";
+import HOC from "../Components/HOC";
 
 function LoginPage() {
   const { setToken } = useContext(StoreContext);
@@ -115,4 +116,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default HOC(LoginPage);

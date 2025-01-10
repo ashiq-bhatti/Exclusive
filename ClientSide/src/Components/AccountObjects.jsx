@@ -24,7 +24,7 @@ const AccountObjects = () => {
   return (
     <>
       {token ? (
-        <div className="parent-box absolute right-16 top-28  w-64 bg-gray-950  opacity-80 rounded-md pl-6 py-4 text-lg">
+        <div className="parent-box absolute right-16 top-28  w-64 bg-gray-950  opacity-80 rounded-md pl-6 py-4 text-lg z-50 ">
           <ul>
             <Link to={"/account-page"}>
               <li className="flex items-center gap-2 text-white py-3">

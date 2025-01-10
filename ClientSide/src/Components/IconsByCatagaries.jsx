@@ -38,17 +38,17 @@ function IconsByCatagaries() {
               <CiMobile4 className="text-5xl" />
               <h1>Phones</h1>
             </div>
-            <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
+            <div className="flex-col  border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
               <HiOutlineDesktopComputer className="text-5xl" />
-              <h1>Phones</h1>
+              <h1>Computers</h1>
             </div>
             <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
               <TbDeviceWatchStats className="text-5xl" />
-              <h1>Phones</h1>
+              <h1>SmartWatch</h1>
             </div>
             <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
               <PiCamera className="text-5xl" />
-              <h1>Phones</h1>
+              <h1>HeadPhones</h1>
             </div>
             <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
               <LuHeadphones className="text-5xl" />
@@ -56,7 +56,7 @@ function IconsByCatagaries() {
             </div>
             <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
               <TbDeviceGamepad className="text-5xl" />
-              <h1>Phones</h1>
+              <h1>Gaming</h1>
             </div>
           </div>
         </div>

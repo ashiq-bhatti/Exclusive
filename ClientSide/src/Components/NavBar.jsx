@@ -9,7 +9,7 @@ import AccountObjects from "./AccountObjects";
 import MobileNavLink from "./MobileNavLink";
 import { StoreContext } from "../Context/StoreContext";
 
-function NavBar() {
+function NavBar({ searchProduct, handleSearch }) {
   const { token } = useContext(StoreContext);
   const [showNavLinks, setShowNavLinks] = useState(false);
   const [showAccountObjects, setshowAccountObjects] = useState(false);
@@ -40,23 +40,25 @@ function NavBar() {
               <li>
                 <NavLink to="/register">Sign Up</NavLink>
               </li>
+              <li>
+                <NavLink to="/allListedProducts">All Products</NavLink>
+              </li>
             </ul>
           </div>
-
           {/* Search, Wishlist, and Cart */}
           <div className="searchCart flex items-center space-x-5">
             {/* Search Box */}
             <div className="searchBox hidden lg:flex bg-gray-100 px-2 rounded-md items-center space-x-3">
-              <form className="flex items-center">
-                <input
-                  className="bg-gray-100 border-0 outline-none"
-                  type="text"
-                  placeholder="Search..."
-                />
-                <button type="submit">
-                  <CiSearch className="text-2xl ml-2" />
-                </button>
-              </form>
+              <input
+                className="bg-gray-100 border-0 outline-none"
+                type="text"
+                placeholder="What are you looking for?"
+                onChange={handleSearch}
+                value={searchProduct}
+              />
+              <button type="submit">
+                <CiSearch className="text-2xl ml-2" />
+              </button>
             </div>
 
             {/* Icons */}

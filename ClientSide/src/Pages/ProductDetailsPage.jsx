@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import game1 from "../images/RandomImages/game1.png";
 import game2 from "../images/RandomImages/game2.png";
 import game3 from "../images/RandomImages/game3.png";
@@ -14,28 +14,17 @@ import ProductCard from "../Components/ProductCard";
 import { useNavigate } from "react-router-dom";
 import { backend_url } from "../BackenURL";
 import axios from "axios";
+import toast from "react-hot-toast";
 
-const initialState = 0;
-const reducer = (state, action) => {
-  switch (true) {
-    case action.type == "increment":
-      // return state + 1;
-      return state < 15 ? state + 1 : state;
-
-    case action.type == "decrement":
-      return state > 0 ? state - 1 : state;
-
-    default:
-      return state;
-  }
-};
+import { StoreContext } from "../Context/StoreContext";
+import HOC from "../Components/HOC";
 
 function ProductDetailsPage() {
+  const { cartItems, addToCart,removeItemFromCart } = useContext(StoreContext);
   const navigate = useNavigate();
   const [productData, setProductData] = useState({});
-  const [state, dispatch] = useReducer(reducer, initialState);
   const { id } = useParams();
-  
+
   useEffect(() => {
     const fetchProductById = async () => {
       try {
@@ -44,9 +33,8 @@ function ProductDetailsPage() {
         );
         const response = request.data.product;
         if (request.status === 200) {
-          setProductData(response);       
+          setProductData(response);
         }
-     
       } catch (error) {
         console.log(error.message);
       }
@@ -59,7 +47,7 @@ function ProductDetailsPage() {
       <div className="section-outer flex justify-center my-16">
         <div className="section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 ">
-            <h1 className="text-gray-500">Account / Gameing /</h1>
+            <h1 className="text-gray-500">Account / {productData.category} /</h1>
             <span>{productData.title}</span>
           </div>
         </div>
@@ -104,14 +92,18 @@ function ProductDetailsPage() {
                   <FaStar />
                   <FaStarHalfAlt />
                 </div>
-                <h1 className="text-gray-400"> {`(${productData.reviews}) Reviews`}</h1>
+                <h1 className="text-gray-400">
+                  {" "}
+                  {`(${productData.reviews}) Reviews`}
+                </h1>
                 <div className="h-4 w-[1px] mt-1 bg-black opacity-50"></div>
                 <p className="text-customGreen"> In Stock</p>{" "}
               </div>
-              <h1 className="text-2xl font-semibold"> {`$${productData.price}`}</h1>
-              <p className="mt-5">
-              {`${productData.description}`}
-              </p>
+              <h1 className="text-2xl font-semibold">
+                {" "}
+                {`$${productData.price}`}
+              </h1>
+              <p className="mt-5">{`${productData.description}`}</p>
               <div className="h-[1px] w-full my-5 bg-black opacity-50"></div>
               <div className="flex items-center gap-4">
                 <h1 className="text-xl font-semibold">Colore:</h1>
@@ -144,22 +136,29 @@ function ProductDetailsPage() {
                 <div className="countBtn flex items-center rounded border border-1 md:mb-3">
                   <button
                     type="button"
-                    onClick={() => dispatch({ type: "decrement" })}
+                    onClick={() => removeItemFromCart(productData._id)}
                     className="px-2 text-3xl border border-l-2  hover:bg-customRed hover:text-white rounded-l"
                   >
                     -
                   </button>
-                  <p className="px-7  font-semibold">{state}</p>
+                  <p className="px-7  font-semibold">
+                    {cartItems[productData._id]} 
+                  </p>
                   <button
                     type="button"
-                    onClick={() => dispatch({ type: "increment" })}
+                    onClick={() => {
+                      addToCart(productData._id);
+                    }}
                     className="px-2 text-3xl border border-r-2  hover:bg-customRed hover:text-white rounded-r"
                   >
                     +
                   </button>
                 </div>
                 <button
-                  onClick={() => navigate("/cart-page")}
+                  onClick={() => {
+                    addToCart(productData._id);
+                    navigate('/cart-page')
+                  }}
                   type="button"
                   className="bg-customRed text-white py-1 px-12 rounded"
                 >
@@ -205,7 +204,6 @@ function ProductDetailsPage() {
             <h1 className="text-customRed  font-semibold">Related Item </h1>
           </div>
 
-         
           <div>
             <div className="flex gap-8 mt-4">
               <ProductCard
@@ -242,4 +240,4 @@ function ProductDetailsPage() {
   );
 }
 
-export default ProductDetailsPage;
+export default HOC(ProductDetailsPage);

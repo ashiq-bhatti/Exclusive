@@ -4,6 +4,7 @@ import MobBaskit from "../images/RandomImages/MobBaskit.png";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import HOC from "../Components/HOC";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -129,4 +130,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default HOC(RegisterPage);

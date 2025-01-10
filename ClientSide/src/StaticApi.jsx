@@ -1,6 +1,17 @@
-import keybord from '../src/images/FlashSale/keybord.png';
+import keybord from "../src/images/FlashSale/keybord.png";
+import game from "../src/images/FlashSale/game.png";
+//browsByCategory
+import { CiMobile4 } from "react-icons/ci";
+import { HiOutlineDesktopComputer } from "react-icons/hi";
+import { TbDeviceWatchStats } from "react-icons/tb";
+import { PiCamera } from "react-icons/pi";
+import { LuHeadphones } from "react-icons/lu";
+import { TbDeviceGamepad } from "react-icons/tb";
+import { FaKitchenSet } from "react-icons/fa6";
+import { GiMedicines } from "react-icons/gi";
+import { MdOutlinePets } from "react-icons/md";
+import { MdSportsHandball } from "react-icons/md";
 
-import game from '../src/images/FlashSale/game.png'
 export const FlashSale = [
   {
     _id: 1,
@@ -65,4 +76,67 @@ export const FlashSale = [
     orgPrice: "$400",
     rating: "(99)",
   },
+];
+export const BrowseByCategory = [
+  {
+    _id: 1,
+    icon: <CiMobile4 />,
+    title: "Phones",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 2,
+    icon: <HiOutlineDesktopComputer />,
+    title: "Computers",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 3,
+    icon: <TbDeviceWatchStats />,
+    title: "WatchStats",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 4,
+    icon: <PiCamera />,
+    title: "Cameras",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 5,
+    icon: <LuHeadphones />,
+    title: "HeadPhones",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 6,
+    icon: <TbDeviceGamepad />,
+    title: "Gaming",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 7,
+    icon: <FaKitchenSet />,
+    title: "Kitchen",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 8,
+    icon: <MdSportsHandball />,
+    title: "Health & Beauty",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 9,
+    icon: <GiMedicines />,
+    title: "Medicines",
+    url: "/mobile-phones",
+  },
+  {
+    _id: 10,
+    icon: <MdOutlinePets />,
+    title: "Groceries & Pets",
+    url: "/mobile-phones",
+  },
+
 ];

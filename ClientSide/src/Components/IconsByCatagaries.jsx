@@ -1,63 +1,88 @@
-import React from "react";
-import { CiMobile4 } from "react-icons/ci";
-import { HiOutlineDesktopComputer } from "react-icons/hi";
-import { TbDeviceWatchStats } from "react-icons/tb";
-import { PiCamera } from "react-icons/pi";
-import { LuHeadphones } from "react-icons/lu";
-import { TbDeviceGamepad } from "react-icons/tb";
-import { FaArrowLeft } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
+import React, { useRef } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import Slider from "react-slick";
+import { BrowseByCategory } from "../StaticApi";
+
 function IconsByCatagaries() {
+  const sliderRef = useRef(null);
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 2,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <div>
       <div className="flashSales-section-outer flex justify-center mt-20">
-        <div className="flashSales-section-inner w-[84%] m-auto ">
+        <div className="flashSales-section-inner w-[90%] m-auto">
           <div className="flex items-center gap-3">
             <div className="h-9 w-5 rounded-sm bg-customRed"></div>
-            <h1 className="text-customRed  font-semibold">Catageries </h1>
+            <h1 className="text-customRed font-semibold">Categories</h1>
           </div>
           <div className="flex justify-between my-7">
-            <div className="flex items-center gap-20">
+            <div>
               <h1 className="text-4xl font-semibold tracking-wider">
                 Browse By Category
               </h1>
             </div>
             <div className="flex gap-2">
-              <div className="bg-gray-100 h-11 w-11  rounded-full flex items-center justify-center">
-                {" "}
-                <FaArrowLeft className="" />
-              </div>
-              <div className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center">
-                {" "}
+              <button
+                className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center"
+                onClick={() => sliderRef.current.slickPrev()}
+              >
+                <FaArrowLeft />
+              </button>
+              <button
+                className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center"
+                onClick={() => sliderRef.current.slickNext()}
+              >
                 <FaArrowRight />
-              </div>
+              </button>
             </div>
           </div>
-          <div className="flex gap-[4%]">
-            <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
-              <CiMobile4 className="text-5xl" />
-              <h1>Phones</h1>
-            </div>
-            <div className="flex-col  border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
-              <HiOutlineDesktopComputer className="text-5xl" />
-              <h1>Computers</h1>
-            </div>
-            <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
-              <TbDeviceWatchStats className="text-5xl" />
-              <h1>SmartWatch</h1>
-            </div>
-            <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
-              <PiCamera className="text-5xl" />
-              <h1>HeadPhones</h1>
-            </div>
-            <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
-              <LuHeadphones className="text-5xl" />
-              <h1>Phones</h1>
-            </div>
-            <div className="flex-col border-2 border-gray-200 rounded-md py-7 px-12 items-center hover:bg-customRed hover:text-white hover:border-customRed">
-              <TbDeviceGamepad className="text-5xl" />
-              <h1>Gaming</h1>
-            </div>
+
+          <div className="mt-5">
+            <Slider {...sliderSettings} ref={sliderRef}>
+              {BrowseByCategory.map((category, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col justify-center items-center border-2 border-gray-200 rounded-md py-7 px-6 hover:bg-customRed hover:text-white hover:border-customRed"
+                >
+                  <div className="flex items-center justify-center text-5xl">
+                    {category.icon}
+                  </div>
+                  <h1 className="mt-4 text-center text-lg ">
+                    {category.title}
+                  </h1>
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
       </div>

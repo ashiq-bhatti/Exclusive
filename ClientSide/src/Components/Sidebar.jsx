@@ -1,80 +1,132 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { RiArrowDropRightLine } from "react-icons/ri";
-import React, { useContext, useState } from "react";
-import { StoreContext } from "../Context/StoreContext";
+import { FiMenu } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const { product_List, addToCart } = useContext(StoreContext);
+  const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const [filterProduct, setFilterProduct] = useState(null);
-
-  const filterProducts = (category) => {
-    if (category === "all") {
-      setFilterProduct(null);
-    } else {
-      const updatedProducts = product_List.filter(
-        (product) => product.category === category
-      );
-      setFilterProduct(updatedProducts);
-    }
+  const handleCategoryClick = (category) => {
+    navigate(`/allListedProducts?category=${category}`);
+    setIsSidebarOpen(false); // Close the sidebar after clicking a category
   };
 
-  const productsToDisplay = filterProduct || product_List;
   return (
     <>
-      <div className="menue  border-r text-lg pr-6 ">
-        <ul className="mt-10">
-          <li>
-            <Link to="#" className="flex items-center">
-              <p>Woman's Feshion</p>{" "}
-              <RiArrowDropRightLine className="text-3xl ml-14" />
-            </Link>
-          </li>
-          <li className="flex items-center ">
-            <Link to="#" className="flex items-center">
-              {" "}
-              <p> Men's Feshion</p>{" "}
-              <RiArrowDropRightLine className="text-3xl ml-20" />
-            </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Electronics </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Home & Lifestyle </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Medicine </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Sport & Outdoor </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Boy's & Toyes </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Groceries & Pets </Link>
-          </li>
-          <li className="pt-2">
-            <Link to="#"> Health & Beauty</Link>
-          </li>
-        </ul>
-        <button type="button" onClick={() => filterProducts("all")}>
-          All Products
-        </button>
-        <br />
-        <button type="button" onClick={() => filterProducts("electric")}>
-          Electricity
-        </button>
-        <br />
-        <button type="button" onClick={() => filterProducts("computer")}>
-          Computer
-        </button>
-        <br />
-        <button type="button" onClick={() => filterProducts("medicine")}>
-          Medicine
+      {/* Toggle Button for Mobile */}
+      <div className="flex items-center md:hidden p-4">
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="text-2xl focus:outline-none"
+        >
+          {isSidebarOpen ? <IoClose /> : <FiMenu />}
         </button>
       </div>
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 
+          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:shadow-none`}
+      >
+        <div className="menue border-r text-lg pr-6 h-full overflow-y-auto">
+          <ul className="mt-10">
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("all")}
+                className="w-full text-left"
+              >
+                All Products
+              </button>
+            </li>
+
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Woman Fashion")}
+                className="flex justify-between items-center w-full"
+              >
+                <p className="w-full text-left">Women's Fashion</p>
+                <RiArrowDropRightLine className="text-3xl" />
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Men Fashion")}
+                className="flex justify-between items-center w-full"
+              >
+                <p className="w-full text-left">Men's Fashion</p>
+                <RiArrowDropRightLine className="text-3xl" />
+              </button>
+            </li>
+
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Electric")}
+                className="w-full text-left"
+              >
+                Electronics
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Home LifeStyle")}
+                className="w-full text-left"
+              >
+                Home & Lifestyle
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Medicine")}
+                className="w-full text-left"
+              >
+                Medicine
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Sport Outdoor")}
+                className="w-full text-left"
+              >
+                Sport & Outdoor
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Boy Toyes")}
+                className="w-full text-left"
+              >
+                Boy's & Toyes
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Groceries Pets")}
+                className="w-full text-left"
+              >
+                Groceries & Pets
+              </button>
+            </li>
+            <li className="flex items-center">
+              <button
+                onClick={() => handleCategoryClick("Health Beauty")}
+                className="w-full text-left"
+              >
+                Health & Beauty
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Overlay for Mobile */}
+      {isSidebarOpen && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
     </>
   );
 };

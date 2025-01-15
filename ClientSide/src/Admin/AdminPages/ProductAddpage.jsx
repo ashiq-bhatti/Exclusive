@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 function ProductAddpage() {
- const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -12,6 +12,7 @@ function ProductAddpage() {
     off_percent: "",
     discount_price: "",
     quantity: "",
+    eventCategory: "",
     rating: "",
     reviews: "",
     description: "",
@@ -45,7 +46,7 @@ function ProductAddpage() {
 
       if (response.data.success) {
         toast.success("Product added successfully");
-        navigate('/admin/all-products')
+        navigate("/admin/all-products");
       }
     } catch (error) {
       if (error.response) {
@@ -68,10 +69,7 @@ function ProductAddpage() {
   return (
     <>
       <div>
-        <form
-          onSubmit={handleSubmit}
-          enctype="multipart/form-data"
-        >
+        <form onSubmit={handleSubmit} enctype="multipart/form-data">
           <div className="w-[80%]  m-auto bg-slate-50  p-6 md:space-y-6 ">
             <div className="w-full flex flex-col sm:flex-row md:flex-flex-row space-x-6 space-y-3 justify-center items-center   ">
               <div className="w-full space-y-2">
@@ -85,16 +83,28 @@ function ProductAddpage() {
                   className="w-full p-2  rounded-md"
                 />
               </div>
+
               <div className="w-full space-y-2">
                 <label className="text-lg">Category:</label>
-                <input
+                <select
                   type="text"
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
                   placeholder=""
                   className="w-full p-2   rounded-md"
-                />
+                >
+                  <option value="">Select</option>
+                  <option value="Woman Feshion">Woman Feshion</option>
+                  <option value="Men Feshion">Man Feshion</option>
+                  <option value="Electric">Electronic</option>
+                  <option value="Home LifeStyle">Home LifeStyle</option>
+                  <option value="Medicine">Medicine</option>
+                  <option value="Sport Outdoor">Sport Outdoor</option>
+                  <option value="Boy Toyes">Boy Toyes</option>
+                  <option value="Groceries Pets">Groceries Pets</option>
+                  <option value="Health Beauty">Health Beauty</option>
+                </select>
               </div>
               <div className="w-full space-y-2">
                 <label className="text-lg">Sub-category:</label>
@@ -184,6 +194,23 @@ function ProductAddpage() {
             </div>
 
             <div className="w-full flex flex-col sm:flex-row md:flex-flex-row space-x-6 space-y-3 justify-center items-center ">
+              <div className="w-full space-y-2">
+                <label className="text-lg">Category By Event:</label>
+                <select
+                  type="text"
+                  name="eventCategory"
+                  value={formData.eventCategory}
+                  onChange={handleChange}
+                  placeholder=""
+                  className="w-full p-2   rounded-md"
+                >
+                  <option value="">Select</option>
+                  <option value="Today">Today Sale</option>
+                  <option value="ThisMonth">This Month</option>
+                  <option value="OurProducts">Our Products</option>
+                  <option value="NewArrivel">New Arrivel</option>
+                </select>
+              </div>
               <div className="w-full space-y-2">
                 <label className="text-lg">Rating:</label>
                 <select

@@ -9,11 +9,22 @@ import AccountObjects from "./AccountObjects";
 import MobileNavLink from "./MobileNavLink";
 import { StoreContext } from "../Context/StoreContext";
 
-function NavBar({ searchProduct, handleSearch }) {
+function NavBar({ searchProduct, setSearchProduct }) {
   const { token } = useContext(StoreContext);
   const [showNavLinks, setShowNavLinks] = useState(false);
   const [showAccountObjects, setshowAccountObjects] = useState(false);
   const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchProduct(value);
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchProduct.trim()) {
+      navigate(`/allListedProducts?search=${searchProduct}`);
+    }
+  };
   return (
     <>
       <div className="outerNav h-20 w-full border-b border-gray-300">
@@ -56,7 +67,7 @@ function NavBar({ searchProduct, handleSearch }) {
                 onChange={handleSearch}
                 value={searchProduct}
               />
-              <button type="submit">
+              <button type="button" onClick={handleSearchSubmit}>
                 <CiSearch className="text-2xl ml-2" />
               </button>
             </div>

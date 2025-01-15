@@ -1,77 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../Context/StoreContext";
 import { GrView } from "react-icons/gr";
 import { PiHeartThin } from "react-icons/pi";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { CiSearch } from "react-icons/ci";
 import HOC from "./HOC";
+import { useLocation } from "react-router-dom";
 
 const AllListedProducts = () => {
   const { product_List, addToCart } = useContext(StoreContext);
+  const location = useLocation();
+  const [productsByCategory, setProductsByCategory] = useState(product_List);
+  const [currentCategory, setCurrentCategory] = useState("All Products");
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const category = queryParams.get("category");
+    const search = queryParams.get("search");
 
-  const selectedCategories = (category) => {
-    if (category === "all") {
-      setSelectedCategory(null);
-    } else {
-      const updatedProducts = product_List.filter(
+    if (search) {
+      const filtered = product_List.filter((product) =>
+        product.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setProductsByCategory(filtered);
+      setCurrentCategory(`Search results for "${search}"`);
+    } else if (category && category !== "all") {
+      const filtered = product_List.filter(
         (product) => product.category === category
       );
-      setSelectedCategory(updatedProducts);
+      setProductsByCategory(filtered);
+      setCurrentCategory(category);
+    } else {
+      setProductsByCategory(product_List);
+      setCurrentCategory("All Products");
     }
-  };
-
-  const productsToDisplay = selectedCategory || product_List;
-
-  const [searchProduct, setSearchProduct] = useState("");
-  const handleSearch = (e) => {
-    setSearchProduct(e.target.value);
-  };
-  const searchResults = productsToDisplay.filter(
-    (product) =>
-      product.title.toLowerCase().includes(searchProduct.toLocaleLowerCase()) ||
-      product.category.toLowerCase().includes(searchProduct.toLocaleLowerCase())
-  );
+  }, [location.search, product_List]);
 
   return (
     <>
-      <div className="searchBox hidden w-32 lg:flex bg-gray-100 px-2 rounded-md items-center space-x-3">
-        <input
-          className="bg-gray-100 border-0 outline-none"
-          type="text"
-          placeholder="Search..."
-          value={searchProduct}
-          onChange={handleSearch}
-        />
-        <button type="submit">
-          <CiSearch className="text-2xl ml-2" />
-        </button>
-      </div>
-      <button type="button" onClick={() => selectedCategories("all")}>
-        All Products
-      </button>
-      <br />
-      <button type="button" onClick={() => selectedCategories("electric")}>
-        Electricity
-      </button>
-      <br />
-      <button type="button" onClick={() => selectedCategories("computer")}>
-        Computer
-      </button>
-      <br />
-      <button type="button" onClick={() => selectedCategories("medicine")}>
-        Medicine
-      </button>
+      <div className="w-[84%] m-auto my-12">
+        <h1 className="text-customRed font-semibold my-10 ">
+          {currentCategory} ({productsByCategory.length} products)
+        </h1>
 
-      <h1 className="text-customRed font-semibold">All Products</h1>
-
-      <div className="w-[84%] m-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {searchResults.length > 0 ? (
-            searchResults.map((product) => (
+          {productsByCategory.length > 0 ? (
+            productsByCategory.map((product) => (
               <div key={product._id} className="card border-1 space-x-3">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
                   <div className="h-56 relative bg-gray-100 flex rounded-md p-1">

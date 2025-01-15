@@ -7,14 +7,10 @@ const HOC = (OldComponents) => {
   return function EnhancedFunction(props) {
     const [searchProduct, setSearchProduct] = useState("");
 
-    const handleSearch = (e) => {
-      setSearchProduct(e.target.value);
-    };
-
     return (
       <div>
         <SeasionHeader />
-        <NavBar searchProduct={searchProduct} handleSearch={handleSearch} />
+        <NavBar searchProduct={searchProduct} setSearchProduct={setSearchProduct} />
         <OldComponents {...props} />
         <Footer />
       </div>

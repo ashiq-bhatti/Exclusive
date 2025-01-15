@@ -1,10 +1,16 @@
 import React, { useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 import { BrowseByCategory } from "../StaticApi";
 
 function IconsByCatagaries() {
   const sliderRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    navigate(`/allListedProducts?category=${category}`);
+  };
 
   const sliderSettings = {
     dots: false,
@@ -69,17 +75,17 @@ function IconsByCatagaries() {
 
           <div className="mt-5">
             <Slider {...sliderSettings} ref={sliderRef}>
-              {BrowseByCategory.map((category, index) => (
+              {BrowseByCategory.map((category) => (
                 <div
-                  key={index}
-                  className="flex flex-col justify-center items-center border-2 border-gray-200 rounded-md py-7 px-6 hover:bg-customRed hover:text-white hover:border-customRed"
+                  key={category._id}
+                  onClick={() => handleCategoryClick(category.title )}
+                  
+                  className="cursor-pointer flex flex-col justify-center items-center border-2 border-gray-200 rounded-md py-7 px-6 hover:bg-customRed hover:text-white hover:border-customRed transition duration-300"
                 >
                   <div className="flex items-center justify-center text-5xl">
                     {category.icon}
                   </div>
-                  <h1 className="mt-4 text-center text-lg ">
-                    {category.title}
-                  </h1>
+                  <h1 className="mt-4 text-center text-lg">{category.title}</h1>
                 </div>
               ))}
             </Slider>

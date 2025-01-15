@@ -77,12 +77,15 @@ export const FlashSale = [
     rating: "(99)",
   },
 ];
+
+
 export const BrowseByCategory = [
   {
     _id: 1,
     icon: <CiMobile4 />,
     title: "Phones",
     url: "/mobile-phones",
+
   },
   {
     _id: 2,

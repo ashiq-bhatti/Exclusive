@@ -6,7 +6,12 @@ import { StoreContext } from "../Context/StoreContext";
 import CountDownTimer from "../Components/CountDown_Timer/CountDownTimer";
 import { GrView } from "react-icons/gr";
 import { PiHeartThin } from "react-icons/pi";
-import { FaStar, FaStarHalfAlt, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import {
+  FaStar,
+  FaStarHalfAlt,
+  FaArrowLeft,
+  FaArrowRight,
+} from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -26,6 +31,16 @@ const FlashSales = () => {
   const displayProducts = viewAllProducts
     ? product_List
     : product_List.slice(0, 4);
+
+    const todayProduct = displayProducts.filter((product) => {
+      const isCatagoryByEvent =
+      product.eventCategory && product.eventCategory.toLowerCase === "today";
+      return isCatagoryByEvent ;
+    });
+
+    console.log("Filtered Today Products:", todayProduct);
+    
+    
 
   const handleAddToCart = (productId) => {
     addToCart(productId);
@@ -75,8 +90,8 @@ const FlashSales = () => {
 
       <div className="w-3/4 m-auto">
         <Slider ref={sliderRef} {...sliderSettings}>
-          {displayProducts.length > 0 ? (
-            displayProducts.map((product) => (
+          {todayProduct.length > 0 ? (
+            todayProduct.map((product) => (
               <div key={product._id} className="w-64 card border-1 space-x-3">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
                   <div className="h-56 relative flex rounded-md p-1">

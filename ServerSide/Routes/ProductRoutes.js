@@ -8,7 +8,7 @@ ProductRoute.get("/fetch-product", FetchProduct);
 ProductRoute.put("/update-product-by-id/:id", UpdateProduct);
 ProductRoute.get("/fetch-product-by-id/:id", FetchProductById);
 
-ProductRoute.post("/delete-product-by-id/:id", RemoveProduct);
+ProductRoute.delete("/delete-product-by-id/:id", RemoveProduct);
 
 
 

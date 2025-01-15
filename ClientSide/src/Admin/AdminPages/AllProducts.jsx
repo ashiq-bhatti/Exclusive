@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function AllProducts() {
   const [products, setProducts] = useState([]);
@@ -12,26 +13,8 @@ function AllProducts() {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-
   const nPage = Math.ceil(products.length / productsPerPage);
   const paginationNumbers = [...Array(nPage + 1).keys()].slice(1);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const request = await axios.get(
-          "http://localhost:8000/api/product/fetch-product"
-        );
-        const response = request.data;
-        if (request.status === 200) {
-          setProducts(response.product);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProducts();
-  }, []);
 
   const prePage = () => {
     if (currentPage > 1) {
@@ -49,6 +32,40 @@ function AllProducts() {
     setCurrentPage(pageNumber);
   };
 
+  const fetchProducts = async () => {
+    try {
+      const request = await axios.get(
+        "http://localhost:8000/api/product/fetch-product"
+      );
+      const response = request.data;
+      if (request.status === 200) {
+        setProducts(response.product);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/product/delete-product-by-id/${id}`
+      );
+      if (response.status === 200) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred");
+        console.log(error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchProducts();
+    
+  }, [handleDelete]);
   return (
     <>
       <table className="w-full text-sm text-left text-gray-500">
@@ -99,6 +116,14 @@ function AllProducts() {
                   <a href="#" className="text-blue-600 hover:underline">
                     Edit
                   </a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <a
+                    href="#"
+                    onClick={() => handleDelete(product._id)}
+                    className="text-red-600 hover:underline"
+                  >
+                    Delete
+                  </a>
                 </td>
               </tr>
             ))
@@ -113,7 +138,7 @@ function AllProducts() {
       </table>
 
       {products.length > 0 && (
-        <div className="flex justify-center items-center gap-2 mt-4">
+        <div className="flex justify-center items-center gap-2 mt-12">
           <button
             className="px-3 py-1 bg-gray-300 rounded"
             onClick={prePage}

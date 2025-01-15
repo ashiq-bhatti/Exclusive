@@ -14,6 +14,32 @@ const AllListedProducts = () => {
   const [productsByCategory, setProductsByCategory] = useState(product_List);
   const [currentCategory, setCurrentCategory] = useState("All Products");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productsByCategory.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const nPage = Math.ceil(productsByCategory.length / productsPerPage);
+  const paginationNumbers = [...Array(nPage + 1).keys()].slice(1);
+  const prePage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage < nPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const changeNumber = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const category = queryParams.get("category");
@@ -45,8 +71,8 @@ const AllListedProducts = () => {
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {productsByCategory.length > 0 ? (
-            productsByCategory.map((product) => (
+          {currentProducts.length > 0 ? (
+            currentProducts.map((product) => (
               <div key={product._id} className="card border-1 space-x-3">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
                   <div className="h-56 relative bg-gray-100 flex rounded-md p-1">
@@ -108,6 +134,38 @@ const AllListedProducts = () => {
           )}
         </div>
       </div>
+
+      {product_List.length > 0 && (
+        <div className="flex justify-center items-center gap-2 my-16">
+          <button
+            className="px-3 py-1 bg-gray-300 rounded"
+            onClick={prePage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {paginationNumbers.map((number) => (
+            <button
+              key={number}
+              className={`px-3 py-1 rounded ${
+                currentPage === number
+                  ? " bg-customRed text-white"
+                  : "bg-gray-300"
+              }`}
+              onClick={() => changeNumber(number)}
+            >
+              {number}
+            </button>
+          ))}
+          <button
+            className="px-3 py-1 bg-gray-300 rounded"
+            onClick={nextPage}
+            disabled={currentPage === nPage}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </>
   );
 };

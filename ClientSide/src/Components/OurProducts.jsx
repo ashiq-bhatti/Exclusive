@@ -13,6 +13,7 @@ const OurProducts = () => {
   const displayProducts = viewAllProducts
     ? product_List
     : product_List.slice(0, 8);
+    const ourProducts = product_List.filter((product)=>product.eventCategory && product.eventCategory === 'Our Products');
   return (
     <>
       <div className="flashSales-section-outer flex justify-center mt-20">
@@ -43,8 +44,8 @@ const OurProducts = () => {
 
       <div className="w-[84%] m-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {displayProducts ? (
-            displayProducts.map((product) => (
+          {ourProducts ? (
+            ourProducts.map((product) => (
               <div key={product._id} className="w-64 card border-1 space-x-3">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
                   <div className="h-56 relative bg-gray-100 flex rounded-md p-1">

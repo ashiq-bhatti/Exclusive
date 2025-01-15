@@ -32,15 +32,11 @@ const FlashSales = () => {
     ? product_List
     : product_List.slice(0, 4);
 
-    const todayProduct = displayProducts.filter((product) => {
+    const todayProduct = product_List.filter((product) => {
       const isCatagoryByEvent =
-      product.eventCategory && product.eventCategory.toLowerCase === "today";
-      return isCatagoryByEvent ;
+        product.eventCategory && product.eventCategory === "Today"; 
+      return isCatagoryByEvent;
     });
-
-    console.log("Filtered Today Products:", todayProduct);
-    
-    
 
   const handleAddToCart = (productId) => {
     addToCart(productId);

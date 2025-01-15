@@ -206,8 +206,8 @@ function ProductAddpage() {
                 >
                   <option value="">Select</option>
                   <option value="Today">Today Sale</option>
-                  <option value="ThisMonth">This Month</option>
-                  <option value="OurProducts">Our Products</option>
+                  <option value="This Month">This Month</option>
+                  <option value="Our Products">Our Products</option>
                   <option value="NewArrivel">New Arrivel</option>
                 </select>
               </div>

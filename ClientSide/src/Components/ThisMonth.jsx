@@ -5,14 +5,48 @@ import { PiHeartThin } from "react-icons/pi";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import ViewAllProductsButton from "./ViewAllProductsButton";
-const ThisMonth = () => {
-  const { product_List, addToCart } = useContext(StoreContext);
-  const [viewAllProducts, setViewAllProducts] = useState(false);
+import axios from "axios";
+import toast from "react-hot-toast";
 
+const ThisMonth = () => {
+  const { product_List, addToCart, token } = useContext(StoreContext);
+  const [viewAllProducts, setViewAllProducts] = useState(false);
+  const [wishList, setWishList] = useState([]);
+  const thisMonth = product_List.filter((product) => {
+    const isCatagoryByEvent =
+      product.eventCategory && product.eventCategory === "This Month";
+    return isCatagoryByEvent;
+  });
   const displayProducts = viewAllProducts
-    ? product_List
-    : product_List.slice(0, 4);
+    ? thisMonth
+    : thisMonth.slice(0, 4);
+ 
+  console.log(thisMonth);
+
+  const addWishList = async (productId) => {
+    try {
+      if (!token) {
+        toast.error("Please login to add to wishlist");
+        return;
+      }
+
+      const response = await axios.put(
+        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setWishList(response.data.user.wishlist);
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error.message);
+    }
+  };
+
   return (
     <>
       <div className="flashSales-section-outer flex justify-center mt-20">
@@ -43,9 +77,12 @@ const ThisMonth = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {displayProducts ? (
             displayProducts.map((product) => (
-              <div key={product._id} className=" card border-1 space-x-3">
+              <div
+                key={product._id}
+                className=" cart border-1 space-x-3 group "
+              >
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
-                  <div className="h-56 relative bg-gray-100 flex rounded-md p-1">
+                  <div className="h-48 relative bg-gray-100 flex rounded-md p-2">
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
                       -{product.off_percent}
                     </span>
@@ -55,8 +92,17 @@ const ThisMonth = () => {
                       className="h-32 w-32 m-auto transform hover:scale-110"
                     />
                     <div className="absolute flex flex-col gap-2 top-3 right-3">
-                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
-                        <PiHeartThin />
+                      <button
+                        onClick={() => addWishList(product._id)}
+                        className={`bg-white h-8 w-8 rounded-full flex items-center justify-center bg`}
+                      >
+                        <PiHeartThin
+                          className={`h-6 w-6 ${
+                            wishList.includes(product._id)
+                              ? "text-customRed "
+                              : "text-gray-500"
+                          }`}
+                        />
                       </button>
                       <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
                         <Link to={`/product-detail-page/${product._id}`}>
@@ -67,7 +113,7 @@ const ThisMonth = () => {
                   </div>
                   <button
                     type="button"
-                    className="w-full bg-black text-white p-2"
+                    className="w-full bg-black text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     onClick={() => {
                       addToCart(product._id);
                       toast("Product added to cart");

@@ -20,11 +20,37 @@ import { StoreContext } from "../Context/StoreContext";
 import HOC from "../Components/HOC";
 
 function ProductDetailsPage() {
-  const { cartItems, addToCart,removeItemFromCart } = useContext(StoreContext);
+  const { cartItems, addToCart, removeItemFromCart, token } =
+    useContext(StoreContext);
   const navigate = useNavigate();
   const [productData, setProductData] = useState({});
+  const [wishList, setWishList] = useState([]);
+
   const { id } = useParams();
 
+  const addWishList = async (productId) => {
+    try {
+      if (!token) {
+        toast.error("Please login to add to wishlist");
+        return;
+      }
+
+      const response = await axios.put(
+        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setWishList(response.data.user.wishlist);
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error.message);
+    }
+  };
   useEffect(() => {
     const fetchProductById = async () => {
       try {
@@ -47,7 +73,9 @@ function ProductDetailsPage() {
       <div className="section-outer flex justify-center my-16">
         <div className="section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 ">
-            <h1 className="text-gray-500">Account / {productData.category} /</h1>
+            <h1 className="text-gray-500">
+              Account / {productData.category} /
+            </h1>
             <span>{productData.title}</span>
           </div>
         </div>
@@ -142,7 +170,7 @@ function ProductDetailsPage() {
                     -
                   </button>
                   <p className="px-7  font-semibold">
-                    {cartItems[productData._id]} 
+                    {cartItems[productData._id]}
                   </p>
                   <button
                     type="button"
@@ -157,14 +185,25 @@ function ProductDetailsPage() {
                 <button
                   onClick={() => {
                     addToCart(productData._id);
-                    navigate('/cart-page')
+                    navigate("/cart-page");
                   }}
                   type="button"
                   className="bg-customRed text-white py-1 px-12 rounded"
                 >
                   Buy Now
                 </button>
-                <PiHeartThin className="border text-black rounded border-1 w-10 h-10 p-1" />
+                <button
+                  onClick={() => addWishList(productData._id)}
+                  className={`bg-white h-8 w-8 rounded-full flex items-center justify-center bg`}
+                >
+                  <PiHeartThin
+                    className={`h-6 w-6 ${
+                      wishList.includes(productData._id)
+                        ? "text-customRed "
+                        : "text-gray-500"
+                    }`}
+                  />
+                </button>{" "}
               </div>
               {/* free delivery section */}
               <div className="border border-1 shadow-sm rounded mt-5">

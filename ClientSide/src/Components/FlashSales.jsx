@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import axios from "axios";
 const sliderSettings = {
   dots: false,
   infinite: true,
@@ -24,23 +24,45 @@ const sliderSettings = {
 };
 
 const FlashSales = () => {
-  const { product_List, addToCart } = useContext(StoreContext);
+  const { product_List, addToCart, token } = useContext(StoreContext);
   const [viewAllProducts, setViewAllProducts] = useState(false);
   const sliderRef = useRef(null);
+  const [wishList, setWishList] = useState([]);
 
-  const displayProducts = viewAllProducts
-    ? product_List
-    : product_List.slice(0, 4);
+  const todayProduct = product_List.filter(
+    (product) =>
+      product.eventCategory && product.eventCategory === "Today"
+  );
 
-    const todayProduct = product_List.filter((product) => {
-      const isCatagoryByEvent =
-        product.eventCategory && product.eventCategory === "Today"; 
-      return isCatagoryByEvent;
-    });
+  const displayProducts = viewAllProducts ? todayProduct : todayProduct.slice(0, 4);
 
   const handleAddToCart = (productId) => {
     addToCart(productId);
     toast.success("Product added to cart!");
+  };
+
+  const addWishList = async (productId) => {
+    try {
+      if (!token) {
+        toast.error("Please login to add to wishlist");
+        return;
+      }
+
+      const response = await axios.put(
+        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setWishList(response.data.user.wishlist);
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error.message);
+    }
   };
 
   return (
@@ -86,11 +108,11 @@ const FlashSales = () => {
 
       <div className="w-3/4 m-auto">
         <Slider ref={sliderRef} {...sliderSettings}>
-          {todayProduct.length > 0 ? (
-            todayProduct.map((product) => (
-              <div key={product._id} className="w-64 card border-1 space-x-3">
+          {displayProducts.length > 0 ? (
+            displayProducts.map((product) => (
+              <div key={product._id} className="w-64 card border-1 space-x-3 group">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
-                  <div className="h-56 relative flex rounded-md p-1">
+                  <div className="h-52 relative flex rounded-md p-1">
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
                       -{product.off_percent}
                     </span>
@@ -100,8 +122,17 @@ const FlashSales = () => {
                       className="h-32 w-32 m-auto transform hover:scale-110"
                     />
                     <div className="absolute flex flex-col gap-2 top-3 right-3">
-                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
-                        <PiHeartThin />
+                      <button
+                        onClick={() => addWishList(product._id)}
+                        className={`bg-white h-8 w-8 rounded-full flex items-center justify-center`}
+                      >
+                        <PiHeartThin
+                          className={`h-6 w-6 ${
+                            wishList.includes(product._id)
+                              ? "text-customRed "
+                              : "text-gray-500"
+                          }`}
+                        />
                       </button>
                       <Link to={`/product-detail-page/${product._id}`}>
                         <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
@@ -112,7 +143,7 @@ const FlashSales = () => {
                   </div>
                   <button
                     type="button"
-                    className="w-full bg-black text-white p-2"
+                    className="w-full bg-black text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     onClick={() => handleAddToCart(product._id)}
                   >
                     Add To Cart
@@ -149,7 +180,7 @@ const FlashSales = () => {
 
       <div className="text-center mt-12">
         <button
-          className="text-white bg-customRed py-3 px-10  rounded-sm"
+          className="text-white bg-customRed py-3 px-10 rounded-sm"
           onClick={() => setViewAllProducts(!viewAllProducts)}
         >
           {viewAllProducts ? "Show Less Products" : "View All Products"}
@@ -160,3 +191,4 @@ const FlashSales = () => {
 };
 
 export default FlashSales;
+

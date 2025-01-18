@@ -8,9 +8,13 @@ import { StoreContext } from "../Context/StoreContext";
 import HOC from "../Components/HOC";
 
 function CartPage() {
-
-  const { cartItems, product_List,addToCart, removeItemFromCart,totelAmoutOfCart } =
-    useContext(StoreContext);
+  const {
+    cartItems,
+    product_List,
+    addToCart,
+    removeItemFromCart,
+    totelAmoutOfCart,
+  } = useContext(StoreContext);
   const nevigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -44,7 +48,7 @@ function CartPage() {
 
             <h1>Subtotal</h1>
           </div>
-          
+
           {product_List && product_List.length > 0 ? (
             product_List.map((product) => {
               if (cartItems[product._id] > 0) {
@@ -67,20 +71,22 @@ function CartPage() {
                           alt="Product"
                           className="h-14 w-14"
                         />
-                       {`${product.title.slice(0, 10)}${product.title.length > 10 ? '...' : ''}`}
-
+                        {`${product.title.slice(0, 10)}${
+                          product.title.length > 10 ? "..." : ""
+                        }`}
                       </li>
                       <li>${product.price}</li>
                       <li>
                         <div className="countBtn flex gap-4 py-2 px-3 items-center rounded border-2">
-                          <p className="font-semibold">{cartItems[product._id]}</p>
+                          <p className="font-semibold">
+                            {cartItems[product._id]}
+                          </p>
                           <div className="flex flex-col">
                             <button
                               type="button"
                               onClick={() => {
                                 addToCart(product._id);
                               }}
-                              
                             >
                               <FaAngleUp className="text-xs" />
                             </button>
@@ -100,7 +106,7 @@ function CartPage() {
               }
             })
           ) : (
-            <p className="text-center">No items in the cart</p>
+            <p className="text-center my-12">No items in the cart</p>
           )}
         </div>
       </div>
@@ -110,7 +116,10 @@ function CartPage() {
       <div className="flashSales-section-outer flex justify-center ">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex justify-between items-center ">
-            <button onClick={()=>nevigate('/')}  className="py-2 px-5 md:py-3 md:px-10 border  border-black border-opacity-55 font-semibold rounded-md">
+            <button
+              onClick={() => nevigate("/")}
+              className="py-2 px-5 md:py-3 md:px-10 border  border-black border-opacity-55 font-semibold rounded-md"
+            >
               Return To Shop
             </button>
             <button className="py-2 px-5 md:py-3 md:px-10 border  border-black border-opacity-55 font-semibold rounded-md">
@@ -157,7 +166,7 @@ function CartPage() {
             </div>
             <div className="flex justify-between items-center  pb-2 w-full">
               <p className="">Total:</p>
-              <p className="">${totelAmoutOfCart()+3}</p>
+              <p className="">${totelAmoutOfCart() + 3}</p>
             </div>
             <div className="w-[66%] flex m-auto">
               <button

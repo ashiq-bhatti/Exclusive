@@ -275,7 +275,7 @@ function CheckoutPage() {
                     name="paymentMethod"
                     value="Cash"
                     onChange={(e) => setPaymentMethod(e.target.value)}
-                  />{" "}
+                  />
                   <p className="text-lg">Chash on delivery</p>
                 </div>
               </div>
@@ -290,7 +290,6 @@ function CheckoutPage() {
                     placeholder="Coupon Code"
                   />
                   <button
-                    // type="submit"
                     className="px-2 py-2   md:py-3 md:px-10 border  bg-customRed text-white  rounded-md"
                   >
                     Apply Coupon

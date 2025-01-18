@@ -10,6 +10,7 @@ const ContactRoutes = require("./Routes/ContactRoutes.js");
 const EdditProfileRoutes = require("./Routes/EditProfileRoutes.js");
 const CartRoutes = require("./Routes/CartRoutes.js");
 const OrderRoutes = require("./Routes/OrderRoutes.js");
+const wishListRoutes = require("./Routes/WishListRoutes.js");
 
 dotenv.config();
 const app = express();
@@ -34,10 +35,11 @@ app.use("/api/contact", ContactRoutes);
 app.use("api/profile", EdditProfileRoutes);
 app.use("/api/cart", CartRoutes);
 app.use("/api/order", OrderRoutes);
- 
+ app.use('/api/wishlist',wishListRoutes)
 app.get("/", (req, res) => {
   res.send("Welcome to Server Home Page");
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

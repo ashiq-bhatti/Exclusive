@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import HOC from "./HOC";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const AllListedProducts = () => {
-  const { product_List, addToCart } = useContext(StoreContext);
+  const { product_List, addToCart, token } = useContext(StoreContext);
   const location = useLocation();
   const [productsByCategory, setProductsByCategory] = useState(product_List);
   const [currentCategory, setCurrentCategory] = useState("All Products");
+  const [wishList, setWishList] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12;
@@ -63,6 +65,29 @@ const AllListedProducts = () => {
     }
   }, [location.search, product_List]);
 
+  const addWishList = async (productId) => {
+    try {
+      if (!token) {
+        toast.error("Please login to add to wishlist");
+        return;
+      }
+
+      const response = await axios.put(
+        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setWishList(response.data.user.wishlist);
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error.message);
+    }
+  };
   return (
     <>
       <div className="w-[84%] m-auto my-12">
@@ -85,8 +110,17 @@ const AllListedProducts = () => {
                       className="h-32 w-32 m-auto transform hover:scale-110"
                     />
                     <div className="absolute flex flex-col gap-2 top-3 right-3">
-                      <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
-                        <PiHeartThin />
+                      <button
+                        onClick={() => addWishList(product._id)}
+                        className={`bg-white h-8 w-8 rounded-full flex items-center justify-center bg`}
+                      >
+                        <PiHeartThin
+                          className={`h-6 w-6 ${
+                            wishList.includes(product._id)
+                              ? "text-customRed "
+                              : "text-gray-500"
+                          }`}
+                        />
                       </button>
                       <button className="bg-white h-8 w-8 rounded-full flex items-center justify-center">
                         <Link to={`/product-detail-page/${product._id}`}>
@@ -135,7 +169,7 @@ const AllListedProducts = () => {
         </div>
       </div>
 
-      {product_List.length > 0 && (
+      {productsByCategory.length > 8 && (
         <div className="flex justify-center items-center gap-2 my-16">
           <button
             className="px-3 py-1 bg-gray-300 rounded"

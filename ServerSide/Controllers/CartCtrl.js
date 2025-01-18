@@ -14,7 +14,7 @@ const AddToCart = async (req, res) => {
     } else {
       cartData[req.body.itemId] += 1;
     }
-
+  
     await UserModel.findByIdAndUpdate(req.body.userId, { cartData });
     res
       .status(200)
@@ -50,7 +50,6 @@ const RemoveFromCart = async (req, res) => {
       );
   }
 };
-
 
 const FetchProduct = async (req, res) => {
   try {

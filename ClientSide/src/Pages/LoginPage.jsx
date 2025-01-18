@@ -63,7 +63,6 @@ function LoginPage() {
     <>
       <div className="outer mt-16 mb-24 w-[90%] lg:w-[80%] mx-auto lg:mx-0">
         <div className="inner flex flex-col lg:flex-row gap-12 lg:gap-36 items-center">
-          {/* Left Section (Image) */}
           <div className="left w-full lg:w-1/2">
             <img
               src={MobBaskit}
@@ -72,7 +71,6 @@ function LoginPage() {
             />
           </div>
 
-          {/* Right Section (Content and Form) */}
           <div className="right w-full lg:w-1/2">
             <div className="content  mt-6 lg:mt-2 text-center lg:text-left">
               <h1

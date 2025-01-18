@@ -51,9 +51,7 @@ function NavBar({ searchProduct, setSearchProduct }) {
               <li>
                 <NavLink to="/register">Sign Up</NavLink>
               </li>
-              <li>
-                <NavLink to="/allListedProducts">All Products</NavLink>
-              </li>
+              
             </ul>
           </div>
           {/* Search, Wishlist, and Cart */}
@@ -86,7 +84,7 @@ function NavBar({ searchProduct, setSearchProduct }) {
                 onClick={() => setshowAccountObjects(!showAccountObjects)}
                 className="text-3xl cursor-pointer"
               />
-            ) : null}
+            ) : null} 
           </div>
           {/* Hamburger Menu */}
           <FiAlignJustify

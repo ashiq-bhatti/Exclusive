@@ -57,7 +57,7 @@ const ThisMonth = () => {
           </div>
           <div className="flex justify-between my-7">
             <div className="flex items-center gap-20">
-              <h1 className="text-4xl font-semibold tracking-wider">
+              <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold tracking-wider">
                 Best Selling Prducts
               </h1>
             </div>

@@ -55,18 +55,18 @@ const OurProducts = () => {
           </div>
           <div className="flex justify-between my-7">
             <div className="flex items-center gap-20">
-              <h1 className="text-4xl font-semibold tracking-wider">
+              <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold tracking-wider">
                 Explore Our Prducts
               </h1>
             </div>
             <div className="flex gap-2">
-              <div className="bg-gray-100 h-11 w-11  rounded-full flex items-center justify-center">
+              <div className="bg-gray-100 h-6 w-6 md:h-11 md:w-11  rounded-full flex items-center justify-center">
                 {" "}
-                <FaArrowLeft className="" />
+                <FaArrowLeft className="text-sm" />
               </div>
-              <div className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center">
+              <div className="bg-gray-100 h-6 w-6 md:h-11 md:w-11 rounded-full flex items-center justify-center">
                 {" "}
-                <FaArrowRight />
+                <FaArrowRight className="text-sm"/>
               </div>
             </div>
           </div>
@@ -74,10 +74,10 @@ const OurProducts = () => {
       </div>
 
       <div className="w-[84%] m-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {displayProducts ? (
             displayProducts.map((product) => (
-              <div key={product._id} className="w-64 card border-1 space-x-3 group">
+              <div key={product._id} className="card border-1  space-x-3 group">
                 <div className="bg-gray-100 rounded-lg overflow-hidden">
                   <div className="h-52 relative bg-gray-100 flex rounded-md p-1">
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">

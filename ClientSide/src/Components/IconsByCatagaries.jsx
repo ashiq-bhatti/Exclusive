@@ -53,22 +53,22 @@ function IconsByCatagaries() {
           </div>
           <div className="flex justify-between my-7">
             <div>
-              <h1 className="text-4xl font-semibold tracking-wider">
+              <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold tracking-wider">
                 Browse By Category
               </h1>
             </div>
             <div className="flex gap-2">
               <button
-                className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center"
+                className="bg-gray-100 h-6 w-6 md:h-11 md:w-11 rounded-full flex items-center justify-center"
                 onClick={() => sliderRef.current.slickPrev()}
               >
-                <FaArrowLeft />
+                <FaArrowLeft className="text-sm"/>
               </button>
               <button
-                className="bg-gray-100 h-11 w-11 rounded-full flex items-center justify-center"
+                className="bg-gray-100 h-6 w-6 md:h-11 md:w-11 rounded-full flex items-center justify-center"
                 onClick={() => sliderRef.current.slickNext()}
               >
-                <FaArrowRight />
+                <FaArrowRight className="text-sm"/>
               </button>
             </div>
           </div>

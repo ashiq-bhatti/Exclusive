@@ -30,7 +30,7 @@ function ContactMessagesPage() {
   }, []);
 
   return (
-    <div className="flashSales-section-outer flex justify-center mb-24">
+    <div className="flashSales-section-outer flex justify-center  mb-24">
       <div className="flashSales-section-inner w-[84%] m-auto ">
         <div className="flex   my-14">
           <Link className="text-gray-500" to="/admin">

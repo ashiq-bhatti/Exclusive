@@ -68,107 +68,108 @@ function AllProducts() {
   }, [handleDelete]);
   return (
     <>
-      <table className="w-full text-sm text-left text-gray-500">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Index
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Image
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Product Name
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Category
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Price
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Quantity
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentProducts.length > 0 ? (
-            currentProducts.map((product, index) => (
-              <tr key={product.id || index}>
-                <td className="px-6 py-4">
-                  {index + 1 + (currentPage - 1) * productsPerPage}
-                </td>
-                <td className="px-6 py-4">
-                  <img
-                    src={`http://localhost:8000/public/images/${product.image}`}
-                    alt=""
-                    className="h-10 w-10"
-                  />
-                </td>
-                <td className="px-6 py-4">{product.title}</td>
-                <td className="px-6 py-4">{product.category}</td>
-                <td className="px-6 py-4">${product.price}</td>
-                <td className="px-6 py-4">{product.quantity}</td>
-                <td className="px-6 py-4">
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Edit
-                  </a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <a
-                    href="#"
-                    onClick={() => handleDelete(product._id)}
-                    className="text-red-600 hover:underline"
-                  >
-                    Delete
-                  </a>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7" className="text-center py-4">
-                No Products Available
+  <div className="overflow-x-auto">
+    <table className="w-full text-sm text-left text-gray-500">
+      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" className="px-6 py-3">
+            Index
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Image
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Product Name
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Category
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Price
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Quantity
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {currentProducts.length > 0 ? (
+          currentProducts.map((product, index) => (
+            <tr key={product.id || index}>
+              <td className="px-6 py-4">
+                {index + 1 + (currentPage - 1) * productsPerPage}
+              </td>
+              <td className="px-6 py-4">
+                <img
+                  src={`http://localhost:8000/public/images/${product.image}`}
+                  alt=""
+                  className="h-10 w-10"
+                />
+              </td>
+              <td className="px-6 py-4">{product.title}</td>
+              <td className="px-6 py-4">{product.category}</td>
+              <td className="px-6 py-4">${product.price}</td>
+              <td className="px-6 py-4">{product.quantity}</td>
+              <td className="px-6 py-4">
+                <a href="#" className="text-blue-600 hover:underline">
+                  Edit
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a
+                  href="#"
+                  onClick={() => handleDelete(product._id)}
+                  className="text-red-600 hover:underline"
+                >
+                  Delete
+                </a>
               </td>
             </tr>
-          )}
-        </tbody>
-      </table>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="7" className="text-center py-4">
+              No Products Available
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
 
-      {products.length > 0 && (
-        <div className="flex justify-center items-center gap-2 mt-12">
-          <button
-            className="px-3 py-1 bg-gray-300 rounded"
-            onClick={prePage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          {paginationNumbers.map((number) => (
-            <button
-              key={number}
-              className={`px-3 py-1 rounded ${
-                currentPage === number
-                  ? " bg-customRed text-white"
-                  : "bg-gray-300"
-              }`}
-              onClick={() => changeNumber(number)}
-            >
-              {number}
-            </button>
-          ))}
-          <button
-            className="px-3 py-1 bg-gray-300 rounded"
-            onClick={nextPage}
-            disabled={currentPage === nPage}
-          >
-            Next
-          </button>
-        </div>
-      )}
-    </>
+  {products.length > 0 && (
+    <div className="flex justify-center items-center gap-2 mt-12">
+      <button
+        className="px-3 py-1 bg-gray-300 rounded"
+        onClick={prePage}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </button>
+      {paginationNumbers.map((number) => (
+        <button
+          key={number}
+          className={`px-3 py-1 rounded ${
+            currentPage === number ? "bg-customRed text-white" : "bg-gray-300"
+          }`}
+          onClick={() => changeNumber(number)}
+        >
+          {number}
+        </button>
+      ))}
+      <button
+        className="px-3 py-1 bg-gray-300 rounded"
+        onClick={nextPage}
+        disabled={currentPage === nPage}
+      >
+        Next
+      </button>
+    </div>
+  )}
+</>
+
   );
 }
 

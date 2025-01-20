@@ -1,36 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { RiFunctionAddFill } from "react-icons/ri";
 import { MdDashboard } from "react-icons/md";
-import { FaBorderAll } from "react-icons/fa";
+import { FaBorderAll, FaServer } from "react-icons/fa";
 import { TbMessageFilled } from "react-icons/tb";
-import { FaServer } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 
 const SideBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div>
-      <div className=" bg-slate-900 p-8 flex-col space-y-4 h-full mr-10">
-        <div className="flex items-center space-x-3 text-white">
-          <MdDashboard className="text-3xl " />
-          <Link to="/admin">DashBoard</Link>
-        </div>
-        <div className="flex items-center space-x-3 text-white">
-          <FaServer className="text-3xl " />
+    <div className="sideBar w-full md:w-60 bg-slate-900 text-white p-4 md:p-8">
+      {/* Hamburger icon for mobile */}
+      <div className="md:hidden mb-4">
+        <button onClick={toggleSidebar}>
+          <FaBars className="text-2xl text-white" />
+        </button>
+      </div>
 
-          <Link to="/admin/all-products">All Products</Link>
+      {/* Sidebar links */}
+      <div className={`md:block ${isOpen ? "block" : "hidden"}`}>
+        <div className="flex items-center space-x-3 py-3">
+          <MdDashboard className="text-3xl" />
+          <Link to="/admin" className="text-white">
+            DashBoard
+          </Link>
         </div>
 
-        <div className="flex items-center space-x-3 text-white">
-          <RiFunctionAddFill className="text-3xl " />
-          <Link to="/admin/product-add">Add Products</Link>
+        <div className="flex items-center space-x-3 py-3">
+          <FaServer className="text-3xl" />
+          <Link to="/admin/all-products" className="text-white">
+            All Products
+          </Link>
         </div>
-        <div className="flex items-center space-x-3 text-white">
-          <FaBorderAll className="text-3xl " />
-          <Link to="/admin/order">All Orders</Link>
+
+        <div className="flex items-center space-x-3 py-3">
+          <RiFunctionAddFill className="text-3xl" />
+          <Link to="/admin/product-add" className="text-white">
+            Add Products
+          </Link>
         </div>
-        <div className="flex items-center space-x-3 text-white">
-          <TbMessageFilled className="text-3xl " />
-          <Link to="/admin/message">User Message</Link>
+
+        <div className="flex items-center space-x-3 py-3">
+          <FaBorderAll className="text-3xl" />
+          <Link to="/admin/order" className="text-white">
+            All Orders
+          </Link>
+        </div>
+
+        <div className="flex items-center space-x-3 py-3">
+          <TbMessageFilled className="text-3xl" />
+          <Link to="/admin/message" className="text-white">
+            User Message
+          </Link>
         </div>
       </div>
     </div>

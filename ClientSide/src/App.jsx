@@ -22,6 +22,7 @@ import AllProducts from "./Admin/AdminPages/AllProducts";
 import OrderPAge from "./Admin/AdminPages/OrderPAge";
 import MyorderPage from "./Pages/MyorderPage";
 import AllListedProducts from "./Components/AllProducts";
+import ContactMessagesPage from "./Admin/AdminPages/ContactMessagePage";
 
 function App() {
 
@@ -56,6 +57,8 @@ function App() {
             />
             <Route path="/admin/all-products" element={<AllProducts />} />
             <Route path="/admin/order" element={<OrderPAge />} />
+            <Route path="/admin/message" element={<ContactMessagesPage />} />
+
           </Route>
         </Routes>
         <Toaster />

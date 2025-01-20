@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { RiFunctionAddFill } from "react-icons/ri";
 import { MdDashboard } from "react-icons/md";
 import { FaBorderAll } from "react-icons/fa";
+import { TbMessageFilled } from "react-icons/tb";
+import { FaServer } from "react-icons/fa";
 
 const SideBar = () => {
   return (
@@ -13,7 +15,7 @@ const SideBar = () => {
           <Link to="/admin">DashBoard</Link>
         </div>
         <div className="flex items-center space-x-3 text-white">
-          <RiFunctionAddFill className="text-3xl " />
+          <FaServer className="text-3xl " />
 
           <Link to="/admin/all-products">All Products</Link>
         </div>
@@ -25,6 +27,10 @@ const SideBar = () => {
         <div className="flex items-center space-x-3 text-white">
           <FaBorderAll className="text-3xl " />
           <Link to="/admin/order">All Orders</Link>
+        </div>
+        <div className="flex items-center space-x-3 text-white">
+          <TbMessageFilled className="text-3xl " />
+          <Link to="/admin/message">User Message</Link>
         </div>
       </div>
     </div>

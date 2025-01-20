@@ -81,9 +81,7 @@ function Footer() {
               <li className="py-2">
                 <Link to="/contact">Contact</Link>
               </li>
-              <li className="py-2">
-                <Link to="/product-add">Add Product</Link>
-              </li>
+             
             </ul>
           </div>
           <div className="downloadApp ">

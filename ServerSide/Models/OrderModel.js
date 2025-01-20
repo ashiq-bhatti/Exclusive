@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
   address: { type: Object, required: true },
   status: {
     type: String,
-    enm: ["Product processing", "Product On the way", "Product Delived"],
+    enm: ["Product processing", "On the way", "Delived"],
     default: "Product processing",
   },
   date: { type: Date, default: Date.now() },
@@ -15,4 +15,3 @@ const OrderSchema = new mongoose.Schema({
 });
 const OrderModel = mongoose.model("Order", OrderSchema);
 module.exports = OrderModel;
-  

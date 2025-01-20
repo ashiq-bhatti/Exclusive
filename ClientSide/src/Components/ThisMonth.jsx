@@ -21,8 +21,6 @@ const ThisMonth = () => {
     ? thisMonth
     : thisMonth.slice(0, 4);
  
-  console.log(thisMonth);
-
   const addWishList = async (productId) => {
     try {
       if (!token) {

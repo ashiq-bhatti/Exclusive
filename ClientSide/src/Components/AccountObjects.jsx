@@ -17,8 +17,8 @@ const AccountObjects = () => {
   const LogOut = () => {
     localStorage.removeItem("token");
     setToken("");
-    navigate("/login");
     toast.success("LogOut successful");
+    navigate("/login");
   };
 
   return (

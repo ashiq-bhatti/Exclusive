@@ -10,12 +10,11 @@ const Sidebar = () => {
 
   const handleCategoryClick = (category) => {
     navigate(`/allListedProducts?category=${category}`);
-    setIsSidebarOpen(false); 
+    setIsSidebarOpen(false);
   };
-       
+
   return (
     <>
-      {/* Toggle Button for Mobile */}
       <div className="flex items-center md:hidden p-4">
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -25,10 +24,11 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 
-          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:shadow-none`}
+          ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 md:static md:shadow-none`}
       >
         <div className="menue border-r text-lg pl-10 md:pl-0 pr-6 h-full overflow-y-auto">
           <ul className="mt-10">
@@ -120,7 +120,6 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Overlay for Mobile */}
       {isSidebarOpen && (
         <div
           className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40"

@@ -20,7 +20,7 @@ const sliderSettings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 4,
+  slidesToShow: 4.5,
   slidesToScroll: 2,
   responsive: [
     {
@@ -118,13 +118,13 @@ const FlashSales = () => {
                 className="bg-gray-100 h-6 w-6 md:h-11 md:w-11 rounded-full flex items-center justify-center"
                 onClick={() => sliderRef.current.slickPrev()}
               >
-                <FaArrowLeft  className="text-sm"/>
+                <FaArrowLeft className="text-sm" />
               </button>
               <button
                 className="bg-gray-100 h-6 w-6 md:h-11 md:w-11 rounded-full flex items-center justify-center"
                 onClick={() => sliderRef.current.slickNext()}
               >
-                <FaArrowRight className="text-sm"/>
+                <FaArrowRight className="text-sm" />
               </button>
             </div>
           </div>
@@ -135,10 +135,7 @@ const FlashSales = () => {
         <Slider ref={sliderRef} {...sliderSettings}>
           {displayProducts.length > 0 ? (
             displayProducts.map((product) => (
-              <div
-                key={product._id}
-                className="w-full md:w-1/2 lg:w-1/4 " 
-              >
+              <div key={product._id} className="w-full md:w-1/2 lg:w-1/4 ">
                 <div className="card border-1 space-x-3 group">
                   <div className="bg-gray-100 rounded-lg overflow-hidden">
                     <div className="h-52 relative flex rounded-md ">

@@ -79,17 +79,13 @@ const verifyOrder = async (req, res) => {
 };
 const fetchSingleUserOrder = async (req, res) => {
   try {
-    
     const orders = await OrderModel.find({ userId: req.body.userId });
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Order fetch successfully",
-        orders: orders,
-      });
-      console.log("userId:", req.body.userId);
-
+    res.status(200).json({
+      success: true,
+      message: "Order fetch successfully",
+      orders: orders,
+    });
+    console.log("userId:", req.body.userId);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Error in fetch order " });

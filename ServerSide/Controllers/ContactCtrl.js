@@ -9,7 +9,7 @@ const Contact = async (req, res) => {
     await newContact.save();
     res.status(200).json({
       success: true,
-      message: "Contact information successfully sent",
+      message: "Message sent successfully ",
       contact: newContact,
     });
   } catch (error) {

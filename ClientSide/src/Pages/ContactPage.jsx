@@ -22,16 +22,24 @@ function ContactPage() {
     const { name, email, phone, message } = formData;
 
     try {
-      const request = await axios.post("http://localhost:8000/api/contact/contact-message", {
-        name,
-        email,
-        phone,
-        message,
-      });
+      const request = await axios.post(
+        "http://localhost:8000/api/contact/contact-message",
+        {
+          name,
+          email,
+          phone,
+          message,
+        }
+      );
       const response = request.data;
-
       if (response.success) {
-        toast.success("Your Message sent successfully");
+        toast.success(request.data.message);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
       }
     } catch (error) {
       if (error.response) {

@@ -2,7 +2,7 @@ import React, { useContext, useReducer, useState } from "react";
 import { FaAngleUp } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { StoreContext } from "../Context/StoreContext";
 import HOC from "../Components/HOC";
@@ -34,11 +34,13 @@ function CartPage() {
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 my-14">
             <h1 className="text-gray-500">Home /</h1>
+            {/* <Link to={'/'}></Link> */}
             <span>Cart</span>
           </div>
         </div>
       </div>
 
+      {product_List && product_List.length > 0}
       <div className="flashSales-section-outer flex justify-center ">
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex justify-between items-center py-5 px-12 shadow-md shadow-slate-100 my-4  ">

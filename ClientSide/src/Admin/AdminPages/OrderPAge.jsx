@@ -88,9 +88,11 @@ const OrderPage = () => {
                     {order.items && order.items.length > 0
                       ? order.items.map((item, index) => (
                           <span key={item.title}>
-                            {item.title} x {item.quantity}
-                            {index < order.items.length - 1 && ","}{" "}
-                            <br />
+                            {item.title.length <= 30
+                              ? item.title
+                              : `${item.title.slice(0, 30)}...`}{" "}
+                            x {item.quantity}
+                            {index < order.items.length - 1 && ","} <br />
                           </span>
                         ))
                       : "N/A"}

@@ -122,7 +122,7 @@ const OurProducts = () => {
                   </button>
                 </div>
                 <div className="space-y-2 font-semibold">
-                  <h1>{product.title}</h1>
+                  <h1>{product .title && product .title.length >70 ? product .title.slice(0,70)+'...': product .title }</h1>
                   <div className="flex gap-3 font-semibold">
                     <span className="text-customRed">${product.price}</span>
                     <span className="text-gray-400 line-through">

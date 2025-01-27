@@ -131,7 +131,7 @@ function ProductAddpage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="w-full space-y-2">
-                <label className="text-lg">Price:</label>
+                <label className="text-lg"> Discount Price:</label>
                 <input
                   type="number"
                   name="price"
@@ -163,7 +163,7 @@ function ProductAddpage() {
               </div>
 
               <div className="w-full space-y-2">
-                <label className="text-lg">Discount Price:</label>
+                <label className="text-lg"> Price:</label>
                 <input
                   type="number"
                   name="discount_price"

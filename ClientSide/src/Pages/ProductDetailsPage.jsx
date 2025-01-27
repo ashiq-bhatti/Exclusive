@@ -103,7 +103,7 @@ function ProductDetailsPage() {
                   <img
                     src={`http://localhost:8000/public/images/${productData.images[0]}`}
                     alt="Product"
-                    className="w-96 h-96 cursor-pointer transform hover:scale-105"
+                    className="w-80 h-96 cursor-pointer transform hover:scale-105"
                   />
                 )}
               </div>

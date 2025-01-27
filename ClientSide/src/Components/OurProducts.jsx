@@ -87,7 +87,7 @@ const OurProducts = () => {
                       <img
                         src={`http://localhost:8000/public/images/${product.images[0]}`}
                         alt="Product"
-                        className="w-40 h-36 transform hover:scale-110"
+                        className="w-30 h-36 transform hover:scale-110"
                       />
                     </div>
                     <div className="absolute flex flex-col gap-2 top-3 right-3">

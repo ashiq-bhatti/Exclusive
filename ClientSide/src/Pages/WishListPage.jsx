@@ -9,7 +9,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { StoreContext } from "../Context/StoreContext";
 import toast from "react-hot-toast";
 function WishListPage() {
-  const {product_List, addToCart, token } = useContext(StoreContext);
+  const { product_List, addToCart, token } = useContext(StoreContext);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [wishList, setWishList] = useState([]);
@@ -20,10 +20,8 @@ function WishListPage() {
       product.eventCategory && product.eventCategory === "This Month";
     return isCatagoryByEvent;
   });
-  const displayProducts = viewAllProducts
-    ? thisMonth
-    : thisMonth.slice(0, 4);
- 
+  const displayProducts = viewAllProducts ? thisMonth : thisMonth.slice(0, 4);
+
   const addWishList = async (productId) => {
     try {
       if (!token) {
@@ -100,11 +98,13 @@ function WishListPage() {
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
                       -{product.off_percent || "0%"}
                     </span>
-                    <img
-                      src={`http://localhost:8000/public/images/${product.image}`}
-                      alt={product.title}
-                      className="h-32 w-32 m-auto transform hover:scale-110"
-                    />
+                    <div className="flex items-center justify-center w-full h-full">
+                      <img
+                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        alt="Product"
+                        className="w-40 h-36 transform hover:scale-110"
+                      />
+                    </div>
                     <div className="absolute flex flex-col gap-2 top-3 right-3">
                       <button
                         onClick={() => addWishList(product._id)}
@@ -164,23 +164,24 @@ function WishListPage() {
       </div>
 
       {/* Just for you */}
-        <div className="flashSales-section-inner w-[84%] m-auto ">
-          
-          <div className="flex justify-between mt-16 mb-10">
+      <div className="flashSales-section-inner w-[84%] m-auto ">
+        <div className="flex justify-between mt-16 mb-10">
           <div className="flex gap-3 items-center">
             <div className="h-9 w-5 rounded-sm bg-customRed"></div>
-            <h1 className="text-black  md:text-xl lg:text-2xl  font-semibold">Just For You </h1>
+            <h1 className="text-black  md:text-xl lg:text-2xl  font-semibold">
+              Just For You{" "}
+            </h1>
           </div>
-            <div className="flex gap-2">
-              <button
-                className=" text-black border   border-black hover:border-white hover:bg-customRed hover:text-white px-6 py-2 rounded"
-                onClick={() => setViewAllProducts(!viewAllProducts)}
-              >
-                {viewAllProducts ? "See Less" : "See All"}
-              </button>
-            </div>
+          <div className="flex gap-2">
+            <button
+              className=" text-black border   border-black hover:border-white hover:bg-customRed hover:text-white px-6 py-2 rounded"
+              onClick={() => setViewAllProducts(!viewAllProducts)}
+            >
+              {viewAllProducts ? "See Less" : "See All"}
+            </button>
           </div>
         </div>
+      </div>
 
       <div className="w-[84%] m-auto mb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -195,11 +196,13 @@ function WishListPage() {
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
                       -{product.off_percent}
                     </span>
-                    <img
-                      src={`http://localhost:8000/public/images/${product.image}`}
-                      alt=""
-                      className="h-32 w-32 m-auto transform hover:scale-110"
-                    />
+                    <div className="flex items-center justify-center w-full h-full">
+                      <img
+                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        alt="Product"
+                        className="w-40 h-36 transform hover:scale-110"
+                      />
+                    </div>
                     <div className="absolute flex flex-col gap-2 top-3 right-3">
                       <button
                         onClick={() => addWishList(product._id)}

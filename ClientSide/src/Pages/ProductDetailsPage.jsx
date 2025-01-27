@@ -25,7 +25,7 @@ function ProductDetailsPage() {
   const navigate = useNavigate();
   const [productData, setProductData] = useState({});
   const [wishList, setWishList] = useState([]);
-
+  console.log("productdata", productData);
   const { id } = useParams();
 
   const addWishList = async (productId) => {
@@ -84,28 +84,28 @@ function ProductDetailsPage() {
       <div className="section-outer mb-20">
         <div className="section-inner flex flex-col md:flex md:flex-row w-[84%] m-auto gap-12">
           <div className="left-imges-section flex flex-col-reverse md:flex md:flex-row  gap-7 ">
-            <div className="flex md:flex md:flex-col  gap-5">
-              <div className="bg-customGray p-3 rounded-md">
-                <img src={game2} alt="Product" />
-              </div>
-              <div className="bg-customGray p-3 rounded-md">
-                <img src={game3} alt="Product" />
-              </div>
-              <div className="bg-customGray p-3 rounded-md">
-                <img src={game4} alt="Product" />
-              </div>
-              <div className="bg-customGray p-3 rounded-md">
-                <img src={game5} alt="Product" />
-              </div>
+            <div className="flex md:flex-col gap-2">
+              {productData.images &&
+                productData.images
+                  .slice(1)
+                  .map((image, index) => (
+                    <img
+                      key={index}
+                      src={`http://localhost:8000/public/images/${image}`}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-28 h-28 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform"
+                    />
+                  ))}
             </div>
-
             <div>
-              <div className="bg-customGray p-7 md:p-8 md:py-32 rounded-md">
-                <img
-                  src={`http://localhost:8000/public/images/${productData.image}`}
-                  alt="Product"
-                  className=" w-96 h-80"
-                />
+              <div className="bg-customGray p-7 md:p-8 md:py-12 rounded-md">
+                {productData.images && productData.images.length > 0 && (
+                  <img
+                    src={`http://localhost:8000/public/images/${productData.images[0]}`}
+                    alt="Product"
+                    className="w-96 h-96 cursor-pointer transform hover:scale-105"
+                  />
+                )}
               </div>
             </div>
           </div>

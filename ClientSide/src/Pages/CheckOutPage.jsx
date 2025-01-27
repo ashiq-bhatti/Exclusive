@@ -37,7 +37,7 @@ function CheckoutPage() {
         orderItems.push(productInfo);
       }
     });
-    console.log("oerder list", orderItems);
+    console.log("order list", orderItems);
     const orderData = {
       address: formData,
       items: orderItems,
@@ -65,10 +65,11 @@ function CheckoutPage() {
       alert("An error occurred while placing the order.");
     }
   };
+
   useEffect(() => {
     if (!token) {
       navigate("/cart-page");
-    }else if(totelAmoutOfCart === 0){
+    } else if (totelAmoutOfCart === 0) {
       navigate("/cart-page");
     }
   }, [token]);
@@ -105,6 +106,7 @@ function CheckoutPage() {
                     name="fname"
                     onChange={handleChange}
                     value={formData.fname}
+                    required
                     className="w-full p-2 bg-customGray border-0  rounded-md"
                   />
                 </div>
@@ -117,6 +119,7 @@ function CheckoutPage() {
                     name="companyName"
                     onChange={handleChange}
                     value={formData.companyName}
+                    required
                     className="w-full p-2 bg-customGray border-0  rounded-md"
                   />
                 </div>
@@ -129,6 +132,7 @@ function CheckoutPage() {
                     name="streetAddress"
                     onChange={handleChange}
                     value={formData.streetAddress}
+                    required
                     className="w-full p-2 bg-customGray border-0  rounded-md"
                   />
                 </div>
@@ -141,6 +145,7 @@ function CheckoutPage() {
                     name="apartment"
                     onChange={handleChange}
                     value={formData.apartment}
+                    required
                     className="w-full p-2 bg-customGray border-0  rounded-md"
                   />
                 </div>
@@ -153,6 +158,7 @@ function CheckoutPage() {
                     name="city"
                     onChange={handleChange}
                     value={formData.city}
+                    required
                     className="w-full p-2 bg-customGray border-0  rounded-md"
                   />
                 </div>
@@ -165,6 +171,7 @@ function CheckoutPage() {
                     name="phone"
                     onChange={handleChange}
                     value={formData.phone}
+                    required
                     className="w-full p-2 bg-customGray border-0  rounded-md"
                   />
                 </div>
@@ -195,12 +202,6 @@ function CheckoutPage() {
                     </label>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="py-3 px-12  border  bg-customRed text-white  rounded-md"
-                >
-                  Place Order
-                </button>
               </form>
             </div>
             <div className="billDetal-box  w-full md:w-[47%]">
@@ -214,11 +215,13 @@ function CheckoutPage() {
                           className="flex justify-between items-cente  pb-2 my-4  "
                         >
                           <div className="flex items-center gap-5">
-                            <img
-                              src={`http://localhost:8000/public/images/${product.image}`}
-                              alt="Product"
-                              className="h-14 w-14"
-                            />{" "}
+                            {product.images && product.images.length > 0 && (
+                              <img
+                                src={`http://localhost:8000/public/images/${product.images[0]}`}
+                                alt="Product"
+                                className="w-14 h-14 transform hover:scale-110"
+                              />
+                            )}
                             <h1>
                               {`${product.title.slice(0, 10)}${
                                 product.title.length > 10 ? "..." : ""
@@ -280,27 +283,27 @@ function CheckoutPage() {
                 </div>
               </div>
               <div className="left">
-                <form className="flex items-center gap-6 my-6">
-                  <input
-                    type="text"
-                    name="couponNum"
-                    onChange={handleChange}
-                    value={formData.coupon}
-                    className=" border border-black border-opacity-80 md:px-9 md:py-[10px] rounded-md"
-                    placeholder="Coupon Code"
-                  />
+                <form onSubmit={handleSubmit} className=" my-6">
+                  <div className="flex items-center gap-6">
+                    <input
+                      type="text"
+                      name="couponNum"
+                      onChange={handleChange}
+                      value={formData.coupon}
+                      className=" border border-black border-opacity-80 md:px-9 md:py-[10px] rounded-md"
+                      placeholder="Coupon Code"
+                    />
+                    <button className="px-2 py-2   md:py-3 md:px-10 border  bg-customRed text-white  rounded-md">
+                      Apply Coupon
+                    </button>
+                  </div>
                   <button
-                    className="px-2 py-2   md:py-3 md:px-10 border  bg-customRed text-white  rounded-md"
+                    type="submit"
+                    className="py-3 px-12 mt-8  border  bg-customRed text-white  rounded-md"
                   >
-                    Apply Coupon
+                    Place Order
                   </button>
                 </form>
-                <button
-                  type="submit"
-                  className="py-3 px-12  border  bg-customRed text-white  rounded-md"
-                >
-                  Place Order
-                </button>
               </div>
             </div>
           </div>

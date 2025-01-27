@@ -58,25 +58,25 @@ const PlaceOrder = async (req, res) => {
 const verifyOrder = async (req, res) => {
   try {
     const { orderId, success } = req.body;
-    if (success == true) {
-      await OrderModel.findByIdAndUpdate(orderId, { payment: true });
-      res
-        .status(200)
-        .json({ success: true, message: "Payment Successful Paid" });
+
+    if (success) {
+      await OrderModel.findByIdAndUpdate(orderId, { payment: true }); 
+      res.status(200).json({ success: true, message: "Payment Successfully Paid" });
     } else {
       await OrderModel.findByIdAndDelete(orderId);
-      res.json({ success: false, message: "Payment Not Paid" });
+      res.status(400).json({ success: false, message: "Payment Not Paid" });
     }
   } catch (error) {
-    console.log(error);
-
-    res.json({
+    console.error("Error in verifying order:", error.message);
+    res.status(500).json({
       success: false,
-      message: "Payment verify error>>",
+      message: "Payment verification error",
       error: error.message,
     });
   }
 };
+
+
 const fetchSingleUserOrder = async (req, res) => {
   try {
     const orders = await OrderModel.find({ userId: req.body.userId });
@@ -85,7 +85,6 @@ const fetchSingleUserOrder = async (req, res) => {
       message: "Order fetch successfully",
       orders: orders,
     });
-    console.log("userId:", req.body.userId);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Error in fetch order " });

@@ -83,11 +83,13 @@ const OurProducts = () => {
                     <span className="absolute top-2 left-2 px-2 rounded-sm bg-customRed text-white text-center">
                       -{product.off_percent}
                     </span>
-                    <img
-                      src={`http://localhost:8000/public/images/${product.image}`}
-                      alt=""
-                      className="h-32 w-32 m-auto transform hover:scale-110"
-                    />
+                    <div className="flex items-center justify-center w-full h-full">
+                      <img
+                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        alt="Product"
+                        className="w-40 h-36 transform hover:scale-110"
+                      />
+                    </div>
                     <div className="absolute flex flex-col gap-2 top-3 right-3">
                       <button
                         onClick={() => addWishList(product._id)}

@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage }).single("image");
+const upload = multer({ storage }).array("images");
 
 const AddProduct = async (req, res) => {
   try {
@@ -27,19 +27,16 @@ const AddProduct = async (req, res) => {
       reviews,
       description,
     } = req.body;
-    const image = req.file ? req.file.filename : null;
 
-    if (!image) {
-      return res
-        .status(400)
-        .json({ status: false, message: "Image is required" });
+    const images = req.files ? req.files.map((file) => file.filename) : [];
+
+    if (!images.length) {
+      return res.status(400).json({ status: false, message: "Images are required" });
     }
 
     const ExistsProduct = await ProductModel.findOne({ title });
     if (ExistsProduct) {
-      return res
-        .status(401)
-        .json({ status: false, message: "Product Already Exists" });
+      return res.status(401).json({ status: false, message: "Product Already Exists" });
     }
 
     const newProduct = new ProductModel({
@@ -54,7 +51,7 @@ const AddProduct = async (req, res) => {
       rating,
       reviews,
       description,
-      image,
+      images,
     });
 
     await newProduct.save();
@@ -65,10 +62,11 @@ const AddProduct = async (req, res) => {
       newProduct,
     });
   } catch (error) {
-    console.log("Error in AddProduct>>>", error);
+    console.error("Error in AddProduct:", error);
     res.status(500).json({ success: false, message: "Server Internal Error" });
   }
 };
+
 
 const FetchProduct = async (req, res) => {
   try {

@@ -2,7 +2,7 @@ import React, { useContext, useReducer, useState } from "react";
 import { FaAngleUp } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { StoreContext } from "../Context/StoreContext";
 import HOC from "../Components/HOC";
@@ -34,21 +34,19 @@ function CartPage() {
         <div className="flashSales-section-inner w-[84%] m-auto ">
           <div className="flex items-center space-x-1 my-14">
             <h1 className="text-gray-500">Home /</h1>
-            {/* <Link to={'/'}></Link> */}
             <span>Cart</span>
           </div>
         </div>
       </div>
 
-      {product_List && product_List.length > 0}
-      <div className="flashSales-section-outer flex justify-center ">
-        <div className="flashSales-section-inner w-[84%] m-auto ">
-          <div className="flex justify-between items-center py-5 px-12 shadow-md shadow-slate-100 my-4  ">
-            <h1>Product</h1>
-            <h1>Price</h1>
-            <h1>Quantity</h1>
-
-            <h1>Subtotal</h1>
+      <div className="flashSales-section-outer flex justify-center">
+        <div className="flashSales-section-inner w-[90%] lg:w-[84%] m-auto">
+          {/* Header Row */}
+          <div className="hidden md:grid grid-cols-4 gap-4 py-5 px-6 lg:px-12 shadow-md shadow-slate-100 my-4">
+            <h1 className="text-left">Product</h1>
+            <h1 className="text-center">Price</h1>
+            <h1 className="text-center">Quantity</h1>
+            <h1 className="text-right">Subtotal</h1>
           </div>
 
           {product_List && product_List.length > 0 ? (
@@ -57,58 +55,68 @@ function CartPage() {
                 return (
                   <div
                     key={product._id}
-                    className="flex my-10 shadow-md shadow-slate-100"
+                    className="grid grid-cols-4 gap-4 items-center py-4 px-6 lg:px-12 my-6 shadow-md shadow-slate-100"
                   >
-                    <ul className="flex justify-between items-center py-2 px-12 w-full">
-                      <li className="flex items-center gap-5">
-                        <RxCross2
-                          onClick={() => {
-                            removeItemFromCart(product._id);
-                            toast.success("Item Removed Successfully");
-                          }}
-                          className="bg-customRed rounded-full text-white absolute cursor-pointer -mt-12 -ml-2"
-                        />
-                        <img
-                          src={`http://localhost:8000/public/images/${product.image}`}
-                          alt="Product"
-                          className="h-14 w-14"
-                        />
+                    <div className="flex items-center gap-4">
+                      <RxCross2
+                        onClick={() => {
+                          removeItemFromCart(product._id);
+                          toast.success("Item Removed Successfully");
+                        }}
+                        className="bg-customRed rounded-full text-white cursor-pointer"
+                      />
+                      <img
+                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        alt="Product"
+                        className="h-14 w-14 object-contain"
+                      />
+                      <span className="text-sm md:text-base">
                         {`${product.title.slice(0, 10)}${
                           product.title.length > 10 ? "..." : ""
                         }`}
-                      </li>
-                      <li>${product.price}</li>
-                      <li>
-                        <div className="countBtn flex gap-4 py-2 px-3 items-center rounded border-2">
-                          <p className="font-semibold">
-                            {cartItems[product._id]}
-                          </p>
-                          <div className="flex flex-col">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                addToCart(product._id);
-                              }}
-                            >
-                              <FaAngleUp className="text-xs" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => removeItemFromCart(product._id)}
-                            >
-                              <FaAngleDown className="text-xs" />
-                            </button>
-                          </div>
+                      </span>
+                    </div>
+
+                    {/* Product Price */}
+                    <div className="text-center">${product.price}</div>
+
+                    {/* Quantity Selector */}
+                    <div className="flex justify-center">
+                      <div className="countBtn flex gap-4 py-2 px-3 items-center rounded border-2">
+                        <p className="font-semibold text-sm md:text-base">
+                          {cartItems[product._id]}
+                        </p>
+                        <div className="flex flex-col">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              addToCart(product._id);
+                            }}
+                          >
+                            <FaAngleUp className="text-xs" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeItemFromCart(product._id)}
+                          >
+                            <FaAngleDown className="text-xs" />
+                          </button>
                         </div>
-                      </li>
-                      <li>${product.price * cartItems[product._id]}</li>
-                    </ul>
+                      </div>
+                    </div>
+
+                    {/* Subtotal */}
+                    <div className="text-right">
+                      ${product.price * cartItems[product._id]}
+                    </div>
                   </div>
                 );
               }
             })
           ) : (
-            <p className="text-center my-12">No items in the cart</p>
+            <p className="text-center my-12 text-sm md:text-base">
+              No items in the cart
+            </p>
           )}
         </div>
       </div>

@@ -102,12 +102,12 @@ function AllProducts() {
               <td className="px-6 py-4">
                 {index + 1 + (currentPage - 1) * productsPerPage}
               </td>
-              <td className="px-6 py-4">
-                <img
-                  src={`http://localhost:8000/public/images/${product.image}`}
-                  alt=""
-                  className="h-10 w-10"
-                />
+              <td className=" py-1 bg-customGray flex items-center justify-center ">
+                  <img
+                    src={`http://localhost:8000/public/images/${product.images[0]}`}
+                    alt="Product"
+                    className="h-10 w-10"
+                  />             
               </td>
               <td className="px-6 py-4">{product.title}</td>
               <td className="px-6 py-4">{product.category}</td>

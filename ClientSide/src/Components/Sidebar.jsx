@@ -94,7 +94,7 @@ const Sidebar = () => {
             </li>
             <li className="flex items-center">
               <button
-                onClick={() => handleCategoryClick("Boy Toyes")}
+                onClick={() => handleCategoryClick("Boy Toys")}
                 className="w-full text-left"
               >
                 Boy's & Toyes

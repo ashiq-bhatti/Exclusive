@@ -69,16 +69,19 @@ const StoreContextProvider = (props) => {
       setCartItems(response.data.cartData);
     } 
 
-    const totelAmoutOfCart =()=>{
-    let  totelAmount = 0 ;
-      for(let item in cartItems){
-       if(cartItems[item] > 0){
-      let  productInfo = product_List.find(product=>product._id===item);
-        totelAmount += productInfo.price * cartItems[item]
-       }
+    const totelAmoutOfCart = () => {
+  let totelAmount = 0;
+  for (let item in cartItems) {
+    if (cartItems[item] > 0) {
+      let productInfo = product_List.find((product) => product._id === item);
+      if (productInfo) { 
+        totelAmount += productInfo.price * cartItems[item];
       }
-      return totelAmount
     }
+  }
+  return totelAmount;
+};
+
   const fetchProductList = async () => {
     const response = await axios.get(
       `${backend_url}/api/product/fetch-product`

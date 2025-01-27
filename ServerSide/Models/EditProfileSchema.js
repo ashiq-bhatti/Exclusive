@@ -19,3 +19,4 @@ const EditProfileModel = mongoose.model("EditProfile", EditProfileSchema);
 
 
 module.exports = EditProfileModel;
+ 

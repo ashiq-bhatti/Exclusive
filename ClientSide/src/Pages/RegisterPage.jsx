@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState ,useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MobBaskit from "../images/RandomImages/MobBaskit.png";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import HOC from "../Components/HOC";
+import { StoreContext } from "../Context/StoreContext";
+
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const {  backend_url} = useContext(StoreContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -26,7 +29,7 @@ function RegisterPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/auth/user-register",
+        `${backend_url}/api/auth/user-register`,
         { name, email, password }
       );
 
@@ -53,7 +56,6 @@ function RegisterPage() {
     <>
       <div className="outer mt-16 mb-24 w-[90%] lg:w-[80%] mx-auto lg:mx-0">
         <div className="inner flex flex-col lg:flex-row gap-12 lg:gap-36 items-center">
-          {/* Left Section (Image) */}
           <div className="left w-full lg:w-2/3">
             <img
               src={MobBaskit}
@@ -62,7 +64,6 @@ function RegisterPage() {
             />
           </div>
 
-          {/* Right Section (Form) */}
           <div className="right w-full lg:w-1/3">
             <div className="content mt-6 lg:mt-2 text-center lg:text-left">
               <h1

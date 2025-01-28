@@ -8,7 +8,7 @@ import { StoreContext } from "../Context/StoreContext";
 import HOC from "../Components/HOC";
 
 function LoginPage() {
-  const { setToken } = useContext(StoreContext);
+  const { setToken  ,backend_url} = useContext(StoreContext);
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ function LoginPage() {
 
     try {
       const request = await axios.post(
-        "http://localhost:8000/api/auth/user-login",
+        `${backend_url}/api/auth/user-login`,
         {
           email,
           password,

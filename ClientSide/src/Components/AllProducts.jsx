@@ -8,9 +8,8 @@ import toast from "react-hot-toast";
 import HOC from "./HOC";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
 const AllListedProducts = () => {
-  const { product_List, addToCart, token } = useContext(StoreContext);
+  const { product_List, addToCart, token ,backend_url } = useContext(StoreContext);
   const location = useLocation();
   const [productsByCategory, setProductsByCategory] = useState(product_List);
   const [currentCategory, setCurrentCategory] = useState("All Products");
@@ -73,7 +72,7 @@ const AllListedProducts = () => {
       }
 
       const response = await axios.put(
-        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        `${backend_url}/api/wishlist/add_to_wish_list`,
         { productId },
         {
           headers: {
@@ -106,7 +105,7 @@ const AllListedProducts = () => {
                     </span>
                     <div className="flex items-center justify-center w-full h-full">
                       <img
-                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        src={`${backend_url}/public/images/${product.images[0]}`}
                         alt="Product"
                         className="w-36 h-40 transform hover:scale-110"
                       />

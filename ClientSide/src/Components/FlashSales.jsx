@@ -65,7 +65,7 @@ const FlashSales = () => {
       }
 
       const response = await axios.put(
-        `https://exclusivebackend.vercel.app/api/wishlist/add_to_wish_list`,
+        `${backend_url}/api/wishlist/add_to_wish_list`,
         { productId },
         {
           headers: {
@@ -144,7 +144,7 @@ const FlashSales = () => {
                       </span>
                       <div className="flex items-center justify-center w-full h-full">
                       <img
-                        src={`https://exclusivebackend.vercel.app/public/images/${product.images[0]}`}
+                        src={`${backend_url}/public/images/${product.images[0]}`}
                         alt="Product"
                         className="w-40 h-36 transform hover:scale-110"
                       />

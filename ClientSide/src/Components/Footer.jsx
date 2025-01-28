@@ -5,7 +5,6 @@ import { RiFacebookLine } from "react-icons/ri";
 import { LuTwitter } from "react-icons/lu";
 import { FaInstagram } from "react-icons/fa";
 import { RiLinkedinLine } from "react-icons/ri";
-
 import Qrcode from "../images/RandomImages/Qrcode.png";
 import appStore from "../images/RandomImages/appStore.png";
 import googleStore from "../images/RandomImages/googleStore.png";

@@ -5,7 +5,7 @@ import { FlashSale } from "../StaticApi";
 export const StoreContext = createContext(null);
 
 // const backend_url = "http://localhost:8000";
-const backend_url = "https://exclusivebackend.vercel.app";
+const backend_url = "https://exclusiveserverside.vercel.app";
 
 const StoreContextProvider = (props) => {
 

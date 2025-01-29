@@ -67,7 +67,7 @@ function CartPage() {
                         className="bg-customRed rounded-full text-white cursor-pointer"
                       />
                       <img
-                        src={`${backend_url}/public/images/${product.images[0]}`}
+                        src={`http://localhost:8000/public/images/${product.images[0]}`}
                         alt="Product"
                         className="h-14 w-14 object-contain"
                       />

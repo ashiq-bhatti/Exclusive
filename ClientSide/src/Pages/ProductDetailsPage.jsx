@@ -93,7 +93,7 @@ function ProductDetailsPage() {
                   .map((image, index) => (
                     <img
                       key={index}
-                      src={`${backend_url}/public/images/${image}`}
+                      src={`http://localhost:8000/public/images/${image}`}
                       alt={`Thumbnail ${index + 1}`}
                       className="w-20 h-24 md:w-28 md:h-28 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform"
                     />
@@ -103,7 +103,7 @@ function ProductDetailsPage() {
               <div className="bg-customGray p-7 md:p-8 md:py-12 rounded-md">
                 {productData.images && productData.images.length > 0 && (
                   <img
-                    src={`${backend_url}/public/images/${productData.images[0]}`}
+                    src={`http://localhost:8000/public/images/${productData.images[0]}`}
                     alt="Product"
                     className=" w-56 h-60  md:w-80 md:h-96 cursor-pointer transform hover:scale-105"
                   />

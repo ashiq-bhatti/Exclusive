@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 4000;
 app.use(
   cors({
     origin: ["http://localhost:5173"],
-    credentials: true, 
+    credentials: true,
   })
 );
 app.use(cookieParser());
@@ -35,7 +35,7 @@ app.use("/api/contact", ContactRoutes);
 app.use("api/profile", EdditProfileRoutes);
 app.use("/api/cart", CartRoutes);
 app.use("/api/order", OrderRoutes);
- app.use('/api/wishlist',wishListRoutes)
+app.use("/api/wishlist", wishListRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to Server Home Page");
 });

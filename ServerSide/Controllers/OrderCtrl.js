@@ -8,8 +8,12 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const PlaceOrder = async (req, res) => {
   // const frontEnd_url = "http://localhost:5173";
+<<<<<<< HEAD
   const frontEnd_url = "https://exclusiveclientside.vercel.app/";
 
+=======
+  const frontEnd_url = "https://exclusiveab.vercel.app/";
+>>>>>>> 25f79c78cc0908978bffa36e3bd4f591ba528aab
   try {
     const newOrder = new OrderModel({
       userId: req.body.userId,

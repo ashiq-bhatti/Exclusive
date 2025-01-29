@@ -7,7 +7,9 @@ dotenv.config();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const PlaceOrder = async (req, res) => {
-  const frontEnd_url = "http://localhost:5173";
+  // const frontEnd_url = "http://localhost:5173";
+  const frontEnd_url = "https://exclusiveclientside.vercel.app/";
+
   try {
     const newOrder = new OrderModel({
       userId: req.body.userId,

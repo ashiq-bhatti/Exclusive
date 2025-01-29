@@ -17,7 +17,7 @@ function ProductDetailsPage() {
   const handleToggle = () => {
     setShowFullDescription(!showFullDescription);
   };
-  const { product_List, cartItems, addToCart, removeItemFromCart, token } =
+  const { product_List, cartItems, addToCart, removeItemFromCart, token,backend_url } =
     useContext(StoreContext);
   const navigate = useNavigate();
   const [productData, setProductData] = useState({});
@@ -32,7 +32,7 @@ function ProductDetailsPage() {
       }
 
       const response = await axios.put(
-        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        `${backend_url}/api/wishlist/add_to_wish_list`,
         { productId },
         {
           headers: {
@@ -51,7 +51,7 @@ function ProductDetailsPage() {
     const fetchProductById = async () => {
       try {
         const request = await axios.get(
-          `http://localhost:8000/api/product/fetch-product-by-id/${id}`
+          `${backend_url}/api/product/fetch-product-by-id/${id}`
         );
         const response = request.data.product;
         if (request.status === 200) {
@@ -93,7 +93,7 @@ function ProductDetailsPage() {
                   .map((image, index) => (
                     <img
                       key={index}
-                      src={`http://localhost:8000/public/images/${image}`}
+                      src={`${backend_url}/public/images/${image}`}
                       alt={`Thumbnail ${index + 1}`}
                       className="w-20 h-24 md:w-28 md:h-28 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform"
                     />
@@ -103,7 +103,7 @@ function ProductDetailsPage() {
               <div className="bg-customGray p-7 md:p-8 md:py-12 rounded-md">
                 {productData.images && productData.images.length > 0 && (
                   <img
-                    src={`http://localhost:8000/public/images/${productData.images[0]}`}
+                    src={`${backend_url}/public/images/${productData.images[0]}`}
                     alt="Product"
                     className=" w-56 h-60  md:w-80 md:h-96 cursor-pointer transform hover:scale-105"
                   />

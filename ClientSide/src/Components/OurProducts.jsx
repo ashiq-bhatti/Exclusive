@@ -10,7 +10,7 @@ import { FaArrowRight } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
 const OurProducts = () => {
-  const { product_List, addToCart, token } = useContext(StoreContext);
+  const { product_List, addToCart, token ,backend_url} = useContext(StoreContext);
   const [viewAllProducts, setViewAllProducts] = useState(false);
   const [wishList, setWishList] = useState([]);
 
@@ -30,7 +30,7 @@ const OurProducts = () => {
       }
 
       const response = await axios.put(
-        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        `${backend_url}/api/wishlist/add_to_wish_list`,
         { productId },
         {
           headers: {
@@ -85,7 +85,7 @@ const OurProducts = () => {
                     </span>
                     <div className="flex items-center justify-center w-full h-full">
                       <img
-                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        src={`${backend_url}/public/images/${product.images[0]}`}
                         alt="Product"
                         className="w-30 h-36 transform hover:scale-110"
                       />

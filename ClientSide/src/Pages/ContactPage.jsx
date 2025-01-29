@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { SlCallEnd } from "react-icons/sl";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import HOC from "../Components/HOC";
+import { StoreContext } from "../Context/StoreContext";
 
 function ContactPage() {
+    const {backend_url } =
+      useContext(StoreContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,7 +26,7 @@ function ContactPage() {
 
     try {
       const request = await axios.post(
-        "http://localhost:8000/api/contact/contact-message",
+       `${backend_url}/api/contact/contact-message`,
         {
           name,
           email,

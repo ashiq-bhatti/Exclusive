@@ -105,7 +105,7 @@ const AllListedProducts = () => {
                     </span>
                     <div className="flex items-center justify-center w-full h-full">
                       <img
-                        src={`http://localhost:8000/public/images/${product.images[0]}`}
+                        src={`${backend_url}/public/images/${product.images[0]}`}
                         alt="Product"
                         className="w-36 h-40 transform hover:scale-110"
                       />

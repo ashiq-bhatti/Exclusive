@@ -11,15 +11,15 @@ const EditProfile = async (req, res) => {
     confirmNewPassword,
   } = req.body;
   try {
-    const newProfile = new EditProfileModel(
+    const newProfile = new EditProfileModel({
       fname,
       lname,
       email,
       address,
       currentPassword,
       newPassword,
-      confirmNewPassword
-    );
+      confirmNewPassword,
+    });
 
     await newProfile.save();
     res.status(200).json({

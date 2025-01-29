@@ -3,13 +3,13 @@ import axios from "axios";
 import { StoreContext } from "../Context/StoreContext";
 import HOC from "../Components/HOC";
 const MyorderPage = () => {
-  const { token } = useContext(StoreContext);
+  const { token,backend_url } = useContext(StoreContext);
   const [userOrder, setUserOrder] = useState([]);
 
   const fetchUserOrder = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/order/fetch-user-order",
+        `${backend_url}/api/order/fetch-user-order`,
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,

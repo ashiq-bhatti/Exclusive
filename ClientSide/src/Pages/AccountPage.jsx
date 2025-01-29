@@ -1,11 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { toast } from "react-hot-toast";
 import HOC from "../Components/HOC";
+import { StoreContext } from "../Context/StoreContext";
 
 function AccountPage() {
+    const { backend_url } = useContext(StoreContext);
+  
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
@@ -32,7 +35,7 @@ function AccountPage() {
     } = formData;
     try {
       const request = await axios.post(
-        "http://localhost:8000/api/profile/edit-profile",
+        `${backend_url}api/profile/edit-profile`,
         {
           fname,
           lname,
@@ -43,21 +46,17 @@ function AccountPage() {
           confirmNewPassword,
         }
       );
-      const response = request.data;
-      if (response.status === 200) {
-        toast.success(response.message);
+      if (request.data.success) {
+        toast.success('Profile updated successfully');
       }
       console.log(formData);
     } catch (error) {
       if (error.response) {
         if (error.response.status === 500) {
           toast.error("Server error");
-        } else {
-          toast.error("Unexpected error occurred");
-        }
-      } else {
-        toast.error("Network error or server not reachable");
-      }
+        } 
+      } 
+       
     }
   };
 
@@ -105,7 +104,7 @@ function AccountPage() {
           <h1 className="text-customRed text-xl font-semibold">
             Edit Your Profile
           </h1>
-          <form onClick={handleSubmit} className="my-4">
+          <form action="" onSubmit={handleSubmit} className="my-4">
             <div className="flex justify-between items-center">
               <div className="flex flex-col mb-6 w-[47%] ">
                 <label htmlFor="name" className=" mb-2 ">

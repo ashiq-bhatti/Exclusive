@@ -28,7 +28,21 @@ function CheckoutPage() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (
+      !formData.fname ||
+      !formData.streetAddress ||
+      !formData.city ||
+      !formData.phone ||
+      !formData.email
+    ) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+  
+    // Submit the form
+    console.log("Form submitted successfully!", formData);
+
+
     let orderItems = [];
     product_List.map((item) => {
       if (cartItems[item._id] > 0) {
@@ -272,7 +286,7 @@ function CheckoutPage() {
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                {/* <div className="flex items-center gap-4">
                   <input
                     type="radio"
                     name="paymentMethod"
@@ -280,7 +294,7 @@ function CheckoutPage() {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   <p className="text-lg">Chash on delivery</p>
-                </div>
+                </div> */}
               </div>
               <div className="left">
                 <form onSubmit={handleSubmit} className=" my-6">

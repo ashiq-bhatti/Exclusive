@@ -27,7 +27,7 @@ function ProductDetailsPage() {
   const addWishList = async (productId) => {
     try {
       if (!token) {
-        toast.error("Please login to add to wishlist");
+        toast.error("Please login first for add to wishlist");
         return;
       }
 

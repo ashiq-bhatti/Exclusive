@@ -9,7 +9,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { StoreContext } from "../Context/StoreContext";
 import toast from "react-hot-toast";
 function WishListPage() {
-  const { product_List, addToCart, token } = useContext(StoreContext);
+  const { product_List, addToCart, token ,backend_url } = useContext(StoreContext);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [wishList, setWishList] = useState([]);
@@ -30,7 +30,7 @@ function WishListPage() {
       }
 
       const response = await axios.put(
-        "http://localhost:8000/api/wishlist/add_to_wish_list",
+        `${backend_url}/api/wishlist/add_to_wish_list`,
         { productId },
         {
           headers: {
@@ -48,7 +48,7 @@ function WishListPage() {
   const fetchWishlist = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/wishlist/get_wish_list",
+        `${backend_url}/api/wishlist/get_wish_list`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

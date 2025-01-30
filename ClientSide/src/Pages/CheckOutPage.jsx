@@ -284,16 +284,16 @@ function CheckoutPage() {
               </div>
               <div className="left">
                 <form onSubmit={handleSubmit} className=" my-6">
-                  <div className="flex items-center gap-6">
+                  <div className="flex  items-center  gap-5 md:gap-4 lg:gap-9">
                     <input
                       type="text"
                       name="couponNum"
                       onChange={handleChange}
                       value={formData.coupon}
-                      className=" border border-black border-opacity-80 md:px-9 md:py-[10px] rounded-md"
+                      className=" border border-black border-opacity-80 px-2 py-2 md:px-4 w-40 lg:w-auto md:py-[10px] rounded-md"
                       placeholder="Coupon Code"
                     />
-                    <button className="px-2 py-2   md:py-3 md:px-10 border  bg-customRed text-white  rounded-md">
+                    <button className="px-2 py-2 lg:px-4 lg:py-3  border  bg-customRed text-white  rounded-md">
                       Apply Coupon
                     </button>
                   </div>

@@ -6,6 +6,7 @@ import { StoreContext } from "../Context/StoreContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HOC from "../Components/HOC";
+import toast from "react-hot-toast";
 
 function CheckoutPage() {
   const navigate = useNavigate();
@@ -35,13 +36,9 @@ function CheckoutPage() {
       !formData.phone ||
       !formData.email
     ) {
-      toast.error("Please fill in all required fields.");
+      toast.error(" Please fill in the missing important field details.");
       return;
     }
-  
-    // Submit the form
-    console.log("Form submitted successfully!", formData);
-
 
     let orderItems = [];
     product_List.map((item) => {

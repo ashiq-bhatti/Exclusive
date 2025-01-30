@@ -46,7 +46,7 @@ function CheckoutPage() {
 
     try {
       const response = await axios.post(
-        `${backend_url}/api/order/place-order`,
+        `http://localhost:8000/api/order/place-order`,
         orderData,
         {
           headers: { Authorization: `Bearer ${token}` },

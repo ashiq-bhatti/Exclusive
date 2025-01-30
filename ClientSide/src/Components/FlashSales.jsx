@@ -90,12 +90,12 @@ const FlashSales = () => {
             <h1 className="text-customRed font-semibold">Today's</h1>
           </div>
           <div className="flex justify-between my-7 ">
-            <div className="flex items-center gap-20">
+            <div className="flex items-center gap-5  md:gap-20">
               <h1 className="text-lg md:text-2xl lg:text-4xl font-semibold tracking-wider">
                 Flash Sales
               </h1>
               <div>
-                <span className="font-medium flex gap-3">
+                <span className="font-medium flex gap-5 md:gap-3">
                   <p className="block md:hidden">D</p>
                   <p className="hidden md:block">Day</p>
 

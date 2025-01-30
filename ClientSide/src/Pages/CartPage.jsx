@@ -109,7 +109,7 @@ function CartPage() {
                       </div>
                     </div>
 
-                    <div className="text-xs sm:text-sm md:text-base whitespace-nowrap">
+                    <div className="text-right sm:text-sm md:text-base whitespace-nowrap">
                       ${product.price * cartItems[product._id]}
                     </div>
                   </div>
@@ -149,19 +149,19 @@ function CartPage() {
           <div className="left w-full md:w-[40%]">
             <form
               onClick={handleSubmit}
-              className="flex md:flex-col md:items-start lg:flex-row items-center gap-6 "
+              className="flex md:flex-col md:items-start lg:flex-row items-center justify-between gap-6 "
             >
               <input
                 type="text"
                 name="couponNum"
                 onChange={handleChange}
                 value={formData.coupon}
-                className=" border border-black border-opacity-80 w-40 md:w-auto   rounded-md"
+                className=" border border-black border-opacity-80 w-40 md:w-auto lg:w-36   rounded-md"
                 placeholder="Coupon Code"
               />
               <button
                 type="submit"
-                className=" p-2  lg:py-3 lg:px-10 border  bg-customRed text-white  rounded-md"
+                className=" p-2  lg:py-3 lg:px-5 xl:px-10 border  bg-customRed text-white  rounded-md"
               >
                 Apply Coupon
               </button>
@@ -181,11 +181,11 @@ function CartPage() {
               <p className="">Total:</p>
               <p className="">${totelAmoutOfCart() + 3}</p>
             </div>
-            <div className="w-[66%] flex m-auto">
+            <div className=" flex justify-center ">
               <button
                 onClick={() => nevigate("/check-out-page")}
                 type="submit"
-                className=" mt-3 py-3 px-4 md:px-2 md:py-3 lg:px-7 text-center border  bg-customRed text-white font-semibold rounded-md"
+                className=" mt-3 py-3 px-5 text-center border  bg-customRed text-white font-semibold rounded-md"
               >
                 Proceed to chekout
               </button>

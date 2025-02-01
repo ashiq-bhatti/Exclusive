@@ -11,7 +11,8 @@ const EdditProfileRoutes = require("./Routes/EditProfileRoutes.js");
 const CartRoutes = require("./Routes/CartRoutes.js");
 const OrderRoutes = require("./Routes/OrderRoutes.js");
 const wishListRoutes = require("./Routes/WishListRoutes.js");
-  
+const  path  = require("path");
+
 dotenv.config();
 const app = express();
 
@@ -27,7 +28,10 @@ app.use(cookieParser());
 app.use(express.json());
 DbConnection();
 
-app.use("/public", express.static("public"));
+const __dirname = path.resolve(); // Get the absolute path
+
+app.use("/public", express.static(path.join(__dirname, "public")));
+
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/admin", AdminRoute);

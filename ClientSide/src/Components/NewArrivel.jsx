@@ -9,7 +9,6 @@ const NewArrivel = () => {
   const newArrivelProduct = product_List.filter(
     (product) => product.eventCategory === "NewArrivals"
   );
-  console.log(newArrivelProduct.images)
   return (
     <>
       <div className="flashSales-section-inner w-[90%] sm:w-[85%] lg:w-[84%] m-auto">
@@ -130,7 +129,7 @@ const NewArrivel = () => {
                 newArrivelProduct.slice(3,4).map((product) => (
                   <div key={product._id}>
                     <img
-                      src={`${backend_url}/public/images/${product.images[0]}`}
+                      src={`${backend_url}/images/${product.images[0]}`}
                       alt={product.title}
                       className="w-full h-64 object-contain"
                     />

@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.json());
 DbConnection();
 
-app.use("/public", express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/admin", AdminRoute);
